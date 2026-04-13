@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Eldritch Horror Encounter Helper</title>
+  <head>
+  <body>
+    <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
+    <div id="app"></div>
+    <script src="js/index.js"></script>
+
+    <div id="mainView">
+      <select name="city" id="citySelect">
+        <option value="">Select a city</option>
+        <option value="general">General</option>
+        <optgroup label="Americas">
+          <option value="arkham">Arkham</option>
+          <option value="Buenos Aires">Buenos Aires</option>
+          <option value="San Francisco"></option>San Francisco</option>
+        </optgroup>
+        <optgroup label="Europe">
+          <option value="Istanbul">Istanbul</option>
+          <option value="London">London</option>
+          <option value="Rome">Rome</option>
+        </optgroup>
+      </select>
+      <button type="button" onclick="readCityEncounter('Arkham')">Read City Encounter</button>
+    </div>
+    <div>
+      <h2 id>Encounters</h2>
+      <div id="encounterList"/>
+    </div>
+  </body>
+</html>
