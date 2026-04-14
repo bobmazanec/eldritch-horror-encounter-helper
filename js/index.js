@@ -66,12 +66,14 @@ function createPassFailButtons(encounterElement, encounter) {
   passButton.textContent = "Pass";
   passButton.onclick = () => {
     addEncounterResult(buttonContainer, encounter, "pass");
+    endEncounter();
   };
 
   const failButton = document.createElement("button");
   failButton.textContent = "Fail";
   failButton.onclick = () => {
     addEncounterResult(buttonContainer, encounter, "fail");
+    endEncounter();
   };
 
   buttonContainer.appendChild(passButton);
@@ -79,7 +81,27 @@ function createPassFailButtons(encounterElement, encounter) {
   return buttonContainer;
 }
 
+function disableEncounterButtons() {
+  updateEncounterButtons(true);
+}
+
+function enableEncounterButtons() {
+  updateEncounterButtons(false);
+}
+
+function endEncounter() {
+  enableEncounterButtons();
+}
+
+function updateEncounterButtons(disabled) {
+  document.querySelectorAll("button.encounter").forEach(button => {
+    button.disabled = disabled;
+  });
+}
+
 function presentEncounter(deckName, cityName, encounter) {
+  disableEncounterButtons();
+
   const encounterElement = createEncounterElement(deckName, encounter.cardId, cityName, encounter)
   document.getElementById("encounterList").prepend(encounterElement);
   readAlound(encounter.intro);
