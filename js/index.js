@@ -26,9 +26,14 @@ const encounterData = {
               {
                 cardId: 4,
                 type: "may-do",
-                intro: "An anonymous patient in the asylum pleads with you to share what you've learned. You may spend Clue 1 Clue to share what you know.",
+                intro: "An anonymous patient in the asylum pleads with you to share what you've learned. You may spend 1 Clue to share what you know.",
                 pass: "The man begins chanting in a long-dead language; gain 1 Incantation Spell.",
                 fail: ""
+              },
+              {
+                cardId: 7,
+                type: "choiceless",
+                intro: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
               }
             ]
           }
@@ -68,7 +73,11 @@ function createEncounterElement(deckName, cardId, cityName, encounter) {
   introElement.textContent = encounter.intro;
   encounterElement.appendChild(introElement); 
 
-  encounterElement.appendChild(createEncounterActionButtons(encounterElement, encounter));
+  if (encounter.type === "choiceless") {
+    endEncounter();
+  } else {
+    encounterElement.appendChild(createEncounterActionButtons(encounterElement, encounter));
+  }
   encounterElement.appendChild(document.createElement("hr"));
   return encounterElement;
 }
