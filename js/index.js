@@ -40,49 +40,71 @@ const encounterData = {
         ]
       }
     }
+  },
+
+  "otherWorld": {
+    encounters: [
+      {
+        cardId: 7,
+        location: "The Dreamlands",
+        intro: "In the cavern of flame, the bearded priests Nasht and Kaman-Thah warn you that it is too dangerous to continue. You insist that you possess the knowledge you need and are resolved to enter the Dreamlands; test Will-1. Roll 1 additional die for each Clue you have.",
+
+        pass: {
+          type: "pass-fail",
+          intro: "After gaining access to the Dreamlands, you find yourself fighting moonbeasts on a black galley sailing to the moon; test Strength.",
+          pass: "You steal their treasure and area able to barter with it; close this Gate.",
+          fail: "You become lost in a forest on the moon; lose Health 2 Health and become Delayed."
+        },
+        fail: {
+          type: "choiceless",
+          intro: "The gods of dreams exile you back to the waking world and punish you for your overreaching ambition. Your dream and the waking world become indistinguishable. Become Delayed and gain a Hallucinations Condition."
+        }
+      }
+    ]
   }
 };
 
-function addEncounterResult(elementToReplace, encounter, action, key) {
+function addEncounterAction(buttonContainer, action) {
+  const actionElement = document.createElement("p");
+  actionElement.classList.add("encounter-action");
+  actionElement.textContent = action;
+
+  buttonContainer.insertAdjacentElement("beforebegin", actionElement);
+}
+
+function addEncounterResult(buttonContainer, encounter, action, key) {
+  if (!buttonContainer) { return }
+
+  addEncounterAction(buttonContainer, action);
+
   const result = encounter[key];
   readAlound(result);
 
-  let resultElement = document.createElement("p");
-  resultElement.classList.add("encounter-result");
-  resultElement.textContent = action;
-
-  elementToReplace.insertAdjacentElement("beforebegin", resultElement);
-  
-  resultElement = document.createElement("p");
+  const resultElement = document.createElement("p");
   resultElement.classList.add("encounter-result");
   resultElement.textContent = result;
   
-  elementToReplace.insertAdjacentElement("beforebegin", resultElement);
-  elementToReplace.remove();
+  buttonContainer.insertAdjacentElement("beforebegin", resultElement);
+  buttonContainer.remove();
 }
 
-function createEncounterElement(deckName, cardId, cityName, encounter) {
-  const encounterElement = document.createElement("div");
-  encounterElement.classList.add("encounter");
-
-  const headerElement = document.createElement("h3");
-  headerElement.textContent = `${deckName} ${cardId}: ${cityName}`;
-  encounterElement.appendChild(headerElement);
-
-  const introElement = document.createElement("p");
-  introElement.textContent = encounter.intro;
-  encounterElement.appendChild(introElement); 
-
+function addEncounterStep(encounterElement, encounter, nextStepFunction) {
+  addIntroElement(encounterElement, encounter.intro);
   if (encounter.type === "choiceless") {
     endEncounter();
   } else {
-    encounterElement.appendChild(createEncounterActionButtons(encounterElement, encounter));
+    addActionButtons(encounterElement, encounter, nextStepFunction);
   }
-  encounterElement.appendChild(document.createElement("hr"));
-  return encounterElement;
 }
 
-function createEncounterActionButtons(encounterElement, encounter) {
+function addIntroElement(encounterElement, intro) {
+  const introElement = document.createElement("p");
+  introElement.textContent = intro;
+  encounterElement.appendChild(introElement);
+  readAlound(intro);
+}
+
+function addActionButtons(encounterElement, encounter, nextStepFunction) {
   const buttonContainer = document.createElement("div");
 
   const button1 = document.createElement("button");
@@ -90,21 +112,26 @@ function createEncounterActionButtons(encounterElement, encounter) {
 
   button1.textContent = text1;
   button1.onclick = () => {
-    addEncounterResult(buttonContainer, encounter, text1, "pass");
-    endEncounter();
+    nextStepFunction(buttonContainer, encounter, text1, "pass");
   };
 
   const button2 = document.createElement("button");
   const text2 = encounter.type === "may-do" ? "Don't do it" : "Fail";
   button2.textContent = text2;
   button2.onclick = () => {
-    addEncounterResult(buttonContainer, encounter, text2, "fail");
-    endEncounter();
+    nextStepFunction(buttonContainer, encounter, text2, "fail");
   };
 
   buttonContainer.appendChild(button1);
   buttonContainer.appendChild(button2);
-  return buttonContainer;
+  
+  encounterElement.appendChild(buttonContainer);
+}
+
+function continueComplexEncounter(buttonContainer, encounter, action, key) {
+  addEncounterAction(buttonContainer, action);
+  addEncounterStep(buttonContainer.parentElement, encounter[key], endSimpleEncounter);
+  buttonContainer.remove();
 }
 
 function disableEncounterButtons() {
@@ -115,22 +142,13 @@ function enableEncounterButtons() {
   updateEncounterButtons(false);
 }
 
-function endEncounter() {
+function endEncounter(buttonContainer, encounter, action, key) {
+  addEncounterResult(buttonContainer, encounter, action, key);
   enableEncounterButtons();
 }
 
-function updateEncounterButtons(disabled) {
-  document.querySelectorAll("button.encounter").forEach(button => {
-    button.disabled = disabled;
-  });
-}
-
-function presentEncounter(deckName, cityName, encounter) {
-  disableEncounterButtons();
-
-  const encounterElement = createEncounterElement(deckName, encounter.cardId, cityName, encounter)
-  document.getElementById("encounterList").prepend(encounterElement);
-  readAlound(encounter.intro);
+function endSimpleEncounter(buttonContainer, encounter, action, key) {
+  endEncounter(buttonContainer, encounter, action, key);
 }
 
 function readAlound(text) {
@@ -138,10 +156,48 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
-function readCityEncounter(cityName) {
+function startCityEncounter(cityName) {
   const city = encounterData.location.city[cityName];
   const encounters = city.byExapansion[0].encounters;
   const encounter = encounters[Math.floor(Math.random() * encounters.length)];
 
-  presentEncounter(city.deckName, cityName, encounter);
+  startEncounter(
+    `${city.deckName} ${encounter.cardId}: ${cityName}`,
+    endSimpleEncounter,
+    encounter
+  );
+}
+
+function startEncounter(headerText, nextStepFunction, encounter) {
+  disableEncounterButtons();
+
+  const encounterElement = document.createElement("div");
+  encounterElement.classList.add("encounter");
+
+  encounterElement.appendChild(document.createElement("hr"));
+
+  const headerElement = document.createElement("h3");
+  headerElement.textContent = headerText;
+  encounterElement.appendChild(headerElement);
+
+  addEncounterStep(encounterElement, encounter, nextStepFunction);
+
+  document.getElementById("encounterList").prepend(encounterElement);
+}
+
+function startOtherWorldEncounter() {
+  const encounters = encounterData.otherWorld.encounters;
+  const encounter = encounters[Math.floor(Math.random() * encounters.length)];
+
+  startEncounter(
+    `Other World ${encounter.cardId}: ${encounter.location}`,
+    continueComplexEncounter,
+    encounter
+  );
+}
+
+function updateEncounterButtons(disabled) {
+  document.querySelectorAll("button.encounter").forEach(button => {
+    button.disabled = disabled;
+  });
 }
