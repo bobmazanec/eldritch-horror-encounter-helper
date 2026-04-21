@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Eldritch Horror Encounter Helper</title>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eldritch Horror Encounter Helper</title>
   </head>
   <body>
     <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
@@ -11,27 +11,27 @@
     <script src="js/index.js"></script>
 
     <div id="mainView">
-      <select name="city" id="citySelect">
+      <select name="city" id="citySelect" onchange="citySelected()" >
         <option value="">Select a city</option>
-        <option value="general">General</option>
+        <option value="City">General</option>
         <optgroup label="Americas">
-          <option value="arkham">Arkham</option>
-          <option value="Buenos Aires">Buenos Aires</option>
-          <option value="San Francisco"></option>San Francisco</option>
+          <option>Arkham</option>
+          <!-- <option>Buenos Aires</option> -->
+          <!-- <option>San Francisco</option> -->
         </optgroup>
-        <optgroup label="Europe">
-          <option value="Istanbul">Istanbul</option>
-          <option value="London">London</option>
-          <option value="Rome">Rome</option>
-        </optgroup>
+        <!-- <optgroup label="Europe">
+          <option>Istanbul</option>
+          <option>London</option>
+          <option>Rome</option>
+        </optgroup> -->
       </select>
-      <button type="button" class="encounter" onclick="startCityEncounter('Arkham')">Read City Encounter</button>
-      <br/>
+      <button id="cityEncounter" type="button" disabled class="encounter" onclick="startCityEncounter(document.getElementById('citySelect').value)">Read City Encounter</button>
+      <br>
       <button type="button" class="encounter" onclick="startOtherWorldEncounter()">Read Other World Encounter</button>
     </div>
     <div>
       <h2 id>Encounters</h2>
-      <div id="encounterList"/>
+      <div id="encounterList"></div>
     </div>
   </body>
 </html>

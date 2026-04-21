@@ -5,7 +5,7 @@ const encounterData = {
     "city": {
       "Arkham": {
         deckName: "Americas",
-        byExapansion: [
+        byExpansion: [
           {
             expansionId: 0,
             encounters: [
@@ -34,6 +34,30 @@ const encounterData = {
                 cardId: 7,
                 type: "choiceless",
                 intro: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
+              }
+            ]
+          }
+        ]
+      },
+      "City": {
+        deckName: "General",
+        byExpansion: [
+          {
+            expansionId: 0,
+            encounters: [
+              {
+                cardId: 1,
+                type: "pass-fail",
+                intro: "You make sure no one is watching before sneaking out of the shop with your stolen goods; test Observation.",
+                pass: "Gain 1 Item Asset from the reserve or 1 random Item Asset from the deck.",
+                fail: "You are caught by the store owner and arrested; gain a Detained Condition."
+              },
+              {
+                cardId: 8,
+                type: "pass-fail",
+                intro: "A night of drinking and good cheer helps raise your spirits. Recover Sanity 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
+                pass: "",
+                fail: "Discard 1 Item possession."
               }
             ]
           }
@@ -177,6 +201,13 @@ function addActionButtons(encounterElement, encounter, nextStepFunction) {
   encounterElement.appendChild(buttonContainer);
 }
 
+function citySelected() {
+  const cityName = document.getElementById("citySelect").value;
+  const cityEncounterButton = document.getElementById("cityEncounter");
+
+  cityEncounterButton.disabled = cityName === "";
+}
+
 function continueComplexEncounter(buttonContainer, encounter, action, key) {
   addEncounterAction(buttonContainer, action);
   addEncounterStep(buttonContainer.parentElement, encounter[key], endSimpleEncounter);
@@ -194,6 +225,7 @@ function enableEncounterButtons() {
 function endEncounter(buttonContainer, encounter, action, key) {
   addEncounterResult(buttonContainer, encounter, action, key);
   enableEncounterButtons();
+  citySelected();
 }
 
 function endSimpleEncounter(buttonContainer, encounter, action, key) {
@@ -207,7 +239,7 @@ function readAlound(text) {
 
 function startCityEncounter(cityName) {
   const city = encounterData.location.city[cityName];
-  const encounters = city.byExapansion[0].encounters;
+  const encounters = city.byExpansion[0].encounters;
   const encounter = encounters[Math.floor(Math.random() * encounters.length)];
 
   startEncounter(
