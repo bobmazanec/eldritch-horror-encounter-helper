@@ -13,7 +13,6 @@
     <div id="mainView">
       <select name="city" id="citySelect" onchange="citySelected()" >
         <option value="">Select a city</option>
-        <option value="City">General</option>
         <optgroup label="Americas">
           <option>Arkham</option>
           <!-- <option>Buenos Aires</option> -->
@@ -26,6 +25,13 @@
         </optgroup> -->
       </select>
       <button id="cityEncounter" type="button" disabled class="encounter" onclick="startCityEncounter(document.getElementById('citySelect').value)">Read City Encounter</button>
+      <br>
+      <br>
+      Read General
+      <button type="button" class="encounter" onclick="startGeneralEncounter('City')">City</button>
+      <button type="button" class="encounter" onclick="startGeneralEncounter('Wilderness')">Wilderness</button>
+      <button type="button" class="encounter" onclick="startGeneralEncounter('Sea')">Sea</button>
+       Encounter
       <br>
       <button type="button" class="encounter" onclick="startOtherWorldEncounter()">Read Other World Encounter</button>
     </div>

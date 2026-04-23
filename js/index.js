@@ -1,5 +1,71 @@
 'use strict';
 
+const Base = 0;
+const ForsakenLore = 1;
+
+const deckData = {
+  General: {
+    byExpansion: [
+      {
+        expansionId: Base,
+        cards: [
+          {
+            cardId: 1,
+            encounters: {
+              City: {
+                type: "pass-fail",
+                intro: "You make sure no one is watching before sneaking out of the shop with your stolen goods; test Observation.",
+                pass: "Gain 1 Item Asset from the reserve or 1 random Item Asset from the deck.",
+                fail: "You are caught by the store owner and arrested; gain a Detained Condition."
+              },
+
+              Sea: {
+                type: "pass-fail",
+                intro: "You find the floating detritus of some sunken ship and search for any survivors or salvageable objects; test Observation.",
+                pass: "You discover a floating trunk; gain 1 Artifact.",
+                fail: "You waste hours without result; become Delayed."
+              },
+
+              Wilderness: {
+                type: "choiceless",
+                intro: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose Sanity 1 Sanity."
+              }
+            }
+          }, {
+            cardId: 8,
+            encounters: {
+              City: {
+                type: "pass-fail",
+                intro: "A night of drinking and good cheer helps raise your spirits. Recover Sanity 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
+                pass: "",
+                fail: "Discard 1 Item possession."
+              },
+
+              Sea: {
+                type: "pass-fail",
+                intro: "You find a terrified stowaway aboard the ship. You attempt to comfort him and coax him into telling you his story; test Influence.",
+                pass: "He tells you about horrifying beasts and unbelievable worlds; gain 1 Clue."
+              },
+
+              Wilderness: {
+                type: "pass-fail",
+                intro: "Past where your campfire allows you to see, you hear voices chanting. You try to draw a protective sigil in the ground; test Lore.",
+                pass: "The next morning you find evidence of cult activity that you can use to identify the cult members; gain 1 Clue or improve Influence.",
+                fail: "Gain a Cursed Condition."
+              }
+            }
+          }
+        ]
+      }, {
+        expansionId: ForsakenLore,
+        cards: [
+          // ...
+        ]
+      }
+    ]
+  }
+};
+
 const encounterData = {
   "location": {
     "city": {
@@ -264,6 +330,17 @@ function startEncounter(headerText, nextStepFunction, encounter) {
   addEncounterStep(encounterElement, encounter, nextStepFunction);
 
   document.getElementById("encounterList").prepend(encounterElement);
+}
+
+function startGeneralEncounter(spaceType) {
+  const cards = deckData.General.byExpansion[0].cards;
+  const card = cards[Math.floor(Math.random() * cards.length)];
+
+  startEncounter(
+    `General ${card.cardId}: ${spaceType}`,
+    endSimpleEncounter,
+    card.encounters[spaceType]
+  );
 }
 
 function startOtherWorldEncounter() {
