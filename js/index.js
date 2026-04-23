@@ -109,6 +109,63 @@ const deckData = {
     ]
   },
 
+  Europe: {
+    byExpansion: [
+      {
+        expansionId: Base,
+        cards: [
+          {
+            cardId: 1,
+            encounters: {
+              Istanbul: {
+                type: "pass-fail",
+                intro: "Inside the loud hustle and bustle of the Grand Bazaar, you negotiate to find a skilled instructor to tutor you; test Influence-1. ",
+                pass: "Improve 1 skill of your choice.",
+                fail: "The instructor teaches you nothing; gain a Debt Condition to pay for his lessons."
+              },
+
+              London: {
+                type: "pass-fail",
+                intro: "The Silver Twilight Lodge is locked up tight. You look over the old building for a possible entrance; test Observation.",
+                pass: "The Lodge members are delighted by your ingenuity and offer their favor; gain a Blessed Condition.",
+                fail: "You waste fruitless hours searching and become Delayed."
+              },
+
+              Rome: {
+                type: "pass-fail",
+                intro: "The Vatican Library is so vast! You ask a librarian for a recommendation; test Influence.",
+                pass: "He leads you to a codex that recounts how worshipers of Shub-Niggurath were driven out of Rome, and the story renews your confidence; improve Will.",
+                fail: ""
+              }
+            }
+          }, {
+            cardId: 2,
+            encounters: {
+              Istanbul: {
+                type: "choiceless",
+                intro: "People from every walk of life can be found enjoying the cleansing steam of the Turkish baths. Inside, you'll eventually find an expert in any give field. You may become Delayed to improve 1 skill of your choice."
+              },
+
+              London: {
+                type: "pass-fail",
+                intro: "Inside the Herefordshire Asylum, a patient asks you if you've seen the Yellow Sign. You listen to his story of the King in Yellow; test Observation.",
+                pass: "Spawn Clue 2 Clues.",
+                fail: "His gibberish imprints itself onto your subconscious; gain a Hallucinations Condition."
+              },
+
+              Rome: {
+                type: "pass-fail",
+                intro: "You have an inspirational dream in which you are a proud Roman quaestor. Improve Will. Your reverie is interrupted by a band of small, primitive men running wild outside. You try to negotiate with this lost tribe of Miri Nigri; test Influence.",
+                pass: "",
+                fail: "Lose Health 1 Health and 1 Sanity as they continue their pursuit of some ancient grudge."
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+
   General: {
     byExpansion: [
       {
