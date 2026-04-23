@@ -1,9 +1,114 @@
 'use strict';
 
+const BuenosAires = "Buenos Aires";
+const SanFrancisco = "San Francisco";
+
 const Base = 0;
 const ForsakenLore = 1;
 
 const deckData = {
+  America: {
+    byExpansion: [
+      {
+        expansionId: Base,
+        cards: [
+          {
+            cardId: 1,
+            encounters: {
+              Arkham: {
+                type: "pass-fail",
+                intro: "In the restricted section of Miskatonic University's library, you study an esoteric tome. Gain 1 Incantation Spell. You try to decode a note written in the margin; test Lore.",
+                pass: "",
+                fail: "The words put strange visions into your mind; gain a Hallucinations Condition."
+              },
+
+              BuenosAires: {
+                type: "pass-fail",
+                intro: "In an ancient underground chamber, you study strange scientific and magic paraphernalia once used by the Serpent Men; test Lore.",
+                pass: "You manipulate the devices to transform yourself and gain a Blessed Condition.",
+                fail: "The devices remain utterly alien; lose Sanity 2 Sanity."
+              },
+
+              SanFrancisco: {
+                type: "choiceless",
+                intro: "Inspector Jack Manion is looking for information about the Tongs in Chinatown. If you can help him, he'll teach you the basics of police work in exchange. You may spend Clue 1 Clue to improve Observation."
+              }
+            }
+          }, {
+            cardId: 2,
+            encounters: {
+              Arkham: {
+                type: "pass-fail",
+                intro: "During the night, you have a nightmare about the old witch, Keziah Mason. In the dream, she shares her power with you; gain 1 Incantation Spell. When you wake up, you fear that the old witch will someday ask you for a favor in return; test Will+1.",
+                pass: "",
+                fail: "Gain a Paranoia Condition."
+              },
+
+              BuenosAires: {
+                type: "pass-fail",
+                intro: "You sneak into the temple and overhear the rough croaking of deep ones chanting. You recognize familiar elements to the words they are intoning; Test Lore.",
+                pass: "Gain 1 Ritual Spell.",
+                fail: "It's nothing more than horrific noise; lose Sanity 1 Sanity."
+              },
+
+              SanFrancisco: {
+                type: "pass-fail",
+                intro: "You find the husk of a squid-like creature in a tunnel. Just seeing it terrifies you; test Will-1",
+                pass: "You identify the cthonian; improve 1 skill of your choice as scientists clamor to contribute to its study.",
+                fail: "You run headlong through the tunnel; gain a Leg Injury Condition."
+              }
+            }
+          }, {
+            cardId: 4,
+            encounters: {
+              Arkham: {
+                type: "may-do",
+                intro: "An anonymous patient in the asylum pleads with you to share what you've learned. You may spend 1 Clue to share what you know.",
+                pass: "The man begins chanting in a long-dead language; gain 1 Incantation Spell.",
+                fail: ""
+              },
+
+              BuenosAires: {
+                type: "choiceless",
+                intro: "A student has been studying the university's copy of the Necronomicon and is eager to share what he's learned in exchange for hearing what you know. You may spend Clue 1 Clue to share what you know and gain 1 Ritual Spell."
+              },
+
+              SanFrancisco: {
+                type: "pass-fail",
+                intro: "You speak to a military prisoner on Alcatraz Island. He tells you his story of deserting after encountering a horrific creature; test Will.",
+                pass: "He thanks you for believing him and blesses your name; gain a Blessed Condition.",
+                fail: "The story throws you into a hysterical fit, and the guards arrest you; gain a Detained Condition."
+              }
+            }
+          }, {
+            cardId: 7,
+            encounters: {
+              Arkham: {
+                type: "choiceless",
+                intro: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
+              },
+
+              BuenosAires: {
+                type: "choiceless",
+                intro: "At the hospital you find a bald, old man with leathery skin and a flat face. He speaks very slowly, but his story is fascinating. You may become Delayed to gain 2 Spells as he recounts all the details of his time worshiping the Father of Serpents."
+              },
+
+              SanFrancisco: {
+                type: "pass-fail",
+                intro: "The Examiner hires you to spend a night in the Winchester Mystery House. They provide you with experts in detecting the supernatural. Improve Observation. The odd architecture and the building's history threaten to unhinge your mind as the evening passes; test Will-1.",
+                fail: "Lose Sanity 2 Sanity."
+              }
+            }
+          }
+        ]
+      }, {
+        expansionId: ForsakenLore,
+        cards: [
+        ]
+      }
+    ]
+  },
+
   General: {
     byExpansion: [
       {
@@ -67,71 +172,6 @@ const deckData = {
 };
 
 const encounterData = {
-  "location": {
-    "city": {
-      "Arkham": {
-        deckName: "Americas",
-        byExpansion: [
-          {
-            expansionId: 0,
-            encounters: [
-              {
-                cardId: 1,
-                type: "pass-fail",
-                intro: "In the restricted section of Miskatonic University's library, you study an esoteric tome. Gain 1 Incantation Spell. You try to decode a note written in the margin; test Lore.",
-                pass: "",
-                fail: "The words put strange visions into your mind; gain a Hallucinations Condition."
-              },
-              {
-                cardId: 2,
-                type: "pass-fail",
-                intro: "During the night, you have a nightmare about the old witch, Keziah Mason. In the dream, she shares her power with you; gain 1 Incantation Spell. When you wake up, you fear that the old witch will someday ask you for a favor in return; test Will+1.",
-                pass: "",
-                fail: "Gain a Paranoia Condition."
-              },
-              {
-                cardId: 4,
-                type: "may-do",
-                intro: "An anonymous patient in the asylum pleads with you to share what you've learned. You may spend 1 Clue to share what you know.",
-                pass: "The man begins chanting in a long-dead language; gain 1 Incantation Spell.",
-                fail: ""
-              },
-              {
-                cardId: 7,
-                type: "choiceless",
-                intro: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
-              }
-            ]
-          }
-        ]
-      },
-      "City": {
-        deckName: "General",
-        byExpansion: [
-          {
-            expansionId: 0,
-            encounters: [
-              {
-                cardId: 1,
-                type: "pass-fail",
-                intro: "You make sure no one is watching before sneaking out of the shop with your stolen goods; test Observation.",
-                pass: "Gain 1 Item Asset from the reserve or 1 random Item Asset from the deck.",
-                fail: "You are caught by the store owner and arrested; gain a Detained Condition."
-              },
-              {
-                cardId: 8,
-                type: "pass-fail",
-                intro: "A night of drinking and good cheer helps raise your spirits. Recover Sanity 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
-                pass: "",
-                fail: "Discard 1 Item possession."
-              }
-            ]
-          }
-        ]
-      }
-    }
-  },
-
   "otherWorld": {
     encounters: [
       {
@@ -267,13 +307,6 @@ function addActionButtons(encounterElement, encounter, nextStepFunction) {
   encounterElement.appendChild(buttonContainer);
 }
 
-function citySelected() {
-  const cityName = document.getElementById("citySelect").value;
-  const cityEncounterButton = document.getElementById("cityEncounter");
-
-  cityEncounterButton.disabled = cityName === "";
-}
-
 function continueComplexEncounter(buttonContainer, encounter, action, key) {
   addEncounterAction(buttonContainer, action);
   addEncounterStep(buttonContainer.parentElement, encounter[key], endSimpleEncounter);
@@ -291,7 +324,6 @@ function enableEncounterButtons() {
 function endEncounter(buttonContainer, encounter, action, key) {
   addEncounterResult(buttonContainer, encounter, action, key);
   enableEncounterButtons();
-  citySelected();
 }
 
 function endSimpleEncounter(buttonContainer, encounter, action, key) {
@@ -303,15 +335,14 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
-function startCityEncounter(cityName) {
-  const city = encounterData.location.city[cityName];
-  const encounters = city.byExpansion[0].encounters;
-  const encounter = encounters[Math.floor(Math.random() * encounters.length)];
+function startCityEncounter(deckName, cityName) {
+  const cards = deckData[deckName].byExpansion[0].cards;
+  const card = cards[Math.floor(Math.random() * cards.length)];
 
   startEncounter(
-    `${city.deckName} ${encounter.cardId}: ${cityName}`,
+    `${deckName} ${card.cardId}: ${cityName}`,
     endSimpleEncounter,
-    encounter
+    card.encounters[cityName]
   );
 }
 
