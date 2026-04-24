@@ -106,6 +106,67 @@ const deckData = {
     ]
   },
 
+  "Asia/Australia": {
+    byExpansion: [
+      {
+        expansionId: Base,
+        cards: [
+          {
+            cardId: 1,
+            encounters: {
+              Shanghai: {
+                type: "pass-fail",
+                intro: "You search through old copies of The Shanghai Courier to find strange or unexplained stories; test Observation.",
+                pass: "You discover a pattern of arcane activity in the city; improve Lore.",
+                fail: "Lose Sanity 1 Sanity as no pattern emerges from all this horror."
+              },
+
+              Sydney: {
+                type: "pass-fail",
+                intro: "You dream of crossing a vast desert hunted by an enormous winged creature. In the dream, you turn to face your fears; test Will",
+                pass: "You wake up feeling more alive than ever; improve Strength.",
+                fail: "The fear lingers; lose 1 Sanity."
+              },
+
+              Tokyo: {
+                type: "pass-fail",
+                intro: "You ask the enigmatic Dragon Lords to rid the world of potential threats to Japan; test Influence.",
+                pass: "Each Monster on a space of your choice loses Health 2 Health as the mysterious group casts their spells.",
+                fail: "The Dragon Lords lash out at you; gain a Back Injury Condition."
+              }
+            }
+          }, {
+            cardId: 2,
+            encounters: {
+              Shanghai: {
+                type: "may-do",
+                intro: "You may become Delayed to explore some submerged pyramids off the coast of Okinawa.",
+                pass: 'You discover ancient writing that claims to "harm one\'s enemies;" 1 Monster of your choice on any space loses Health 3 Health.'
+              },
+
+              Sydney: {
+                type: "may-do",
+                intro: "You may become Delayed to explore the depths of the Great Barrier Reef.",
+                pass: 'You discover a hidden chamber filled with ancient artifacts; gain 2 Spells.'
+              },
+
+              Tokyo: {
+                type: "may-do",
+                intro: "You may become Delayed to investigate the mysterious disappearances in the city.",
+                pass: "you uncover a conspiracy involving the Dragon Lords; gain 1 Clue."
+              }
+            }
+          }
+        ]
+      },
+      {
+        expansionId: ForsakenLore,
+        cards: [
+        ]
+      }
+    ]
+  },
+
   Europe: {
     byExpansion: [
       {
