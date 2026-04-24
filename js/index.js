@@ -1,8 +1,5 @@
 'use strict';
 
-const BuenosAires = "Buenos Aires";
-const SanFrancisco = "San Francisco";
-
 const Base = 0;
 const ForsakenLore = 1;
 
@@ -22,14 +19,14 @@ const deckData = {
                 fail: "The words put strange visions into your mind; gain a Hallucinations Condition."
               },
 
-              BuenosAires: {
+              "Buenos Aires": {
                 type: "pass-fail",
                 intro: "In an ancient underground chamber, you study strange scientific and magic paraphernalia once used by the Serpent Men; test Lore.",
                 pass: "You manipulate the devices to transform yourself and gain a Blessed Condition.",
                 fail: "The devices remain utterly alien; lose Sanity 2 Sanity."
               },
 
-              SanFrancisco: {
+              "San Francisco": {
                 type: "choiceless",
                 intro: "Inspector Jack Manion is looking for information about the Tongs in Chinatown. If you can help him, he'll teach you the basics of police work in exchange. You may spend Clue 1 Clue to improve Observation."
               }
@@ -44,14 +41,14 @@ const deckData = {
                 fail: "Gain a Paranoia Condition."
               },
 
-              BuenosAires: {
+              "Buenos Aires": {
                 type: "pass-fail",
                 intro: "You sneak into the temple and overhear the rough croaking of deep ones chanting. You recognize familiar elements to the words they are intoning; Test Lore.",
                 pass: "Gain 1 Ritual Spell.",
                 fail: "It's nothing more than horrific noise; lose Sanity 1 Sanity."
               },
 
-              SanFrancisco: {
+              "San Francisco": {
                 type: "pass-fail",
                 intro: "You find the husk of a squid-like creature in a tunnel. Just seeing it terrifies you; test Will-1",
                 pass: "You identify the cthonian; improve 1 skill of your choice as scientists clamor to contribute to its study.",
@@ -68,12 +65,12 @@ const deckData = {
                 fail: ""
               },
 
-              BuenosAires: {
+              "Buenos Aires": {
                 type: "choiceless",
                 intro: "A student has been studying the university's copy of the Necronomicon and is eager to share what he's learned in exchange for hearing what you know. You may spend Clue 1 Clue to share what you know and gain 1 Ritual Spell."
               },
 
-              SanFrancisco: {
+              "San Francisco": {
                 type: "pass-fail",
                 intro: "You speak to a military prisoner on Alcatraz Island. He tells you his story of deserting after encountering a horrific creature; test Will.",
                 pass: "He thanks you for believing him and blesses your name; gain a Blessed Condition.",
@@ -88,12 +85,12 @@ const deckData = {
                 intro: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
               },
 
-              BuenosAires: {
+              "Buenos Aires": {
                 type: "choiceless",
                 intro: "At the hospital you find a bald, old man with leathery skin and a flat face. He speaks very slowly, but his story is fascinating. You may become Delayed to gain 2 Spells as he recounts all the details of his time worshiping the Father of Serpents."
               },
 
-              SanFrancisco: {
+              "San Francisco": {
                 type: "pass-fail",
                 intro: "The Examiner hires you to spend a night in the Winchester Mystery House. They provide you with experts in detecting the supernatural. Improve Observation. The odd architecture and the building's history threaten to unhinge your mind as the evening passes; test Will-1.",
                 fail: "Lose Sanity 2 Sanity."
