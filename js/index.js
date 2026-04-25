@@ -628,7 +628,7 @@ function startOtherWorldEncounter() {
   const card = cards[Math.floor(Math.random() * cards.length)];
 
   startEncounter(
-    `Other World ${card.cardId}: ${card.space}`,
+    `Other World ${card.cardId}: ${card.location}`,
     continueComplexEncounter,
     card
   );
