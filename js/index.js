@@ -269,7 +269,7 @@ const deckData = {
               pass: {
                 type: "pass-fail",
                 intro: "The murals inside the city tell the story of the elder things. Retreat Doom Doom by 1. However, your studies take a toll on your mind; test Will",
-                fail: "you block everything you've learned from your mind; gain an Amnesia Condition."
+                fail: "You block everything you've learned from your mind; gain an Amnesia Condition."
               },
               fail: {
                 type: "pass-fail",
