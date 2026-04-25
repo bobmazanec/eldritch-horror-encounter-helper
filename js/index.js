@@ -492,6 +492,65 @@ const deckData = {
             ]
           }
         ]
+      },
+
+      "Yog-Sothoth": {
+        byExpansion: [
+          {
+            expansionId: Base,
+            cards: [
+              {
+                cardId: 1,
+                encounters: {
+                  City: {
+                    type: "pass-fail",
+                    intro: "Randolph Carter claims that the Silver Twilight Lodge stole a unique family treasure. You investigate the local Lodge; test Observation.",
+                    pass: "You gain the opportunity to examine the stolen treasure; gain this Clue and you may discard a Spell to gain the Silver Key Artifact.",
+                    fail: "The Lodge frames you for the theft; gain a Detained Condition."
+                  },
+
+                  Sea: {
+                    type: "pass-fail",
+                    intro: "A strange fog covers the water, but no one else seems to see it; test Observation",
+                    pass: "You find that the fog originates from a circle of stones on the beach of a small island; gain this Clue.",
+                    fail: "The mist impairs your vision; discard this Clue unless you discard 1 Spell."
+                  },
+
+                  Wilderness: {
+                    type: "ambush",
+                    intro: "Talking to one of the locals, you realize that his village and its surrounding farms are inhabited by worshipers of Yog-Sothoth. A Cultist Monster ambushes you!",
+                    pass: "You manage to reach safety; gain this Clue.",
+                    fail: ""
+                  }
+                }
+              }, {
+                cardId: 2,
+                encounters: {
+                  City: {
+                    type: "may-do",
+                    intro: "An old man approaches you and begs you to make a solemn vow to deliver a book to his grandson, Wilbur, in a town called Dunwich. You may gain a Dark Pact Condition to gain this Clue and the Necronomicon Artifact.",
+                    pass: "",
+                    fail: "Discard this Clue."
+                  },
+
+                  Sea: {
+                    type: "pass-fail",
+                    intro: "You see a white ship on the horizon, its sails apparently unaffected by the strong winds you feel racing across the waves. You use a telescope to examine the craft; test Observation-1.",
+                    pass: "You see the ship passing through a fog bank into another world; gain this Clue and 1 additional Clue.",
+                    fail: ""
+                  },
+
+                  Wilderness: {
+                    type: "pass-fail",
+                    intro: "You watch several mi-go operate alien technology. Gain this Clue. If you have at least 1 Spell, the mi-go are suddenly aware of your presence and turn their strange devices toward you; test Observation",
+                    pass: "",
+                    fail: "Their devices erode your sense of reason; lose 1 Sanity and gain a Paranoia Condition."
+                  }
+                }
+              }
+            ]
+          }
+        ]
       }
     }
   }
@@ -554,8 +613,26 @@ function addIntroElement(encounterElement, intro) {
 function addActionButtons(encounterElement, encounter, nextStepFunction) {
   const buttonContainer = document.createElement("div");
 
+  let text1, text2;
+
+  switch (encounter.type) {
+    case "ambush":
+      text1 = "Defeat it";
+      text2 = "Don't defeat it";
+      break;
+
+    case "may-do":
+      text1 = "Do it";
+      text2 = "Don't do it";
+      break;
+
+      case "pass-fail":
+      text1 = "Pass";
+      text2 = "Fail";
+      break;
+  }
+
   const button1 = document.createElement("button");
-  const text1 = encounter.type === "may-do" ? "Do it" : "Pass";
 
   button1.textContent = text1;
   button1.onclick = () => {
@@ -563,7 +640,6 @@ function addActionButtons(encounterElement, encounter, nextStepFunction) {
   };
 
   const button2 = document.createElement("button");
-  const text2 = encounter.type === "may-do" ? "Don't do it" : "Fail";
   button2.textContent = text2;
   button2.onclick = () => {
     nextStepFunction(buttonContainer, encounter, text2, "fail");
@@ -728,7 +804,7 @@ function updateEncounterButtons(disabled) {
   });
 }
 
-const ancientOne = "Azathoth";
+const ancientOne = "Yog-Sothoth";
 const decks = [];
 const linkedCard = {};
 
