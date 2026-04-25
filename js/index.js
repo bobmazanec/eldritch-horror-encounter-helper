@@ -434,64 +434,66 @@ const deckData = {
   },
 
   Research: {
-    byExpansion: [
-      {
-        expansionId: Base,
-        byAncientOne: {
-          Azathoth: [
-            {
-              cardId: 1,
-              encounters: {
-                City: {
-                  type: "pass-fail",
-                  intro: "Inside a warehouse, you hear a clanging sound and discover a creature that resembles a metallic crate walking around on several legs. You try to follow the thing back to the cult's lair; test Observation-1.",
-                  pass: "Gain this Clue and 1 additional Clue.",
-                  fail: ""
-                },
+    byAncientOne: {
+      Azathoth: {
+        byExpansion: [
+          {
+            expansionId: Base,
+            cards: [
+              {
+                cardId: 1,
+                encounters: {
+                  City: {
+                    type: "pass-fail",
+                    intro: "Inside a warehouse, you hear a clanging sound and discover a creature that resembles a metallic crate walking around on several legs. You try to follow the thing back to the cult's lair; test Observation-1.",
+                    pass: "Gain this Clue and 1 additional Clue.",
+                    fail: ""
+                  },
 
-                Sea: {
-                  type: "pass-fail",
-                  intro: "You overhear the navigator say that the stars are not as they should be. The ship is utterly lost. You believe you understand the significance of the new alignment of stars; test Lore.",
-                  pass: "Gain this Clue and 1 additional Clue.",
-                  fail: "You become Delayed."
-                },
+                  Sea: {
+                    type: "pass-fail",
+                    intro: "You overhear the navigator say that the stars are not as they should be. The ship is utterly lost. You believe you understand the significance of the new alignment of stars; test Lore.",
+                    pass: "Gain this Clue and 1 additional Clue.",
+                    fail: "You become Delayed."
+                  },
 
-                Wilderness: {
-                  type: "pass-fail",
-                  intro: "A meteor exploded in the air, scattering a glowing green powder. You try to find a sufficient amount of the compound; test Observation-1.",
-                  pass: "Gain this Clue and move the Omen token to any space on the track without advancing Doom.",
-                  fail: "You are exposed to the terrible energy emanating from the substance; lose Health 1 Health."
+                  Wilderness: {
+                    type: "pass-fail",
+                    intro: "A meteor exploded in the air, scattering a glowing green powder. You try to find a sufficient amount of the compound; test Observation-1.",
+                    pass: "Gain this Clue and move the Omen token to any space on the track without advancing Doom.",
+                    fail: "You are exposed to the terrible energy emanating from the substance; lose Health 1 Health."
+                  }
+                }
+              }, {
+                cardId: 2,
+                encounters: {
+                  City: {
+                    type: "pass-fail",
+                    intro: "A few hours before the performance of the opera Massa di Requiem per Shuggay you have a chance to examine the libretto; test Lore",
+                    pass: "You recognize that it's a ritual that honors Azathoth and stop the performance; gain this Clue.",
+                    fail: "The performance calls to Azathoth; place 1 Eldritch token on the green space of the Omen track."
+                  },
+
+                  Sea: {
+                    type: "pass-fail",
+                    intro: "Your ship is destroyed by a glowing rock that fell from the sky! Gain this Clue. You struggle to reach wreckage that can keep you afloat; test Strength",
+                    pass: "",
+                    fail: "the undertow pulls you underwater; lose Health 2 Health."
+                  },
+
+                  Wilderness: {
+                    type: "pass-fail",
+                    intro: "Mi-go have dug up the meteor that you were seeking. Curious, you attempt to spy on them; test Observation.",
+                    pass: "You see them use the stones as a power source; gain this Clue and 1 additional Clue.",
+                    fail: "They shoot you with a weapon that leaves you unconscious for hours; gain an Amnesia Condition."
+                  }
                 }
               }
-            }, {
-              cardId: 2,
-              encounters: {
-                City: {
-                  type: "pass-fail",
-                  intro: "A few hours before the performance of the opera Massa di Requiem per Shuggay you have a chance to examine the libretto; test Lore",
-                  pass: "You recognize that it's a ritual that honors Azathoth and stop the performance; gain this Clue.",
-                  fail: "The performance calls to Azathoth; place 1 Eldritch token on the green space of the Omen track."
-                },
-
-                Sea: {
-                  type: "pass-fail",
-                  intro: "Your ship is destroyed by a glowing rock that fell from the sky! Gain this Clue. You struggle to reach wreckage that can keep you afloat; test Strength",
-                  pass: "",
-                  fail: "the undertow pulls you underwater; lose Health 2 Health."
-                },
-
-                Wilderness: {
-                  type: "pass-fail",
-                  intro: "Mi-go have dug up the meteor that you were seeking. Curious, you attempt to spy on them; test Observation.",
-                  pass: "You see them use the stones as a power source; gain this Clue and 1 additional Clue.",
-                  fail: "They shoot you with a weapon that leaves you unconscious for hours; gain an Amnesia Condition."
-                }
-              }
-            }
-          ]
-        }
+            ]
+          }
+        ]
       }
-    ]
+    }
   }
 };
 
@@ -590,8 +592,8 @@ function buildExpeditionDeck() {
 
 function buildResearchDeck() {
   const deck = new Array();
-  deckData.Research.byExpansion.forEach(expansion => {
-    expansion.byAncientOne[ancientOne].forEach(card => {
+  deckData.Research.byAncientOne[ancientOne].byExpansion.forEach(expansion => {
+    expansion.cards.forEach(card => {
       deck.push(card);
     })
   });
