@@ -224,6 +224,79 @@ const deckData = {
     ]
   },
 
+  Expedition: {
+    byExpansion: [
+      {
+        expansionId: Base,
+        bySpace: {
+          "The Amazon": [
+            {
+              cardId: 1,
+              intro: "You see the vine-covered temple ahead of you, but you're going to have to fight your way through a thick tangle of venomous snakes between yourself and the entrance; test Strength.",
+              pass: {
+                type: "pass-fail",
+                intro: "You enter the Temple of Yig. Retreat Doom by 1. Strange runes are inscribed on the wall in a serpentine design. You must interpret their meaning to avoid their hypnotic effect; test Lore.",
+                fail: "The runes' hypnotic effect takes hold; gain a Paranoia Condition."
+              },
+              fail: {
+                type: "pass-fail",
+                intro: "You've been bit! Lose Health 1 Health and gain an Internal Injury Condition. Something about the snakes is odd. You try to identify what makes them unique; test Observation-1.",
+                pass: "You notice a crescent on the snake's head; retreat Doom by 1."
+              }
+            }, {
+              cardId: 2,
+              intro: "As you slip into a deep trance and touch the odd stone, the jungle around you subtle changes in appearance. You look for hints regarding this new jungle terrain; test Observation.",
+
+              pass: {
+                type: "pass-fail",
+                intro: "You are in some other dimension. You use your arcane skills to return home; test Lore.",
+                pass: "You wake up back in the jungle next to a strange item; gain 1 Artifact.",
+                fail: "The journey back unsettles you; lose 2 Sanity."
+              },
+              fail: {
+                type: "pass-fail",
+                intro: "A towering, larva-like thing grabs you with its tendrils. You struggle fiercely to break free; test Strength-1.",
+                pass: "You retrieve a sample of the creature; gain 2 Clues.",
+                fail: "It throws you high into the air; gain a Back Injury Condition."
+              }
+            }            
+          ],
+
+          Antarctica: [
+            {
+              cardId: 1,
+              intro: "Flying over the area, you see evidence of an ancient stone city. You land your plane as close as you can and climb across the ice to reach the strange architecture; test Strength).",
+              pass: {
+                type: "pass-fail",
+                intro: "The murals inside the city tell the story of the elder things. Retreat Doom Doom by 1. However, your studies take a toll on your mind; test Will",
+                fail: "you block everything you've learned from your mind; gain an Amnesia Condition."
+              },
+              fail: {
+                type: "pass-fail",
+                intro: "You fall through the ice into a stone chamber. Lose Health 1 Health and gain a Back Injury Condition. You search the dark chamber; test Observation-1.",
+                fail: "You find the husk of an elder thing for study; retreat Doom by 1."
+              }
+            }, {
+              cardId: 2,
+              intro: "You hear a faint sound echoing up from the caves that lead down in to the darkness. You listen carefully to discern the sound's origin; test Observation.",
+              pass: {
+                type: "pass-fail",
+                intro: "You identify the sound of shoggoths. You escape, but can barely keep yourself conscious waiting for a rescue; test Will.",
+                pass: "You spot something on the cave floor; gain 1 Artifact.",
+                fail: "You pass out and hear the sounds of shoggoths everywhere you go; gain a Hallucinations Condition."
+              },
+              fail: {
+                intro: '"Tekeli-li! Tekeli-li!" You recognize it too late. The shoggoths overwhelm you; test Strength-1.',
+                pass: "You overcome the threat; gain 2 Clues.",
+                fail: "You escape by jumping off a ledge; gain a Leg Injury Condition."
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+
   General: {
     byExpansion: [
       {
@@ -394,6 +467,20 @@ function addEncounterStep(encounterElement, encounter, nextStepFunction) {
   }
 }
 
+function addExpeditionEncounterButton() {
+  const card = drawCard("Expedition");
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("encounter");
+  button.classList.add("expedition");
+  linkedCard[button] = card;
+  button.onclick = startExpeditionEncounter;
+  button.textContent = `Start ${card.space} Expedition Encounter`;
+
+  document.getElementById("expedition-buttons").appendChild(button);
+}
+
 function addIntroElement(encounterElement, intro) {
   const introElement = document.createElement("p");
   introElement.textContent = intro;
@@ -425,6 +512,21 @@ function addActionButtons(encounterElement, encounter, nextStepFunction) {
   encounterElement.appendChild(buttonContainer);
 }
 
+function buildExpeditionDeck() {
+  const deck = new Array();
+  for (const space in deckData.Expedition.byExpansion[0].bySpace) {
+    const cards = deckData.Expedition.byExpansion[0].bySpace[space];
+    cards.forEach(card => {
+      card.expansionId = 0;
+      card.space = space;
+      deck.push(card)
+    });
+  };
+
+  shuffleArray(deck);
+  return deck;
+}
+
 function continueComplexEncounter(buttonContainer, encounter, action, key) {
   addEncounterAction(buttonContainer, action);
   addEncounterStep(buttonContainer.parentElement, encounter[key], endSimpleEncounter);
@@ -433,6 +535,10 @@ function continueComplexEncounter(buttonContainer, encounter, action, key) {
 
 function disableEncounterButtons() {
   updateEncounterButtons(true);
+}
+
+function drawCard(deckName) {
+  return deck[deckName].shift();
 }
 
 function enableEncounterButtons() {
@@ -451,6 +557,13 @@ function endSimpleEncounter(buttonContainer, encounter, action, key) {
 function readAlound(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(utterance);
+}
+
+function shuffleArray(arr) {
+	for (let i = arr.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[arr[i], arr[j]] = [arr[j], arr[i]];
+	}
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -481,6 +594,24 @@ function startEncounter(headerText, nextStepFunction, encounter) {
   document.getElementById("encounterList").prepend(encounterElement);
 }
 
+function startExpeditionEncounter(event) {
+  const button = event.target;
+  const card = linkedCard[button];
+
+  button.remove();
+  delete linkedCard[button];
+
+  deck["Expedition"].push(card);
+
+  addExpeditionEncounterButton();
+
+  startEncounter(
+    `Expedition - ${card.space}: ${card.cardId}`,
+    continueComplexEncounter,
+    card
+  );
+}
+
 function startGeneralEncounter(spaceType) {
   const cards = deckData.General.byExpansion[0].cards;
   const card = cards[Math.floor(Math.random() * cards.length)];
@@ -497,7 +628,7 @@ function startOtherWorldEncounter() {
   const card = cards[Math.floor(Math.random() * cards.length)];
 
   startEncounter(
-    `Other World ${card.cardId}: ${card.location}`,
+    `Other World ${card.cardId}: ${card.space}`,
     continueComplexEncounter,
     card
   );
@@ -508,3 +639,8 @@ function updateEncounterButtons(disabled) {
     button.disabled = disabled;
   });
 }
+
+const deck = [];
+const linkedCard = {};
+deck["Expedition"] = buildExpeditionDeck();
+addExpeditionEncounterButton();
