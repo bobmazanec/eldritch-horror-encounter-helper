@@ -626,7 +626,7 @@ function addActionButtons(encounterElement, encounter, nextStepFunction) {
       text2 = "Don't do it";
       break;
 
-      case "pass-fail":
+    default:
       text1 = "Pass";
       text2 = "Fail";
       break;
