@@ -582,8 +582,13 @@ const deckData = {
                   Wilderness: {
                     intro: "Talking to one of the locals, you realize that his village and its surrounding farms are inhabited by worshipers of Yog-Sothoth. A Cultist Monster ambushes you!",
                     choices: {
-                      "Defeat the Cultist Monster": "You manage to reach safety; gain this Clue.",
-                      "Don't": ""
+                      "Resolved combat encounter": {
+                        intro: "",
+                        choices: {
+                          "Defeated it": "You manage to reach safety; gain this Clue.",
+                          "Did not defeat it": ""
+                        }
+                      }
                     }
                   }
                 }
@@ -653,7 +658,7 @@ function addEncounterStep(encounterElement, encounterStep, priorButtonContainer 
     addEncounterAction(priorButtonContainer, action);
   }
 
-  addEncounterStepText(encounterElement, encounterStep.intro || encounterStep);
+  addEncounterStepText(encounterElement, encounterStep);
 
   if (encounterStep.choices) {
     addChoiceButtons(encounterElement, encounterStep);
@@ -676,7 +681,8 @@ function addExpeditionEncounterButton() {
   document.getElementById("expedition-buttons").appendChild(button);
 }
 
-function addEncounterStepText(encounterElement, text) {
+function addEncounterStepText(encounterElement, encounterStep) {
+  const text = typeof(encounterStep.intro) == "string" ? encounterStep.intro : encounterStep;
   const textElement = document.createElement("p");
   textElement.textContent = text;
   encounterElement.appendChild(textElement);
