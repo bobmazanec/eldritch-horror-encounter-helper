@@ -7,7 +7,7 @@ const deckData = {
   America: {
     byExpansion: [
       {
-        expansionId: Base,
+        expansionId: Core,
         cards: [
           {
             cardId: 1,
@@ -114,7 +114,7 @@ const deckData = {
   "Asia/Australia": {
     byExpansion: [
       {
-        expansionId: Base,
+        expansionId: Core,
         cards: [
           {
             cardId: 1,
@@ -184,7 +184,7 @@ const deckData = {
   Europe: {
     byExpansion: [
       {
-        expansionId: Base,
+        expansionId: Core,
         cards: [
           {
             cardId: 1,
@@ -245,7 +245,7 @@ const deckData = {
   Expedition: {
     byExpansion: [
       {
-        expansionId: Base,
+        expansionId: Core,
         bySpace: {
           "The Amazon": [
             {
@@ -338,7 +338,7 @@ const deckData = {
   General: {
     byExpansion: [
       {
-        expansionId: Base,
+        expansionId: Core,
         cards: [
           {
             cardId: 1,
@@ -404,7 +404,7 @@ const deckData = {
   OtherWorld: {
     byExpansion: [
       {
-        expansionId: Base,
+        expansionId: Core,
         cards: [
           {
             cardId: 7,
@@ -493,7 +493,7 @@ const deckData = {
       Azathoth: {
         byExpansion: [
           {
-            expansionId: Base,
+            expansionId: Core,
             cards: [
               {
                 cardId: 1,
@@ -558,7 +558,7 @@ const deckData = {
       "Yog-Sothoth": {
         byExpansion: [
           {
-            expansionId: Base,
+            expansionId: Core,
             cards: [
               {
                 cardId: 1,
