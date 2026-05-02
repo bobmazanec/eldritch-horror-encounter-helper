@@ -197,93 +197,90 @@ const deckData = {
   ],
 
   Expedition: {
-    byExpansion: [
+    "The Amazon": [
       {
         expansionId: Core,
-        bySpace: {
-          "The Amazon": [
-            {
-              cardId: 1,
-              intro: "You see the vine-covered temple ahead of you, but you're going to have to fight your way through a thick tangle of venomous snakes between yourself and the entrance; test Strength.",
-              choices: {
-                Pass: {
-                  intro: "You enter the Temple of Yig. Retreat Doom by 1. Strange runes are inscribed on the wall in a serpentine design. You must interpret their meaning to avoid their hypnotic effect; test Lore.",
-                  choices: {
-                    Pass: "",
-                    Fail: "The runes' hypnotic effect takes hold; gain a Paranoia Condition."
-                  }
-                },
-                Fail: {
-                  intro: "You've been bit! Lose Health 1 Health and gain an Internal Injury Condition. Something about the snakes is odd. You try to identify what makes them unique; test Observation-1.",
-                  choices: {
-                    Pass: "You notice a crescent on the snake's head; retreat Doom by 1.",
-                    Fail: ""
-                  }
-                }
-              }
-            }, {
-              cardId: 2,
-              intro: "As you slip into a deep trance and touch the odd stone, the jungle around you subtle changes in appearance. You look for hints regarding this new jungle terrain; test Observation.",
-              choices: {
-                Pass: {
-                  intro: "You are in some other dimension. You use your arcane skills to return home; test Lore.",
-                  choices: {
-                    Pass: "You wake up back in the jungle next to a strange item; gain 1 Artifact.",
-                    Fail: "The journey back unsettles you; lose 2 Sanity."
-                  }
-                },
-                Fail: {
-                  intro: "A towering, larva-like thing grabs you with its tendrils. You struggle fiercely to break free; test Strength-1.",
-                  choices: {
-                    Pass: "You retrieve a sample of the creature; gain 2 Clues.",
-                    Fail: "It throws you high into the air; gain a Back Injury Condition."
-                  }
-                }
-              }
-            }            
-          ],
-
-          Antarctica: [
-            {
-              cardId: 1,
-              intro: "Flying over the area, you see evidence of an ancient stone city. You land your plane as close as you can and climb across the ice to reach the strange architecture; test Strength).",
-              choices: {
-                Pass: {
-                  intro: "The murals inside the city tell the story of the elder things. Retreat Doom Doom by 1. However, your studies take a toll on your mind; test Will",
-                  choices: {
-                    Pass: "",
-                    Fail: "You block everything you've learned from your mind; gain an Amnesia Condition."
-                  }
-                },
-                Fail: {
-                  intro: "You fall through the ice into a stone chamber. Lose Health 1 Health and gain a Back Injury Condition. You search the dark chamber; test Observation-1.",
-                  choices: {
-                    Pass: "",
-                    Fail: "You find the husk of an elder thing for study; retreat Doom by 1."
-                  }
-                }
-              }
-            }, {
-              cardId: 2,
-              intro: "You hear a faint sound echoing up from the caves that lead down in to the darkness. You listen carefully to discern the sound's origin; test Observation.",
-              choices: {
-                Pass: {
-                  intro: "You identify the sound of shoggoths. You escape, but can barely keep yourself conscious waiting for a rescue; test Will.",
-                  choices: {
-                    Pass: "You spot something on the cave floor; gain 1 Artifact.",
-                    Fail: "You pass out and hear the sounds of shoggoths everywhere you go; gain a Hallucinations Condition."
-                  }
-                },
-                Fail: {
-                  intro: '"Tekeli-li! Tekeli-li!" You recognize it too late. The shoggoths overwhelm you; test Strength-1.',
-                  choices: {
-                    Pass: "You overcome the threat; gain 2 Clues.",
-                    Fail: "You escape by jumping off a ledge; gain a Leg Injury Condition."
-                  }
-                }
-              }
+        cardId: 1,
+        intro: "You see the vine-covered temple ahead of you, but you're going to have to fight your way through a thick tangle of venomous snakes between yourself and the entrance; test Strength.",
+        choices: {
+          Pass: {
+            intro: "You enter the Temple of Yig. Retreat Doom by 1. Strange runes are inscribed on the wall in a serpentine design. You must interpret their meaning to avoid their hypnotic effect; test Lore.",
+            choices: {
+              Pass: "",
+              Fail: "The runes' hypnotic effect takes hold; gain a Paranoia Condition."
             }
-          ]
+          },
+          Fail: {
+            intro: "You've been bit! Lose Health 1 Health and gain an Internal Injury Condition. Something about the snakes is odd. You try to identify what makes them unique; test Observation-1.",
+            choices: {
+              Pass: "You notice a crescent on the snake's head; retreat Doom by 1.",
+              Fail: ""
+            }
+          }
+        }
+      }, {
+        cardId: 2,
+        expansionId: Core,
+        intro: "As you slip into a deep trance and touch the odd stone, the jungle around you subtle changes in appearance. You look for hints regarding this new jungle terrain; test Observation.",
+        choices: {
+          Pass: {
+            intro: "You are in some other dimension. You use your arcane skills to return home; test Lore.",
+            choices: {
+              Pass: "You wake up back in the jungle next to a strange item; gain 1 Artifact.",
+              Fail: "The journey back unsettles you; lose 2 Sanity."
+            }
+          },
+          Fail: {
+            intro: "A towering, larva-like thing grabs you with its tendrils. You struggle fiercely to break free; test Strength-1.",
+            choices: {
+              Pass: "You retrieve a sample of the creature; gain 2 Clues.",
+              Fail: "It throws you high into the air; gain a Back Injury Condition."
+            }
+          }
+        }
+      }            
+    ],
+
+    Antarctica: [
+      {
+        cardId: 1,
+        expansionId: Core,
+        intro: "Flying over the area, you see evidence of an ancient stone city. You land your plane as close as you can and climb across the ice to reach the strange architecture; test Strength).",
+        choices: {
+          Pass: {
+            intro: "The murals inside the city tell the story of the elder things. Retreat Doom Doom by 1. However, your studies take a toll on your mind; test Will",
+            choices: {
+              Pass: "",
+              Fail: "You block everything you've learned from your mind; gain an Amnesia Condition."
+            }
+          },
+          Fail: {
+            intro: "You fall through the ice into a stone chamber. Lose Health 1 Health and gain a Back Injury Condition. You search the dark chamber; test Observation-1.",
+            choices: {
+              Pass: "You find the husk of an elder thing for study; retreat Doom by 1.",
+              Fail: ""
+            }
+          }
+        }
+      }, {
+        cardId: 2,
+        expansionId: Core,
+        intro: "You hear a faint sound echoing up from the caves that lead down in to the darkness. You listen carefully to discern the sound's origin; test Observation.",
+        choices: {
+          Pass: {
+            intro: "You identify the sound of shoggoths. You escape, but can barely keep yourself conscious waiting for a rescue; test Will.",
+            choices: {
+              Pass: "You spot something on the cave floor; gain 1 Artifact.",
+              Fail: "You pass out and hear the sounds of shoggoths everywhere you go; gain a Hallucinations Condition."
+            }
+          },
+          Fail: {
+            intro: '"Tekeli-li! Tekeli-li!" You recognize it too late. The shoggoths overwhelm you; test Strength-1.',
+            choices: {
+              Pass: "You overcome the threat; gain 2 Clues.",
+              Fail: "You escape by jumping off a ledge; gain a Leg Injury Condition."
+            }
+          }
         }
       }
     ]
@@ -790,10 +787,9 @@ function addSpecialEncounterButtons(deckNames) {
 
 function buildExpeditionDeck() {
   const deck = new Array();
-  for (const space in deckData.Expedition.byExpansion[0].bySpace) {
-    const cards = deckData.Expedition.byExpansion[0].bySpace[space];
+  for (const space in deckData.Expedition) {
+    const cards = deckData.Expedition[space];
     cards.forEach(card => {
-      card.expansionId = 0;
       card.space = space;
       deck.push(card)
     });
