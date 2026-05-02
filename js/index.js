@@ -70,9 +70,7 @@ const deckData = {
                 }
               },
 
-              "Buenos Aires": {
-                intro: "A student has been studying the university's copy of the Necronomicon and is eager to share what he's learned in exchange for hearing what you know. You may spend 1 Clue to share what you know and gain 1 Ritual Spell."
-              },
+              "Buenos Aires": "A student has been studying the university's copy of the Necronomicon and is eager to share what he's learned in exchange for hearing what you know. You may spend 1 Clue to share what you know and gain 1 Ritual Spell.",
 
               "San Francisco": {
                 intro: "You speak to a military prisoner on Alcatraz Island. He tells you his story of deserting after encountering a horrific creature; test Will.",
@@ -85,13 +83,9 @@ const deckData = {
           }, {
             cardId: 7,
             byCity: {
-              Arkham: {
-                intro: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
-              },
+              Arkham: "The administrators of Arkham's Historical Society take great pains to show you their extensive collection of historical documents. You may become Delayed to gain 2 Spells.",
 
-              "Buenos Aires": {
-                intro: "At the hospital you find a bald, old man with leathery skin and a flat face. He speaks very slowly, but his story is fascinating. You may become Delayed to gain 2 Spells as he recounts all the details of his time worshiping the Father of Serpents."
-              },
+              "Buenos Aires": "At the hospital you find a bald, old man with leathery skin and a flat face. He speaks very slowly, but his story is fascinating. You may become Delayed to gain 2 Spells as he recounts all the details of his time worshiping the Father of Serpents.",
 
               "San Francisco": {
                 intro: "The Examiner hires you to spend a night in the Winchester Mystery House. They provide you with experts in detecting the supernatural. Improve Observation. The odd architecture and the building's history threaten to unhinge your mind as the evening passes; test Will-1.",
@@ -216,9 +210,7 @@ const deckData = {
           }, {
             cardId: 2,
             byCity: {
-              Istanbul: {
-                intro: "People from every walk of life can be found enjoying the cleansing steam of the Turkish baths. Inside, you'll eventually find an expert in any give field. You may become Delayed to improve 1 skill of your choice."
-              },
+              Istanbul: "People from every walk of life can be found enjoying the cleansing steam of the Turkish baths. Inside, you'll eventually find an expert in any give field. You may become Delayed to improve 1 skill of your choice.",
 
               London: {
                 intro: "Inside the Herefordshire Asylum, a patient asks you if you've seen the Yellow Sign. You listen to his story of the King in Yellow; test Observation.",
@@ -359,9 +351,7 @@ const deckData = {
                 }
               },
 
-              Wilderness: {
-                intro: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose Sanity 1 Sanity."
-              }
+              Wilderness: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose Sanity 1 Sanity."
             }
           }, {
             cardId: 8,
@@ -418,9 +408,7 @@ const deckData = {
                   Fail: "You become lost in a forest on the moon; lose Health 2 Health and become Delayed."
                 }
               },
-              Fail: {
-                intro: "The gods of dreams exile you back to the waking world and punish you for your overreaching ambition. Your dream and the waking world become indistinguishable. Become Delayed and gain a Hallucinations Condition."
-              }
+              Fail: "The gods of dreams exile you back to the waking world and punish you for your overreaching ambition. Your dream and the waking world become indistinguishable. Become Delayed and gain a Hallucinations Condition."
             }
           }, {
             cardId: 10,
@@ -475,7 +463,10 @@ const deckData = {
                 }
               },
               Fail: {
-                intro: "You are thrown onto a slave ship. Lose Sanity 2 Sanity. A sailor offers to free you in exchange for secrets. You may spend Clue 2 Clues to close this Gate.",
+                intro: [
+                  "You are thrown onto a slave ship. Lose Sanity 2 Sanity.",
+                  "A sailor offers to free you in exchange for secrets. You may spend Clue 2 Clues to close this Gate."
+                ],
                 choices: {
                   "Close this Gate": "",
                   "Don't": "You escape but cannot recall how; gain an Amnesia Condition."
@@ -583,7 +574,6 @@ const deckData = {
                     intro: "Talking to one of the locals, you realize that his village and its surrounding farms are inhabited by worshipers of Yog-Sothoth. A Cultist Monster ambushes you!",
                     choices: {
                       "Resolved combat encounter": {
-                        intro: "",
                         choices: {
                           "Defeated it": "You manage to reach safety; gain this Clue.",
                           "Did not defeat it": ""
@@ -646,14 +636,13 @@ const deckData = {
                       "Don't": "Lose 3 Sanity."
                     }
                   },
-                  Fail: {
-                    intro: "Lose Sanity 3 Sanity."
-                  }
+                  Fail: "Lose Sanity 3 Sanity."
                 }
               },
-              Fail: {
-                intro: "In one horrifying flash, your mind is flooded with knowledge of all places and all times as your molecules are torn apart. You are devoured."
-              }
+              Fail: [
+                "In one horrifying flash, your mind is flooded with knowledge of all places and all times as your molecules are torn apart.",
+                "You are devoured."
+              ]
             }
           }, {
             cardId: 2,
@@ -667,7 +656,10 @@ const deckData = {
                   "Your test result is less than 3": "Yog-Sothoth threatens to trap you on the doomed planet Yaddith; lose Sanity 3 Sanity."
                 }
               },
-              Fail: "'Umr-At-Tawil holds a large metallic sphere that radiates powerful pulses of energy. The rhythmic waves shake you to your core, tearing your body to pieces. You are devoured."
+              Fail: [
+                "'Umr-At-Tawil holds a large metallic sphere that radiates powerful pulses of energy. The rhythmic waves shake you to your core, tearing your body to pieces.",
+                "You are devoured."
+              ]
             }
           }, {
             cardId: 7,
@@ -681,9 +673,10 @@ const deckData = {
                   Fail: "You drift further through worlds beyond; gain a Lost in Time and Space Condition."
                 }
               },
-              Fail: {
-                intro: "When your vision clears, you find yourself on a frozen plateau. No starts look down from the night sky. For a tragically brief time, you are the only living thing in the universe. You are devoured."
-              }
+              Fail: [
+                "When your vision clears, you find yourself on a frozen plateau. No starts look down from the night sky. For a tragically brief time, you are the only living thing in the universe.",
+                "You are devoured."
+              ]
             }
           }, {
             cardId: 8,
@@ -697,9 +690,10 @@ const deckData = {
                   "Your test result is less than 3": "You're hopelessly lost; gain a Lost in Time and Space Condition."
                 }
               },
-              Fail: {
-                intro: "He introduces himself as the wizard Zkauba, and he uses his arcane powers to steal your experiences. Discard all of your Clue Clues, Spells, and Improvement tokens."
-              }
+              Fail: [
+                "He introduces himself as the wizard Zkauba, and he uses his arcane powers to steal your experiences.",
+                "Discard all of your Clues, Spells, and Improvement tokens."
+              ]
             }
           }
         ],
@@ -737,9 +731,7 @@ const deckData = {
                   Fail: {
                     intro: "The creature escapes and attacks you; a Monster ambushes you!",
                     choices: {
-                       "Resolved combat encounter": {
-                        intro: ""
-                       }
+                       "Resolved combat encounter": ""
                     }
                   }
                 }
@@ -792,6 +784,21 @@ function addEncounterStep(encounterElement, encounterStep, priorButtonContainer 
   }
 }
 
+function addEncounterStepText(encounterElement, encounterStep) {
+  let textItems;
+  if (Array.isArray(encounterStep) || typeof(encounterStep) == "string") {
+    textItems = encounterStep;
+  } else {
+    textItems = encounterStep.intro;
+  }
+  [textItems].flat().forEach(textItem => {
+    const textElement = document.createElement("p");
+    textElement.textContent = textItem;
+    encounterElement.appendChild(textElement);
+    readAlound(textItem);
+  });
+}
+
 function addExpeditionEncounterButton() {
   const card = drawCard("Expedition");
 
@@ -804,14 +811,6 @@ function addExpeditionEncounterButton() {
   button.textContent = `Start ${card.space} Expedition Encounter`;
 
   document.getElementById("expedition-buttons").appendChild(button);
-}
-
-function addEncounterStepText(encounterElement, encounterStep) {
-  const text = typeof(encounterStep.intro) == "string" ? encounterStep.intro : encounterStep;
-  const textElement = document.createElement("p");
-  textElement.textContent = text;
-  encounterElement.appendChild(textElement);
-  readAlound(text);
 }
 
 function addSpecialEncounterButtons(deckNames) {
