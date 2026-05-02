@@ -2,6 +2,8 @@
 
 const Core = 0;
 const ForsakenLore = 1;
+const MountainsOfMadness = 2;
+const TheDreamlands = 6;
 
 const deckData = {
   America: [
@@ -87,6 +89,58 @@ const deckData = {
           Fail: "Lose Sanity 2 Sanity."
         }
       }
+    }, {
+      cardId: 9,
+      expansionId: ForsakenLore,
+      Arkham: {
+        intro: "Ma Mathison shows you a journal left behind by one of the lodgers at her boarding house.[3] The text makes several oblique references to the occult, but you think you can decipher its meaning; test Lore-1.",
+        choices: {
+          Pass: "You determine the lodger's true intent; gain 1 Incantation Spell and spawn 1 Clue.",
+          Fail: ""
+        }
+      },
+
+      "Buenos Aires": {
+        intro: "The subway car stops, and you hear the sound of hissing voices in the dark; test Observation-1.",
+        choices: {
+          Pass: "You discern the phrases being whispered; gain 1 Ritual Spell.",
+          Fail: "The voices haunt you even after the lights are restored; gain a Hallucinations Condition."
+        }
+      },
+
+      "San Francisco": {
+        intro: "A private investigator prepares you to help him on a case. Improve Observation. He's looking for a strangely shaped skull that's gone missing after being recovered from a file. Your investigation reveals Atlantean symbols including the one for \"resurrection\"; test Lore-1).",
+        choices: {
+          Pass: "",
+          Fail: "you do not notice the symbol for \"curse;\" gain a Cursed Condition."
+        }
+      }
+    }, {
+      cardId: 19,
+      expansionId: MountainsOfMadness,
+      Arkham: {
+        intro: "A patron at Ma's Diner left behind an odd book. Gain 1 Old Journal Unique Asset. A series of strange sigils are written on its pages; test Lore-1.",
+        choices: {
+          Pass: "You decode the symbols; gain 1 Incantation Spell.",
+          Fail: "You fear the owner will return to reclaim the book; gain 1 Pursuit Condition."
+        }
+      },
+
+      "Buenos Aires": {
+        intro: "You are horrified to find several blasphemous sculptures on display at the university; test Will-1.",
+        choices: {
+          Pass: "The sculptor approaches you; gain the Henry Wilcox Unique Asset.",
+          Fail: "The vile images infect your dreams; lose 1 Sanity and gain 1 Madness Condition."
+        }
+      },
+
+      "San Francisco": {
+        intro: "The mechanical face inside a fortune-telling machine at Playland at the Beach seems to scare off most patrons; test Will.",
+        choices: {
+          Pass: "You steel yourself and seek your fortune; gain 1 Task Unique Asset.",
+          Fail: "The destiny you fled continues to seek you out; lose 1 Sanity and gain 1 Pursuit Condition."
+        }
+      }
     }
   ],
 
@@ -143,6 +197,58 @@ const deckData = {
           "Don't": ""
         }
       }
+    }, {
+      cardId: 10,
+      expansionId: ForsakenLore,
+      Shanghai: {
+        intro: "The Green Gang has hidden 200-years worth of stolen treasures in a vault. Despite the risk, you try to break in; test Observation.",
+        choices: {
+          Pass: "You discover several magical texts; improve Lore.",
+          Fail: "You are caught and punished without mercy; lose Health 1 Health and gain an Internal Injury Condition."
+        }
+      },
+
+      Sydney: {
+        intro: "In a game of cards, the stakes are raised and you bet a prized possession. You watch the other players carefully for any tells; test Observation-1.",
+        choices: {
+          Pass: "You call a bluff; gain 1 random Weapon Asset from the deck.",
+          Fail: "Another player outwits you and claims your prize; discard 1 Item or Trinket possession."
+        }
+      },
+
+      Tokyo: {
+        intro: "Your hotel room is haunted by a yūrei. You are terrified as the white-clad woman howls and passes through you; test Will.",
+        choices: {
+          Pass: "",
+          Fail: "Her lingering presence is a blight on your soul; lose Sanity 1 Sanity and gain a Cursed Condition."
+        }
+      }
+    }, {
+      cardId: 20,
+      expansionId: MountainsOfMadness,
+      Shanghai: {
+        intro: "You awake in the middle of the night to hungry ghosts trying to devour your soul. Test Will).",
+        choices: {
+          Pass: "They stop and beg you to perform a service to set them free; gain 1 Task Unique Asset.",
+          Fail: "You grow more like them; lose 1 Sanity and gain a Hunger Condition."
+        }
+      },
+
+      Sydney: {
+        intro: "A small demon known as a yara-ma-yha-who tries to eat you. You may spend 1 Focus to stay calm and not run away.",
+        choices: {
+          "Stay calm and not run away": "the beast swallows you whole, and when it spits you out later, your skin has turned red and you are stronger; improve Strength.",
+          "Don't": ""
+        }
+      },
+
+      Tokyo: {
+        intro: "An American is using mathematics to travel between dimensions. As you try to find him, a dark figure offers you help. Test Observation-2; you may gain a Dark Pact Condition to roll 3 additional dice.",
+        choices: {
+          Pass: "Gain the Dr. Hiram Upham Unique Asset.",
+          Fail: "The search leaves you exhausted; lose 1 Sanity."
+        }
+      }
     }
   ],
 
@@ -191,6 +297,62 @@ const deckData = {
         choices: {
           Pass: "",
           Fail: "Lose Health 1 Health and 1 Sanity as they continue their pursuit of some ancient grudge."
+        }
+      }
+    }, {
+      cardId: 12,
+      expansionId: ForsakenLore,
+      Istanbul: {
+        intro: "You defend a young scribe being attacked by an angry mob. Test Strength.",
+        choices: {
+          Pass: "The man offers to introduce you to many important politicians; improve Influence.",
+          Fail: "The mob beats you quite badly; lose 1 Health and gain an Internal Injury Condition."
+        }
+      },
+
+      London: {
+        intro: "You interrupt a group of cultists about to sacrifice a large muscular man. A Cultist Monster ambushes you!",
+        choices: {
+          "Resolved combat encounter": {
+            choices: {
+              "Defeated it": "The man you rescued introduces himself as \"Bulldog\" Drummond and tells you of his adventures; spawn 1 Clue.",
+              "Did not defeat it": ""
+            }
+          }
+        }
+      },
+
+      Rome: {
+        intro: "You discover the ancient recipe to create Mithridate, a powerful concoction to protect you from harm. Interpreting it as best you can, you assemble the ingredients. Test Lore-1.",
+        choices: {
+          Pass: "The Mithridate works; gain a Blessed Condition.",
+          Fail: "The foul brew makes you sick; gain a Poisoned Condition."
+        }
+      }
+    }, {
+      cardId: 20,
+      expansionId: MountainsOfMadness,
+      Istanbul: {
+        intro: "A dying man admits that he was loyal to the Sultanate and hid his wealth in Ottoman lira. He explains how to find the money, but dies before you can take notes. You may spend 1 Focus to remember what he said.",
+        choices: {
+          "Remember what he said": "you discover the hidden funds; improve Influence.",
+          "Don't": ""
+        }
+      },
+
+      London: {
+        intro: "H. G. Wells shows you items from the future, after the Ancient Ones have destroyed humanity. You cannot bear to look at them. Test Will.",
+        choices: {
+          Pass: "You see a way to avoid that future; gain 1 Task Unique Asset.",
+          Fail: "Lose 1 Sanity and gain 1 Madness Condition."
+        }
+      },
+
+      Rome: {
+        intro: "You ask an American priest to tell you the reason for his visit. Test Influence-1.",
+        choices: {
+          Pass: "He talks about the Starry Wisdom Church; gain the Father Merluzzo Unique Asset.",
+          Fail: "He leaves, and the room grows dark; gain a Cursed Condition."
         }
       }
     }
@@ -333,6 +495,58 @@ const deckData = {
           Fail: "Gain a Cursed Condition."
         }
       }
+    }, {
+      cardId: 15,
+      expansionId: ForsakenLore,
+      City: {
+        intro: "Grifters have chosen you to be their next mark. You plan on turning the tables with a few tricks of your own; test Observation-1.",
+        choices: {
+          Pass: "You end up with the money and an impressive reputation; improve Influence.",
+          Fail: "They swindle you; discard 1 Item possession and 1 Trinket possession."
+        }
+      },
+
+      Sea: {
+        intro: "During a flash of lightning in the night, you see an enormous creature silhouetted against the sky. The image chills you to the core; test Will.",
+        choices: {
+          Pass: "",
+          Fail: "Lose 1 Sanity and gain a Paranoia Condition."
+        }
+      },
+
+      Wilderness: {
+        intro: "You discover a shrine with a natural spring that you do not remember from your maps; test Lore-2.",
+        choices: {
+          Pass: "You recall an old story about a well of life; gain 1 Elixir Artifact.",
+          Fail: "You don't notice native wildlife making off with your gear as you search your maps; discard 1 Trinket possession."
+        }
+      }
+    }, {
+      cardId: 19,
+      expansionId: MountainsOfMadness,
+      City: {
+        intro: "To find the city's legendary magic shop requires knowledge of ley lines; test Lore-1.",
+        choices: {
+          Pass: "The owner will sell you only a single curio; gain 1 random Magical Asset from the deck.",
+          Fail: "Your search seems to have led you through another world; move to a random space."
+        }
+      },
+
+      Sea: {
+        intro: "In the middle of the night, you're horrified to see the ghost of a sailor who died in your cabin; teset Will.",
+        choices: {
+          Pass: "The spirit shows you a loose board in the floor; gain 1 Old Journal Unique Asset.",
+          Fail: "You run from the room in terror; lose 2 Sanity."
+        }
+      },
+
+      Wilderness: {
+        intro: "The winds turn bitterly cold and a storm descends upon you before you can build a shelter. The ordeal pushes your endurance to the limit; test Strength.",
+        choices: {
+          Pass: "",
+          Fail: "You collapse, and the elements take their toll; lose 1 Health and gain a Hypothermia Condition."
+        }
+      }
     }
   ],
 
@@ -354,6 +568,7 @@ const deckData = {
       }
     }, {
       cardId: 10,
+      expansionId: Core,
       location: "Yuggoth",
       intro: "You discover a waxen mask and artificial hands. Your mind reels as you realize that the old man you had spoken to earlier was actually some terrible creature disguised as a human. Test Will.",
       choices: {
@@ -374,6 +589,7 @@ const deckData = {
       }
     }, {
       cardId: 15,
+      expansionId: Core,
       location: "Yuggoth",
       intro: "You discover a fetid creature with wings and webbed feet. The beast is strange, like something from your wildest dreams. You may spend 1 Clue to resolve the pass effect. If you do not spend the Clue, resolve the fail effect.",
       choices: {
@@ -393,7 +609,29 @@ const deckData = {
         }
       }
     }, {
+      cardId: 30,
+      expansionId: ForsakenLore,
+      location: "Plateau of Leng",
+      intro: "As you make your way through a web-filled valley, you see an enormous purple spider crawling toward your path. You hope to sneak past the creature; test Observation-1.",
+      choices: {
+        Pass: {
+          intro: "As you leave the spider behind, you discover the corpse of a previous victim. You find the unfortunate man's journal and translate the strange symbols on the pages; test Lore.",
+          choices: {
+            Pass: "You discover a safe path home; close this Gate.",
+            Fail: "You misinterpret the directions; gain a Lost in Time and Space Condition."
+          }
+        },
+        Fail: {
+          intro: "The spider sees you and attacks; test Strength-1!",
+          choices: {
+            Pass: "You rescue someone else trapped in its web; gain 1 random Ally Asset from the deck.",
+            Fail: "You're bitten by the spider; lose 1 Health and gain a Poisoned Condition."
+          }
+        }
+      }
+    }, {
       cardId: 55,
+      expansionId: TheDreamlands,
       location: "Plateau of Leng",
       intro: "Exploring a crude stone hut, you are discovered by a brutish man with horns and cloven hooves. He corners you, threatening to deliver you to the moon-beasts. You try to bribe the strange man to let you go; test Influence - 1.",
       choices: {
@@ -743,6 +981,18 @@ function addSpecialEncounterButtons(deckNames) {
   });
 }
 
+function buildDeck(cards) {
+  const deck = [];
+
+  cards.forEach(card => {
+    if (expansionsUsed.includes(card.expansionId)) {
+      deck.push(card);
+    }
+  });
+
+  return shuffleArray(deck);
+}
+
 function buildExpeditionDeck() {
   const deck = new Array();
   for (const space in deckData.Expedition) {
@@ -767,6 +1017,12 @@ function buildResearchDeck() {
   decks["Research"] = deck;
 }
 
+function buildSimpleDecks() {
+  ["America", "Asia/Australia", "Europe", "General", "OtherWorld"].forEach(deckName => {
+    decks[deckName] = buildDeck(deckData[deckName]);
+  });
+}
+
 function buildSpecialEncounterDecks() {
   const deckNames = [];
   const specialDecks = deckData.Special[ancientOne];
@@ -775,7 +1031,7 @@ function buildSpecialEncounterDecks() {
     // Initialize the deck
     const deck = [];
     specialDecks[deckName].forEach(card => {
-      if (expansions.includes(card.expansionId)) {
+      if (expansionsUsed.includes(card.expansionId)) {
         deck.push(card);
       }
     });
@@ -821,11 +1077,12 @@ function shuffleArray(arr) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[arr[i], arr[j]] = [arr[j], arr[i]];
 	}
+
+  return arr;
 }
 
 function startCityEncounter(deckName, cityName) {
-  const cards = deckData[deckName];
-  const card = cards[Math.floor(Math.random() * cards.length)];
+  const card = drawCard(deckName);
 
   startEncounter(
     `${deckName} ${card.cardId}: ${cityName}`,
@@ -866,8 +1123,7 @@ function startExpeditionEncounter(event) {
 }
 
 function startGeneralEncounter(spaceType) {
-  const cards = deckData.General;
-  const card = cards[Math.floor(Math.random() * cards.length)];
+  const card = drawCard("General");
 
   startEncounter(
     `General ${card.cardId}: ${spaceType}`,
@@ -876,8 +1132,7 @@ function startGeneralEncounter(spaceType) {
 }
 
 function startOtherWorldEncounter() {
-  const cards = deckData.OtherWorld;
-  const card = cards[Math.floor(Math.random() * cards.length)];
+  const card = drawCard("OtherWorld");
 
   startEncounter(
     `Other World ${card.cardId}: ${card.location}`,
@@ -910,10 +1165,11 @@ function updateEncounterButtons(disabled) {
 }
 
 const ancientOne = "Yog-Sothoth";
-const expansions = [Core, ForsakenLore]
+const expansionsUsed = [Core, ForsakenLore];
 const decks = [];
 const linkedCard = {};
 
+buildSimpleDecks();
 buildExpeditionDeck();
 buildResearchDeck();
 addSpecialEncounterButtons(buildSpecialEncounterDecks());
