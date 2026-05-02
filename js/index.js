@@ -286,69 +286,55 @@ const deckData = {
     ]
   },
 
-  General: {
-    byExpansion: [
-      {
-        expansionId: Core,
-        cards: [
-          {
-            cardId: 1,
-            bySpaceType: {
-              City: {
-                intro: "You make sure no one is watching before sneaking out of the shop with your stolen goods; test Observation.",
-                choices: {
-                  Pass: "Gain 1 Item Asset from the reserve or 1 random Item Asset from the deck.",
-                  Fail: "You are caught by the store owner and arrested; gain a Detained Condition."
-                }
-              },
+  General: [
+    {
+      cardId: 1,
+      expansionId: Core,
+      City: {
+        intro: "You make sure no one is watching before sneaking out of the shop with your stolen goods; test Observation.",
+        choices: {
+          Pass: "Gain 1 Item Asset from the reserve or 1 random Item Asset from the deck.",
+          Fail: "You are caught by the store owner and arrested; gain a Detained Condition."
+        }
+      },
 
-              Sea: {
-                intro: "You find the floating detritus of some sunken ship and search for any survivors or salvageable objects; test Observation.",
-                choices: {
-                  Pass: "You discover a floating trunk; gain 1 Artifact.",
-                  Fail: "You waste hours without result; become Delayed."
-                }
-              },
+      Sea: {
+        intro: "You find the floating detritus of some sunken ship and search for any survivors or salvageable objects; test Observation.",
+        choices: {
+          Pass: "You discover a floating trunk; gain 1 Artifact.",
+          Fail: "You waste hours without result; become Delayed."
+        }
+      },
 
-              Wilderness: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose Sanity 1 Sanity."
-            }
-          }, {
-            cardId: 8,
-            bySpaceType: {
-              City: {
-                intro: "A night of drinking and good cheer helps raise your spirits. Recover Sanity 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
-                choices: {
-                  Pass: "",
-                  Fail: "Discard 1 Item possession."
-                }
-              },
+      Wilderness: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose Sanity 1 Sanity."
+    }, {
+      cardId: 8,
+      expansionId: Core,
+      City: {
+        intro: "A night of drinking and good cheer helps raise your spirits. Recover Sanity 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
+        choices: {
+          Pass: "",
+          Fail: "Discard 1 Item possession."
+        }
+      },
 
-              Sea: {
-                intro: "You find a terrified stowaway aboard the ship. You attempt to comfort him and coax him into telling you his story; test Influence.",
-                choices: {
-                  Pass: "He tells you about horrifying beasts and unbelievable worlds; gain 1 Clue.",
-                  Fail: ""
-                }
-              },
+      Sea: {
+        intro: "You find a terrified stowaway aboard the ship. You attempt to comfort him and coax him into telling you his story; test Influence.",
+        choices: {
+          Pass: "He tells you about horrifying beasts and unbelievable worlds; gain 1 Clue.",
+          Fail: ""
+        }
+      },
 
-              Wilderness: {
-                intro: "Past where your campfire allows you to see, you hear voices chanting. You try to draw a protective sigil in the ground; test Lore.",
-                choices: {
-                  Pass: "The next morning you find evidence of cult activity that you can use to identify the cult members; gain 1 Clue or improve Influence.",
-                  Fail: "Gain a Cursed Condition."
-                }
-              }
-            }
-          }
-        ]
-      }, {
-        expansionId: ForsakenLore,
-        cards: [
-          // ...
-        ]
+      Wilderness: {
+        intro: "Past where your campfire allows you to see, you hear voices chanting. You try to draw a protective sigil in the ground; test Lore.",
+        choices: {
+          Pass: "The next morning you find evidence of cult activity that you can use to identify the cult members; gain 1 Clue or improve Influence.",
+          Fail: "Gain a Cursed Condition."
+        }
       }
-    ]
-  },
+    }
+  ],
 
   OtherWorld: {
     byExpansion: [
@@ -910,12 +896,12 @@ function startExpeditionEncounter(event) {
 }
 
 function startGeneralEncounter(spaceType) {
-  const cards = deckData.General.byExpansion[0].cards;
+  const cards = deckData.General;
   const card = cards[Math.floor(Math.random() * cards.length)];
 
   startEncounter(
     `General ${card.cardId}: ${spaceType}`,
-    card.bySpaceType[spaceType]
+    card[spaceType]
   );
 }
 
