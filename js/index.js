@@ -1147,17 +1147,10 @@ function buildSpecialEncounterDecks() {
   const specialDecks = deckData.Special[ancientOne];
 
   for (const deckName in specialDecks) {
-    // Initialize the deck
-    const deck = [];
-    specialDecks[deckName].forEach(card => {
-      if (expansionsUsed.includes(card.expansionId)) {
-        deck.push(card);
-      }
-    });
+    const deck = buildDeck(specialDecks[deckName])
 
     if (deck.length > 0) {
       deckNames.push(deckName);
-      shuffleArray(deck);
       decks[deckName] = deck;
     }
   }
