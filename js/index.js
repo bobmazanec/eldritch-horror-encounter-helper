@@ -777,10 +777,10 @@ const deckData = {
         },
 
         Sea: {
-          intro: "Your ship is destroyed by a glowing rock that fell from the sky! Gain this Clue. You struggle to reach wreckage that can keep you afloat; test Strength",
+          intro: "Your ship is destroyed by a glowing rock that fell from the sky! Gain this Clue. You struggle to reach wreckage that can keep you afloat; test Strength.",
           choices: {
             Pass: "",
-            Fail: "the undertow pulls you underwater; lose Health 2 Health."
+            Fail: "The undertow pulls you underwater; lose Health 2 Health."
           }
         },
 
@@ -789,6 +789,26 @@ const deckData = {
           choices: {
             Pass: "You see them use the stones as a power source; gain this Clue and 1 additional Clue.",
             Fail: "They shoot you with a weapon that leaves you unconscious for hours; gain an Amnesia Condition."
+          }
+        }
+      }, {
+        cardId: 13,
+        expansionId: ForsakenLore,
+        City: "Inside the restricted section of the library, the book you sought is suddenly engulfed in green flames. To claim the ancient text, you will have to bow to the will of Tulzscha. You may spend Sanity 2 Sanity and gain a Dark Pact Condition to gain this Clue and 1 Tome Artifact.",
+
+        Sea: {
+          intro: "You attempt to subdue a madman who is threatening the captain of the ship; test Strength-1.",
+          choices: {
+            Pass: "You detain the man and search his cabin; gain this Clue.",
+            Fail: "The lunatic disappears, and the ship is badly damaged by an explosion; move this Clue to an adjacent space and become Delayed."
+          }
+        },
+
+        Wilderness: {
+          intro: "You track a family under the control of the shan back to their farm; test Observation.",
+          choices: {
+            Pass: "You observe them and learn of their plans; gain this Clue.",
+            Fail: "They take notice, beating you and leaving in the wild; lose Health 1 Health and gain an Internal Injury Condition."
           }
         }
       }
@@ -849,6 +869,30 @@ const deckData = {
           choices: {
             Pass: "",
             Fail: "Their devices erode your sense of reason; lose 1 Sanity and gain a Paranoia Condition."
+          }
+        }
+      }, {
+        cardId: 23,
+        expansionId: ForsakenLore,
+        City: "You read an article about the disappearance of the legendary Dunwich Horror. The creature evidently left its home village for some other destination. If you are on a space containing a Gate, the legend reveals itself before you; the Dunwich Horror Epic Monster ambushes you!",
+
+        Sea: {
+          intro: "A small native population lives on this island. Their high priest tells you that the One From Beyond warned him of your arrival. A Cultist Monster ambushes you!",
+          choices: {
+            "Resolved combat encounter": {
+              choices: {
+                "Defeated it": "you study the carvings on his primitive shrine; gain this Clue.",
+                "Did not defeat it": ""
+              }
+            }
+          }
+        },
+
+        Wilderness: {
+          intro: "A flock of whip-poor-wills gathers around you, which is significant in some folktales; test Lore.",
+          choices: {
+            Pass: "You recall that these birds are an omen of death; gain this Clue.",
+            Fail: "You remember too late that they claim the souls of the dead, and you are buried under a landslide; lose Health 2 Health and gain an Internal Injury Condition."
           }
         }
       }
@@ -1089,13 +1133,7 @@ function buildExpeditionDeck() {
 }
 
 function buildResearchDeck() {
-  const deck = new Array();
-  deckData.Research[ancientOne].forEach(card => {
-    deck.push(card);
-  })
-
-  shuffleArray(deck);
-  decks["Research"] = deck;
+  decks["Research"] = buildDeck(deckData.Research[ancientOne])
 }
 
 function buildSimpleDecks() {
