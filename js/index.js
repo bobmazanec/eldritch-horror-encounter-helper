@@ -1464,17 +1464,6 @@ function startEncounter(headerText, encounter) {
   document.getElementById("encounterList").prepend(encounterElement);
 }
 
-function startMysticRuinsEncounter(event) {
-  const card = getLinkedCard(event);
-
-  addMysticRuinsEncounterButton();
-
-  startEncounter(
-    `Mystic Ruins - ${card.space}: ${card.cardId}`,
-    card
-  );
-}
-
 function startExpeditionEncounter(event) {
   const card = getLinkedCard(event);
 
@@ -1492,6 +1481,17 @@ function startGeneralEncounter(spaceType) {
   startEncounter(
     `General ${card.cardId}: ${spaceType}`,
     card[spaceType]
+  );
+}
+
+function startMysticRuinsEncounter(event) {
+  const card = getLinkedCard(event);
+
+  addMysticRuinsEncounterButton();
+
+  startEncounter(
+    `Mystic Ruins - ${card.space}: ${card.cardId}`,
+    card
   );
 }
 
