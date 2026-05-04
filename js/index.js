@@ -537,7 +537,7 @@ const deckData = {
           Fail: {
             intro: "The beast finds you first, attacking you with powerful claws; test Strength.",
             choices: {
-              Pass: "The creature speaks, revealing powerful arcane knowledge; retreat Doom Doom by 1.",
+              Pass: "The creature speaks, revealing powerful arcane knowledge; retreat Doom by 1.",
               Fail: "The beast claws at your legs; gain a Leg Injury Condition."
             }
           }
@@ -552,7 +552,7 @@ const deckData = {
         intro: "Flying over the area, you see evidence of an ancient stone city. You land your plane as close as you can and climb across the ice to reach the strange architecture; test Strength).",
         choices: {
           Pass: {
-            intro: "The murals inside the city tell the story of the elder things. Retreat Doom Doom by 1. However, your studies take a toll on your mind; test Will",
+            intro: "The murals inside the city tell the story of the elder things. Retreat Doom by 1. However, your studies take a toll on your mind; test Will",
             choices: {
               Pass: "",
               Fail: "You block everything you've learned from your mind; gain an Amnesia Condition."
@@ -594,7 +594,7 @@ const deckData = {
           Pass: {
             intro: "You realize that you've seen the future. In this vision, a being of unthinkable power escapes from this tower, unless you have the knowledge to prevent it; test Lore.",
             choices: {
-              Pass: "You restore the seals on the tower; retreat Doom Doom by 1.",
+              Pass: "You restore the seals on the tower; retreat Doom by 1.",
               Fail: "Nothing can be done; lose 1 Sanity and gain a Paranoia Condition."
             }
           },
