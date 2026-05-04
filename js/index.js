@@ -5,6 +5,7 @@ const ForsakenLore = 1;
 const MountainsOfMadness = 2;
 const StrangeRemnants = 3;
 const UnderThePyramids = 4;
+const CitiesInRuin = 5;
 const TheDreamlands = 6;
 const MasksOfNyarlathotep = 7;
 
@@ -250,6 +251,50 @@ const deckData = {
         choices: {
           Pass: "Gain the Dr. Hiram Upham Unique Asset.",
           Fail: "The search leaves you exhausted; lose 1 Sanity."
+        }
+      }
+    }
+  ],
+
+  Devestation: [
+    {
+      cardId: 1,
+      expansionId: CitiesInRuin,
+      intro: "A friend of yours says he knows where an important treasure was hidden before the tragedy. Resolve the pass effect to send your friend to retrieve the object; or resolve the fail effect to look for it yourself.",
+      choices: {
+        "Send your friend to retrieve the object": {
+          intro: "You impress on your friend how important this treasure would be to your cause; test Influence-1.",
+          choices: {
+            Pass: "Your friend returns successfully; gain 1 Artifact.",
+            Fail: "Your friend absconds with the treasure and is never seen again; discard 1 Ally Asset."
+          }
+        },
+        "To look for it yourself": {
+          intro: "You search the area; test Observation-1.",
+          choices: {
+            Pass: "You find that the treasure was destroyed, but its fragment can still be used to ward off evil; retreat Doom by 1.",
+            Fail: "You search the desolate wasteland fruitlessly; lose Sanity 1 Sanity and gain 1 Madness Condition."
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: CitiesInRuin,
+      intro: "A cult has established itself in the ruins of the city and is terrorizing those survivors who remain. Resolve the pass effect to convince the survivors to defend themselves; or resolve the fail effect to infiltrate the cult.",
+      choices: {
+        "Convince the survivors to defend themselves": {
+          intro: "You gather the survivors and make an impassioned speech; test Influence-1.",
+          choices: {
+            Pass: "Their resistance is a worldwide inspiration; retreat Doom by 1.",
+            Fail: "They all eventually succumb to the cult; lose Sanity 3 Sanity."
+          }
+        },
+        "Infiltrate the cult": {
+          intro: "The cult will not accept you unless you establish your arcane knowledge; test Lore-1.",
+          choices: {
+            Pass: "You sabotage the cultists and steal one of their prize possessions; gain 1 Artifact.",
+            Fail: "They attack you; lose Health 2 Health."
+          }
         }
       }
     }
@@ -1360,7 +1405,7 @@ function buildResearchDeck() {
 }
 
 function buildSimpleDecks() {
-  ["America", "Asia/Australia", "Europe", "General", "OtherWorld"].forEach(deckName => {
+  ["America", "Asia/Australia", "Devestation", "Europe", "General", "OtherWorld"].forEach(deckName => {
     decks[deckName] = buildDeck(deckData[deckName]);
   });
 }
@@ -1418,6 +1463,13 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
+function showOrHideDevestationEncounterButton() {
+  const div = document.getElementById("devestation");
+  if (decks.Devestation.length === 0) {
+    div.style.display = "none";
+  }
+}
+
 function shuffleArray(arr) {
 	for (let i = arr.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -1433,6 +1485,15 @@ function startCityEncounter(deckName, cityName) {
   startEncounter(
     `${deckName} ${card.cardId}: ${cityName}`,
     card[cityName]
+  );
+}
+
+function startDevestationEncounter(spaceType) {
+  const card = drawCard("Devestation");
+
+  startEncounter(
+    `Devestation: ${card.cardId}`,
+    card
   );
 }
 
@@ -1529,7 +1590,7 @@ function updateEncounterButtons(disabled) {
 }
 
 const ancientOne = "Yog-Sothoth";
-const expansionsUsed = [Core, ForsakenLore, MasksOfNyarlathotep, StrangeRemnants, TheDreamlands];
+const expansionsUsed = [Core, ForsakenLore, MasksOfNyarlathotep, StrangeRemnants, TheDreamlands, CitiesInRuin];
 const decks = {};
 const linkedCard = {};
 
@@ -1538,6 +1599,8 @@ buildDreamQuestDeck();
 buildExpeditionDeck();
 buildMysticRuinsDeck();
 buildResearchDeck();
+
+showOrHideDevestationEncounterButton();
 
 addDreamQuestEncounterButton();
 addExpeditionEncounterButton();
