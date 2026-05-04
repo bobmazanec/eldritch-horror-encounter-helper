@@ -1080,17 +1080,9 @@ function addEncounterStepText(encounterElement, encounterStep) {
 }
 
 function addExpeditionEncounterButton() {
-  const card = drawCard("Expedition");
-
-  const button = document.createElement("button");
-  button.type = "button";
-  button.classList.add("encounter");
-  button.classList.add("expedition");
-  linkedCard[button] = card;
-  button.onclick = startExpeditionEncounter;
-  button.textContent = `Start ${card.space} Expedition Encounter`;
-
-  document.getElementById("expedition-buttons").appendChild(button);
+  addTopCardButton("Expedition", "expedition-buttons", "expedition", startExpeditionEncounter, card => {
+    return `Start ${card.space} Expedition Encounter`;
+  })
 }
 
 function addSpecialEncounterButtons(deckNames) {
@@ -1106,6 +1098,20 @@ function addSpecialEncounterButtons(deckNames) {
   });
 }
 
+function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, buttonTextFunction) {
+  const card = drawCard(deckName);
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.classList.add("encounter");
+  button.classList.add(buttonClass);
+  linkedCard[button] = card;
+  button.onclick = onClick;
+  button.textContent = buttonTextFunction(card);
+
+  document.getElementById(buttonContainerId).appendChild(button);
+}
+
 function buildDeck(cards) {
   const deck = [];
 
@@ -1118,18 +1124,22 @@ function buildDeck(cards) {
   return shuffleArray(deck);
 }
 
-function buildExpeditionDeck() {
+function buildDeckBySpaces(cardsBySpaces) {
   const allCards = [];
-  for (const space in deckData.Expedition) {
-    const cards = deckData.Expedition[space];
+
+  for (const space in cardsBySpaces) {
+    const cards = cardsBySpaces[space];
     cards.forEach(card => {
       card.space = space;
       allCards.push(card)
     });
   };
 
-  // Filter by expansion & shuffle
-  decks["Expedition"] = buildDeck(allCards);
+  return buildDeck(allCards);
+}
+
+function buildExpeditionDeck() {
+  decks["Expedition"] = buildDeckBySpaces(deckData.Expedition);
 }
 
 function buildResearchDeck() {
