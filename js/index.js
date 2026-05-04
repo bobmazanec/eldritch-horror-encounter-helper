@@ -1198,12 +1198,14 @@ function addSpecialEncounterButtons(deckNames) {
 
 function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, buttonTextFunction) {
   const card = drawCard(deckName);
+  const cardIdent = `${card.space} ${card.cardId}`
 
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("encounter");
   button.classList.add(buttonClass);
-  linkedCard[button] = card;
+  button.dataset.cardIdent = cardIdent;
+  linkedCard[cardIdent] = card;
   button.onclick = onClick;
   button.textContent = buttonTextFunction(card);
 
@@ -1291,6 +1293,17 @@ function endEncounter(buttonContainer, encounter, action, key) {
   enableEncounterButtons();
 }
 
+function getLinkedCard(event) {
+  const button = event.target;
+  const cardIdent = button.dataset.cardIdent;
+  const card = linkedCard[cardIdent];
+
+  button.remove();
+  delete linkedCard[cardIdent];
+
+  return card;
+}
+
 function readAlound(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(utterance);
@@ -1332,26 +1345,18 @@ function startEncounter(headerText, encounter) {
 }
 
 function startMysticRuinsEncounter(event) {
-  const button = event.target;
-  const card = linkedCard[button];
-
-  button.remove();
-  delete linkedCard[button];
+  const card = getLinkedCard(event);
 
   addMysticRuinsEncounterButton();
 
   startEncounter(
-    `Expedition - ${card.space}: ${card.cardId}`,
+    `Mystic Ruins - ${card.space}: ${card.cardId}`,
     card
   );
 }
 
 function startExpeditionEncounter(event) {
-  const button = event.target;
-  const card = linkedCard[button];
-
-  button.remove();
-  delete linkedCard[button];
+  const card = getLinkedCard(event);
 
   addExpeditionEncounterButton();
 
