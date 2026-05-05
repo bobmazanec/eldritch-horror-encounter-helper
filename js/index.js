@@ -345,9 +345,18 @@ function useDreamlandsBoard() {
   );
 }
 
+function useMysticRuinsDeck() {
+  // True if either of the Ancient Ones or Preludes,
+  return (
+    ["Antediluvium", "Syzygy"].includes(ancientOne) ||
+    ["In Cosmic Alignment", "The Stars Align"].some(
+      prelude => preludesUsed.includes(prelude)
+    )
+  );
+}
+
 buildSimpleDecks();
 buildExpeditionDeck();
-buildMysticRuinsDeck();
 buildResearchDeck();
 
 if (useDreamlandsBoard()) {
@@ -357,8 +366,12 @@ if (useDreamlandsBoard()) {
   removeDreamlandsButtons();
 }
 
+if (useMysticRuinsDeck()) {
+  buildMysticRuinsDeck();
+  addMysticRuinsEncounterButton();
+}
+
 showOrHideDevestationEncounterButton();
 
 addExpeditionEncounterButton();
-addMysticRuinsEncounterButton();
 addSpecialEncounterButtons(buildSpecialEncounterDecks());

@@ -1,4 +1,60 @@
 deckData.Research = {
+  Antediluvium: [
+    {
+      expansionId: MasksOfNyarlathotep,
+      cardId: 1,
+      City: {
+        intro: "A statue in the city square has an unusual inscription; test Lore-1.",
+        choices: {
+          Pass: "You intuit the glyphs to be empowered by temporal magic; gain this Clue and 1 Spell.",
+          Fail: "Your curiosity alerts the Order of Rising Stars to the location of the glyphs; advance Doom by 1."
+        }
+      },
+
+      Sea: {
+        intro: "Unusual flotsam smashes into the side of the ship, and something small catches your eye. As you pull the unusual object aboard the ship, you know instantly that it was never meant for mortal hands and that by taking it you will set yourself along a dark path from which there is no return. You may gain a Dark Pact Condition to gain the Grotesque Statue Artifact.",
+        choices: {
+          "Gain the Grotesque Statue Artifact": "",
+          "Don't": ""
+        }
+      },
+
+      Wilderness: {
+        intro: "You notice that the soil has been disturbed in this area; test Observation.",
+        choices: {
+          Pass: "You discover that an ancient burial site has been desecrated; gain this Clue.",
+          Fail: "You twist your ankle in the dirt; lose 1 Health."
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: MasksOfNyarlathotep,
+      City: {
+        intro: "Three men eat together at a diner. You attempt to pick out which belongs to the Order; test Observation.",
+        choices: {
+          Pass: "You ambush him after his meal and grill him for information on the Order; gain this Clue.",
+          Fail: "You attack an innocent person; gain a Detained Condition."
+        }
+      },
+
+      Sea: {
+        intro: "The only way to activate the strange island shrine and uncover its nefarious purpose is with a sacrifice of blood. You may gain a Dark Pact Condition to gain this Clue and 1 additional Clue.",
+        choices: {
+          "Gain this Clue Clue and 1 additional Clue": "",
+          "Don't": ""
+        }
+      },
+
+      Wilderness: {
+        intro: "Suddenly, you cannot move or speak, and you are surrounded by chanting Order members; test Will-1.",
+        choices: {
+          Pass: "You manage to escape with their strange words etched into your mind; gain this Clue and 1 Spell.",
+          Fail: "Your vision fades to black; place 2 Sanity on the Ancient One sheet."
+        }
+      }
+    }
+  ],
+
   Azathoth: [
     {
       expansionId: Core,
@@ -30,7 +86,7 @@ deckData.Research = {
       cardId: 2,
       expansionId: Core,
       City: {
-        intro: "A few hours before the performance of the opera Massa di Requiem per Shuggay you have a chance to examine the libretto; test Lore",
+        intro: "A few hours before the performance of the opera Massa di Requiem per Shuggay you have a chance to examine the libretto; test Lore.",
         choices: {
           Pass: "You recognize that it's a ritual that honors Azathoth and stop the performance; gain this Clue.",
           Fail: "The performance calls to Azathoth; place 1 Eldritch token on the green space of the Omen track."
@@ -136,6 +192,62 @@ deckData.Research = {
         choices: {
           Pass: "You get a look at the figure's empty black eyes before you wake; gain this Clue and 1 additional Clue.",
           Fail: "Your injuries from the dream remain when you wake; lose 1 Health and gain 1 Injury Condition."
+        }
+      }
+    }
+  ],
+
+  Syzygy: [
+    {
+      expansionId: StrangeRemnants,
+      cardId: 1,
+      City: {
+        intro: "Gazing at the sun, you have a sudden epiphany regarding the effects of a planetary occultation on dimensional stability and become distracted; test Observation.",
+        choices: {
+          Pass: "Gain this Clue.",
+          Fail: "You hit your head on a low-hanging street sign and forget all about it; gain a Head Injury Condition."
+        }
+      },
+
+      Sea: {
+        intro: "As you lift the ancient astrolabe from its pedestal, the island begins to sink; test Observation-1.",
+        choices: {
+          Pass: "You disable the mechanism; gain this Clue and 1 Relic Unique Asset.",
+          Fail: "The current rips it from your grasp as you escape; move this Clue to the nearest space containing a Gate."
+        }
+      },
+
+      Wilderness: {
+        intro: "Your observations of movements in the night sky indicate that a minor alignment of stars will open a rift to another time. Gain this Clue. You think you know how to stop it; test Lore-1.",
+        choices: {
+          Pass: "",
+          Fail: "No ritual you perform nor incantation you utter can prevent the rift from opening; spawn 1 Gate."
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: StrangeRemnants,
+      City: {
+        intro: "A local collector is rumored to have the item you seek; test Influence.",
+        choices: {
+          Pass: "You convince him that lending it to you will serve the greater good; gain 1 Relic Unique Asset.",
+          Fail: "He feels threatened by your interest in his property and summons the authorities; gain a Detained Condition."
+        }
+      },
+
+      Sea: {
+        intro: "Suddenly, your ship is no longer sailing on the ocean, but in a sea of stars; test Will-1.",
+        choices: {
+          Pass: "You keep your composure and observe the positions of the stars; gain this Clue and 1 additional Clue.",
+          Fail: "The alien ocean is terrifying; lose 1 Sanity and gain a Hallucinations Condition."
+        }
+      },
+
+      Wilderness: {
+        intro: "In your haste to survey the unusual forest clearing, you nearly miss a subtle placement of smooth stones; test Observation.",
+        choices: {
+          Pass: "You deduce that they are positioned to counter the destabilizing effects of a lunar eclipse; gain this Clue.",
+          Fail: "You trip over them and fall; gain 1 Injury Condition."
         }
       }
     }
