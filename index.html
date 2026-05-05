@@ -10,6 +10,7 @@
     <script src="js/deckdata_asia_australia.js"></script>
     <script src="js/deckdata_devestation.js"></script>
     <script src="js/deckdata_dream_quest.js"></script>
+    <script src="js/deckdata_dreamlands.js"></script>
     <script src="js/deckdata_europe.js"></script>
     <script src="js/deckdata_expedition.js"></script>
     <script src="js/deckdata_general.js"></script>
@@ -49,6 +50,13 @@
       <button type="button" class="encounter" onclick="startResearchEncounter('Wilderness')">Wilderness</button>
       <button type="button" class="encounter" onclick="startResearchEncounter('Sea')">Sea</button>
       <br>
+      <div id="dreamlands">
+        Read Dreamlands Encounter
+        <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Celephaïs')">Celephaïs</button>
+        <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Dylath-Leen')">Dylath-Leen</button>
+        <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Ulthar')">Ulthar</button>
+        <div id="dream-quest-buttons"></div>
+      </div>
       <div id="devestation">
         <button type="button" class="encounter" onclick="startDevestationEncounter()">Read Devestation Encounter</button>
         <br>
@@ -56,7 +64,6 @@
       <button type="button" class="encounter" onclick="startOtherWorldEncounter()">Read Other World Encounter</button>
 
       <div id="expedition-buttons"></div>
-      <div id="dream-quest-buttons"></div>
       <div id="mystic-ruins-buttons"></div>
       <div id="special-encounters"></div>
     </div>

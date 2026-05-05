@@ -75,6 +75,72 @@ deckData.Research = {
     }
   ],
 
+  Hypnos: [
+    {
+      cardId: 1,
+      expansionId: TheDreamlands,
+      City: {
+        intro: "You pore over the pages from the dream journals of patients from an asylum; test Lore-1.",
+        choices: {
+          Pass: "You notice a series of dots in the margins; gain this Clue and 1 additional Clue. Each of the journals has different markings. You record the markings in case it someday proves useful.",
+          Fail: ""
+        }
+      },
+
+      Sea: {
+        intro: "One of the crew is sleepwalking on the deck and normal means do not wake him; test Lore-1.",
+        choices: {
+          Pass: "You realize that he is hypnotized and restrain him until he regains his faculties; gain this Clue and retreat Doom by 1.",
+          Fail: {
+            intro: "He struggles against you; a Cultist Monster ambushes you!",
+            choices: {
+              "Resolved combat encounter": ""
+            }
+          }
+        }
+      },
+
+      Wilderness: {
+        intro: "You scan the night sky as you prepare to make camp for the evening; test Observation-1.",
+        choices: {
+          Pass: "You notice a constellation that matches one that you saw in your dreams; gain this Clue.",
+          Fail: "A pulsing golden star enraptures you with its malevolent luminescence; lose 1 Sanity."
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: Core,
+      City: {
+        intro: "A gentleman in flowing white silks claims to know what you seek; test Influence-1.",
+        choices: {
+          Pass: "You convince him to share what he knows; gain this Clue and, if you are on the Dreamlands side board, gain 1 Task Unique Asset.",
+          Fail: {
+            intro: "He morphs into a hideous nightmare; a Ghoul Monster ambushes you!",
+            choices: {
+              "Resolved combat encounter": ""
+            }
+          }
+        }
+      },
+
+      Sea: {
+        intro: "Without warning, you feel yourself being drawn into the unknown; test Will-1.",
+        choices: {
+          Pass: "You notice a sliver of red-gold light in the sky; gain this Clue.",
+          Fail: "You are propelled through the cosmos until you come to rest amongst distant stars; gain a Lost in Time and Space Condition."
+        }
+      },
+
+      Wilderness: {
+        intro: "You chase an ashen figure through the muck of a wooded fen; test Observation-1.",
+        choices: {
+          Pass: "You get a look at the figure's empty black eyes before you wake; gain this Clue and 1 additional Clue.",
+          Fail: "Your injuries from the dream remain when you wake; lose 1 Health and gain 1 Injury Condition."
+        }
+      }
+    }
+  ],
+
   "Yog-Sothoth": [
     {
       cardId: 1,

@@ -144,7 +144,13 @@ function buildResearchDeck() {
 }
 
 function buildSimpleDecks() {
-  ["America", "Asia/Australia", "Devestation", "Europe", "General", "OtherWorld"].forEach(deckName => {
+  [
+    "America", "Asia/Australia",
+    "Devestation", "Dreamlands",
+    "Europe",
+    "General",
+    "OtherWorld"
+  ].forEach(deckName => {
     decks[deckName] = buildDeck(deckData[deckName]);
   });
 }
@@ -200,6 +206,10 @@ function getLinkedCard(event) {
 function readAlound(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(utterance);
+}
+
+function removeDreamlandsButtons() {
+  document.getElementById("dreamlands").remove();
 }
 
 function showOrHideDevestationEncounterButton() {
@@ -328,15 +338,27 @@ function updateEncounterButtons(disabled) {
   });
 }
 
+function useDreamlandsBoard() {
+  return (
+    ancientOne == "Hypnos" ||
+    preludesUsed.includes("Otherworldly Dreams")
+  );
+}
+
 buildSimpleDecks();
-buildDreamQuestDeck();
 buildExpeditionDeck();
 buildMysticRuinsDeck();
 buildResearchDeck();
 
+if (useDreamlandsBoard()) {
+  buildDreamQuestDeck();
+  addDreamQuestEncounterButton();
+} else {
+  removeDreamlandsButtons();
+}
+
 showOrHideDevestationEncounterButton();
 
-addDreamQuestEncounterButton();
 addExpeditionEncounterButton();
 addMysticRuinsEncounterButton();
 addSpecialEncounterButtons(buildSpecialEncounterDecks());
