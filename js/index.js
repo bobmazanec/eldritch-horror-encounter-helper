@@ -192,8 +192,7 @@ function endEncounter(buttonContainer, encounter, action, key) {
   enableEncounterButtons();
 }
 
-function getLinkedCard(event) {
-  const button = event.target;
+function getLinkedCard(button) {
   const cardIdent = button.dataset.cardIdent;
   const card = linkedCard[cardIdent];
 
@@ -212,6 +211,10 @@ function removeDreamlandsButtons() {
   document.getElementById("dreamlands").remove();
 }
 
+function removeMysticRuinsButtons() {
+  document.getElementById("mystic-ruins-buttons").remove();
+}
+
 function showOrHideDevestationEncounterButton() {
   const div = document.getElementById("devestation");
   if (decks.Devestation.length === 0) {
@@ -226,6 +229,19 @@ function shuffleArray(arr) {
 	}
 
   return arr;
+}
+
+function shuffleMysticRuinsDeck() {
+  const buttons = document.getElementsByClassName("mystic-ruins encounter");
+  const buttonCount = buttons.length;
+
+  Array.prototype.forEach.call(buttons, button => getLinkedCard(button));
+
+  shuffleArray(decks["Mystic Ruins"]);
+
+  for(let i = 0; i < buttonCount; ++i) {
+    addMysticRuinsEncounterButton();
+  }
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -247,7 +263,7 @@ function startDevestationEncounter(spaceType) {
 }
 
 function startDreamQuestEncounter(event) {
-  const card = getLinkedCard(event);
+  const card = getLinkedCard(event.target);
 
   addDreamQuestEncounterButton();
 
@@ -275,7 +291,7 @@ function startEncounter(headerText, encounter) {
 }
 
 function startExpeditionEncounter(event) {
-  const card = getLinkedCard(event);
+  const card = getLinkedCard(event.target);
 
   addExpeditionEncounterButton();
 
@@ -295,7 +311,7 @@ function startGeneralEncounter(spaceType) {
 }
 
 function startMysticRuinsEncounter(event) {
-  const card = getLinkedCard(event);
+  const card = getLinkedCard(event.target);
 
   addMysticRuinsEncounterButton();
 
@@ -369,6 +385,8 @@ if (useDreamlandsBoard()) {
 if (useMysticRuinsDeck()) {
   buildMysticRuinsDeck();
   addMysticRuinsEncounterButton();
+} else {
+  removeMysticRuinsButtons();
 }
 
 showOrHideDevestationEncounterButton();
