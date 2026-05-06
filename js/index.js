@@ -31,6 +31,19 @@ function addEncounterAction(buttonContainer, action) {
   buttonContainer.remove();
 }
 
+function addEncounterListElement(headerText) {
+  const encounterElement = document.createElement("div");
+  encounterElement.appendChild(document.createElement("hr"));
+
+  const headerElement = document.createElement("h3");
+  headerElement.textContent = headerText;
+  encounterElement.appendChild(headerElement);
+
+  document.getElementById("encounterList").prepend(encounterElement);
+
+  return encounterElement;
+}
+
 function addEncounterStep(encounterElement, encounterStep, priorButtonContainer = null, action = null) {
   if (action && priorButtonContainer) {
     addEncounterAction(priorButtonContainer, action);
@@ -242,6 +255,8 @@ function shuffleMysticRuinsDeck() {
   for(let i = 0; i < buttonCount; ++i) {
     addMysticRuinsEncounterButton();
   }
+
+  addEncounterListElement("Shuffled Mystic Ruins deck(s)");
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -276,18 +291,10 @@ function startDreamQuestEncounter(event) {
 function startEncounter(headerText, encounter) {
   disableEncounterButtons();
 
-  const encounterElement = document.createElement("div");
+  const encounterElement = addEncounterListElement(headerText);
   encounterElement.classList.add("encounter");
 
-  encounterElement.appendChild(document.createElement("hr"));
-
-  const headerElement = document.createElement("h3");
-  headerElement.textContent = headerText;
-  encounterElement.appendChild(headerElement);
-
   addEncounterStep(encounterElement, encounter);
-
-  document.getElementById("encounterList").prepend(encounterElement);
 }
 
 function startExpeditionEncounter(event) {
