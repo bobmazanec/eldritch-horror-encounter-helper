@@ -245,18 +245,22 @@ function shuffleArray(arr) {
 }
 
 function shuffleMysticRuinsDeck() {
-  const buttons = document.getElementsByClassName("mystic-ruins encounter");
+  shuffleTopCardDeck("Mystic Ruins", "mystic-ruins encounter", addMysticRuinsEncounterButton);
+}
+
+function shuffleTopCardDeck(deckName, classList, addButtonFunction) {
+  const buttons = document.getElementsByClassName(classList);
   const buttonCount = buttons.length;
 
   Array.prototype.forEach.call(buttons, button => getLinkedCard(button));
 
-  shuffleArray(decks["Mystic Ruins"]);
+  shuffleArray(decks[deckName]);
 
   for(let i = 0; i < buttonCount; ++i) {
-    addMysticRuinsEncounterButton();
+    addButtonFunction();
   }
 
-  addEncounterListElement("Shuffled Mystic Ruins deck(s)");
+  addEncounterListElement(`Shuffled ${deckName} deck(s)`);
 }
 
 function startCityEncounter(deckName, cityName) {
