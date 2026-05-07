@@ -244,6 +244,10 @@ function shuffleArray(arr) {
   return arr;
 }
 
+function shuffleExpeditionDeck() {
+  shuffleTopCardDeck("Expedition", "expedition encounter", addExpeditionEncounterButton);
+}
+
 function shuffleMysticRuinsDeck() {
   shuffleTopCardDeck("Mystic Ruins", "mystic-ruins encounter", addMysticRuinsEncounterButton);
 }
