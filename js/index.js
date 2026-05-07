@@ -244,6 +244,10 @@ function shuffleArray(arr) {
   return arr;
 }
 
+function shuffleDreamQuestDeck() {
+  shuffleTopCardDeck("Dream-Quest", "dream-quest encounter", addDreamQuestEncounterButton);
+}
+
 function shuffleExpeditionDeck() {
   shuffleTopCardDeck("Expedition", "expedition encounter", addExpeditionEncounterButton);
 }
