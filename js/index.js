@@ -73,13 +73,13 @@ function addEncounterStepText(encounterElement, encounterStep) {
   });
 }
 
-function addExpeditionEncounterButton() {
-  addTopCardButton("Expedition", "expedition-buttons", "expedition", startExpeditionEncounter, card => {
+function addExpeditionEncounterButton(deckName) {
+  addTopCardButton(deckName, "expedition-buttons", "expedition", startExpeditionEncounter, card => {
     return `Start ${card.space} Expedition Encounter`;
-  })
+  });
 }
 
-function addMysticRuinsEncounterButton() {
+function addMysticRuinsEncounterButton(_) {
   addTopCardButton("Mystic Ruins", "mystic-ruins-buttons", "mystic-ruins", startMysticRuinsEncounter, card => {
     return `Start ${card.space} Mystic Ruins Encounter`;
   })
@@ -100,14 +100,13 @@ function addSpecialEncounterButtons(deckNames) {
 
 function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, buttonTextFunction) {
   const card = drawCard(deckName);
-  const cardIdent = `${card.space} ${card.cardId}`
 
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("encounter");
   button.classList.add(buttonClass);
-  button.dataset.cardIdent = cardIdent;
-  linkedCard[cardIdent] = card;
+  button.dataset.deckName = deckName;
+  linkedCards[deckName] = card;
   button.onclick = onClick;
   button.textContent = buttonTextFunction(card);
 
@@ -144,8 +143,15 @@ function buildDreamQuestDeck() {
   decks["Dream-Quest"] = buildDeckBySpaces(deckData["Dream-Quest"]);
 }
 
-function buildExpeditionDeck() {
-  decks["Expedition"] = buildDeckBySpaces(deckData.Expedition);
+function buildExpeditionDecks() {
+  const allExpeditionCards = buildDeckBySpaces(deckData.Expedition);
+  if (useSecondExpeditionDeck()) {
+    const halfwayPoint = Math.ceil(allExpeditionCards.length / 2);
+    decks["Expedition-1"] = allExpeditionCards.slice(0, halfwayPoint);
+    decks["Expedition-2"] = allExpeditionCards.slice(halfwayPoint);
+  } else {
+    decks["Expedition"] = allExpeditionCards;
+  }   
 }
 
 function buildMysticRuinsDeck() {
@@ -206,13 +212,23 @@ function endEncounter(buttonContainer, encounter, action, key) {
 }
 
 function getLinkedCard(button) {
-  const cardIdent = button.dataset.cardIdent;
-  const card = linkedCard[cardIdent];
+  const deckName = button.dataset.deckName;
+  const card = linkedCards[deckName];
 
   button.remove();
-  delete linkedCard[cardIdent];
+  delete linkedCards[deckName];
 
   return card;
+}
+
+function numUniqueSpacesInDeck(deckName) {
+  const spaces = new Set();
+
+  decks[deckName].forEach(card => {
+    spaces.add(card.space);
+  });
+
+  return spaces.size;
 }
 
 function readAlound(text) {
@@ -226,6 +242,36 @@ function removeDreamlandsButtons() {
 
 function removeMysticRuinsButtons() {
   document.getElementById("mystic-ruins-buttons").remove();
+}
+
+function resolveSecretsOfThePastReckoningFor(button) {
+  const card = getLinkedCard(button);
+  const space = card.space;
+  const deckName = button.dataset.deckName;
+  decks[deckName] = decks[deckName].filter(c => c.space !== space);
+}
+
+function resolveSecretsOfThePastReckoning() {
+  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  let expeditionDeckIsEmpty = false;
+  
+  buttons.forEach(button => {
+    const deckName = button.dataset.deckName;
+
+    resolveSecretsOfThePastReckoningFor(button);
+
+    if (decks[deckName].length === 0) {
+      expeditionDeckIsEmpty = true;
+    } else {
+      addExpeditionEncounterButton(deckName);
+    }
+  });
+
+  if (expeditionDeckIsEmpty) {
+    const article = useSecondExpeditionDeck() ? "An" : "The";
+    alert(`${article} Expedition deck is empty - investigators lose the game.`);
+  }
+  updateSecretsOfThePastButton();
 }
 
 function showOrHideDevestationEncounterButton() {
@@ -256,19 +302,18 @@ function shuffleMysticRuinsDeck() {
   shuffleTopCardDeck("Mystic Ruins", "mystic-ruins encounter", addMysticRuinsEncounterButton);
 }
 
-function shuffleTopCardDeck(deckName, classList, addButtonFunction) {
-  const buttons = document.getElementsByClassName(classList);
-  const buttonCount = buttons.length;
+function shuffleTopCardDeck(deckLabel, classList, addButtonFunction) {
+  const buttons = Array.from(document.getElementsByClassName(classList));
 
-  Array.prototype.forEach.call(buttons, button => getLinkedCard(button));
+  buttons.forEach(button => {
+    const deckName = button.dataset.deckName;
+    getLinkedCard(button);
+    shuffleArray(decks[deckName]);
+    addButtonFunction(deckName);
+  });
 
-  shuffleArray(decks[deckName]);
-
-  for(let i = 0; i < buttonCount; ++i) {
-    addButtonFunction();
-  }
-
-  addEncounterListElement(`Shuffled ${deckName} deck(s)`);
+  const plural = buttons.length === 1 ? "" : "s";
+  addEncounterListElement(`Shuffled the ${deckLabel} deck${plural}`);
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -310,9 +355,10 @@ function startEncounter(headerText, encounter) {
 }
 
 function startExpeditionEncounter(event) {
-  const card = getLinkedCard(event.target);
+  const button = event.target;
+  const card = getLinkedCard(button);
 
-  addExpeditionEncounterButton();
+  addExpeditionEncounterButton(button.dataset.deckName);
 
   startEncounter(
     `Expedition - ${card.space}: ${card.cardId}`,
@@ -373,6 +419,22 @@ function updateEncounterButtons(disabled) {
   });
 }
 
+function updateSecretsOfThePastButton() {
+  let text = "Resolve the 'Secrets of the Past' Mythos card's Reckoning effect<br>";
+
+  if (useSecondExpeditionDeck()) {
+    const spaces1 = numUniqueSpacesInDeck("Expedition-1");
+    const spaces2 = numUniqueSpacesInDeck("Expedition-2");
+    text += `The Expedition decks have ${spaces1} and ${spaces2} unique spaces remaining, respectively`;
+  } else {
+    const spaces = numUniqueSpacesInDeck("Expedition");
+    const plural = spaces === 1 ? "" : "s";
+    text += `The Expedition deck has ${spaces} unique space${plural} remaining`;
+  }
+
+  document.getElementById("secrets-of-the-past").innerHTML = text;
+}
+
 function useDreamlandsBoard() {
   return (
     ancientOne == "Hypnos" ||
@@ -390,8 +452,12 @@ function useMysticRuinsDeck() {
   );
 }
 
+function useSecondExpeditionDeck() {
+  return preludesUsed.includes("Litany of Secrets");
+}
+
 buildSimpleDecks();
-buildExpeditionDeck();
+buildExpeditionDecks();
 buildResearchDeck();
 
 if (useDreamlandsBoard()) {
@@ -408,7 +474,19 @@ if (useMysticRuinsDeck()) {
   removeMysticRuinsButtons();
 }
 
+if (preludesUsed.includes("Otherwordly Dreams")) {
+  addOtherworldlyDreamsButtons();
+}
+
 showOrHideDevestationEncounterButton();
 
-addExpeditionEncounterButton();
+if (useSecondExpeditionDeck()) {
+  addExpeditionEncounterButton("Expedition-1");
+  addExpeditionEncounterButton("Expedition-2");
+  document.getElementById("shuffle-expedition").textContent += "s";
+} else {
+  addExpeditionEncounterButton("Expedition");
+}
+updateSecretsOfThePastButton();
+
 addSpecialEncounterButtons(buildSpecialEncounterDecks());
