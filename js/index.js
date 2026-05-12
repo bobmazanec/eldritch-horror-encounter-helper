@@ -99,14 +99,14 @@ function addSpecialEncounterButtons(deckNames) {
 }
 
 function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, buttonTextFunction) {
-  const card = drawCard(deckName);
+  const card = decks[deckName][0];
 
   const button = document.createElement("button");
   button.type = "button";
   button.classList.add("encounter");
+  button.classList.add("top-card");
   button.classList.add(buttonClass);
   button.dataset.deckName = deckName;
-  linkedCards[deckName] = card;
   button.onclick = onClick;
   button.textContent = buttonTextFunction(card);
 
@@ -203,22 +203,17 @@ function drawCard(deckName) {
   return card;
 }
 
+function drawCardFromButtonDeck(button) {
+  button.remove();
+  return drawCard(button.dataset.deckName);
+}
+
 function enableEncounterButtons() {
   updateEncounterButtons(false);
 }
 
 function endEncounter(buttonContainer, encounter, action, key) {
   enableEncounterButtons();
-}
-
-function getLinkedCard(button) {
-  const deckName = button.dataset.deckName;
-  const card = linkedCards[deckName];
-
-  button.remove();
-  delete linkedCards[deckName];
-
-  return card;
 }
 
 function numUniqueSpacesInDeck(deckName) {
@@ -306,8 +301,8 @@ function shuffleTopCardDeck(deckLabel, classList, addButtonFunction) {
   const buttons = Array.from(document.getElementsByClassName(classList));
 
   buttons.forEach(button => {
+    button.remove();
     const deckName = button.dataset.deckName;
-    getLinkedCard(button);
     shuffleArray(decks[deckName]);
     addButtonFunction(deckName);
   });
@@ -335,7 +330,7 @@ function startDevestationEncounter(spaceType) {
 }
 
 function startDreamQuestEncounter(event) {
-  const card = getLinkedCard(event.target);
+  const card = drawCardFromButtonDeck(event.target);
 
   addDreamQuestEncounterButton();
 
@@ -356,7 +351,7 @@ function startEncounter(headerText, encounter) {
 
 function startExpeditionEncounter(event) {
   const button = event.target;
-  const card = getLinkedCard(button);
+  const card = drawCardFromButtonDeck(button);
 
   addExpeditionEncounterButton(button.dataset.deckName);
 
@@ -376,7 +371,7 @@ function startGeneralEncounter(spaceType) {
 }
 
 function startMysticRuinsEncounter(event) {
-  const card = getLinkedCard(event.target);
+  const card = drawCardFromButtonDeck(event.target);
 
   addMysticRuinsEncounterButton();
 
