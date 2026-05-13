@@ -311,22 +311,26 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
   startMysticRuinsEncounterWith(card);
 }
 
-function resolveSecretsOfThePastReckoningFor(button) {
-  const card = drawCardFromButtonDeck(button);
-  const space = card.space;
-  const deckName = button.dataset.deckName;
-  decks[deckName] = decks[deckName].filter(c => c.space !== space);
-  disableEncounterButtonsFor(card.space);
-}
-
 function resolveSecretsOfThePastReckoning() {
   const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
-  let expeditionDeckIsEmpty = false;
+  const cardSpaces = new Set();
+  const deckNames = [];
   
-  buttons.forEach(button => {
-    const deckName = button.dataset.deckName;
+  buttons.forEach((button) => {
+    // Draws the card from the button's deck
+    // & removes the button from the DOM
+    cardSpaces.add(drawCardFromButtonDeck(button).space);
 
-    resolveSecretsOfThePastReckoningFor(button);
+    deckNames.push(button.dataset.deckName);
+  });
+
+  let expeditionDeckIsEmpty = false;
+
+  deckNames.forEach((deckName) => {
+    // Remove cards whose space matches the drawn card('s/s')
+    decks[deckName] = decks[deckName].filter(
+      (card) => !cardSpaces.has(card.space)
+    );
 
     if (decks[deckName].length === 0) {
       expeditionDeckIsEmpty = true;
@@ -334,6 +338,8 @@ function resolveSecretsOfThePastReckoning() {
       addExpeditionEncounterButton(deckName);
     }
   });
+
+  cardSpaces.forEach((space) => disableEncounterButtonsFor(space));
 
   if (expeditionDeckIsEmpty) {
     const article = useSecondExpeditionDeck() ? "An" : "The";
