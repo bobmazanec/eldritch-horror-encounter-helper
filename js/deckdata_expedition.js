@@ -165,5 +165,81 @@ deckData.Expedition = {
         }
       }
     }
+  ],
+
+  "The Pyramids": [
+    {
+      expansionId: Core,
+      cardId: 1,
+      intro: "Bandits tie your hands and blindfold you. They lower you into catacombs deep under the pyramids and leave you there to die. You try to free yourself from your bonds; test Strength.",
+      choices: {
+        Pass: {
+          intro: "You see now that you are in the Temple of the Sphinx. Retreat Doom by 1. You use your knowledge of Egyptology to find an exit; test Lore.",
+          Pass: "",
+          Fail: "You wake up with no memory of how you escaped; gain an Amnesia Condition."
+        },
+        Fail: {
+          intro: "While struggling with your bonds, you feel undead hands tearing at you. Lose Health 1 Health and gain an Internal Injury Condition. You gaze into the darkness; test Observation-1.",
+          choices: {
+            Pass: "you identify mummies with the heads of animals; retreat Doom Doom by 1.",
+            Fail: ""
+          }
+        }
+      }
+    }, {
+      expansionId: Core,
+      cardId: 2,
+      intro: "Inside the pyramid, you find a hidden passage leading to an undiscovered throne room. You explore the room for indications of its history; test Observation.",
+      choices: {
+        Pass: {
+          intro: "You see a star map adjacent to a world map on the wall. You use the star map to determine a location on the world map; test Lore.",
+          choices: {
+            Pass: "You discover a hidden cabinet built into the wall; gain 1 Artifact.",
+            Fail: "The maps remain a mystery; you lose Sanity 2 Sanity."
+          }
+        },
+        Fail: {
+          intro: "As you search, Nephren-Ka appears! With a wave of his hand, you are overcome by pain; test Strength-1.",
+          choices: {
+            Pass: "You crawl away; gain 2 Clues.",
+            Fail: "Lose Health 1 Health and gain an Internal Injury Condition."
+          }
+        }
+      }
+    }, {
+      expansionId: ForsakenLore,
+      cardId: 4,
+      intro: "Once you reach Dashur, you begin digging through the rubble that had once been the White Pyramid, hoping to excavate the ancient burial chambers; test Strength-1.",
+      choices: {
+        Pass: {
+          intro: "You uncover a vast labyrinth of underground tunnels. You only hope of navigating is to translate the hieroglyphs on the wall; test Lore.",
+          choices: {
+            Pass: "You find your way to the royal treasury; gain 1 Artifact.",
+            Fail: "You slowly find your way back to the exit; become Delayed."
+          }
+        },
+        Fail: "You exhaust yourself working into the night without result. Lose Health 1 Health. That night, a snake-eyed man dressed like a bedouin approaches you and offers you a deal. You may gain a Dark Pact to improve 1 skill of your choice."
+      }
+    }, {
+      expansionId: UnderThePyramids,
+      cardId: 5,
+      intro: "An Australian veteran of the Great War has a room in the Mena House Hotel. You hear rumors that over the years he has stolen several objects from inside the pyramids. When you confront him on the issue, he starts a fight with you; test Strength.",
+      choices: {
+        Pass: {
+          intro: "Humbled, the soldier tells you about murals within the pyramid. Gain 1 Clue. You search for them; test Observation.",
+          chcoices: {
+            Pass: "You find a secret painting; advance the active Mystery by 1.",
+            Fail: "The foul air takes a toll; gain 1 Illness Condition."
+          }
+        },
+        Fail: {
+          intro: "The soldier leaves you unconscious in a chamber in the pyramids. You wake up terrified in the dark; test Will.",
+          choices: {
+            Pass: "You hear the whispers of long dead pharaohs; retreat Doom by 1.",
+            Fail: "you run as fast as you can; gain a Despair Condition."
+          }
+        }
+      }
+    }
   ]
 };

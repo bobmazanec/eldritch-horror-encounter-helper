@@ -85,5 +85,49 @@ deckData["Mystic Ruins"] = {
         }
       }
     }
+  ],
+
+  "Stonehenge": [
+    {
+      cardId: 1,
+      expansionId: StrangeRemnants,
+      intro: "A man and a woman are arguing over the stones' occult significance. He claims they open doorways to other worlds. She says they measure the stars. Resolve the pass effect to agree with the man; or resolve the fail effect to agree with the woman.",
+      choices: {
+        "Agree with the man": {
+          intro: "Exasperated, the woman leaves. You ask the man to tell you more about these portals; test Influence-1.",
+          choices: {
+            Pass: "He helps you control them; close 1 Gate of your choice on any space.",
+            Fail: "He reveals that he is a warlock and casts a hex on you; gain 1 Bane Condition."
+          }
+        },
+        "Agree with the woman": {
+          intro: "The man storms off. The woman tries to show you certain stars; test Observation-1.",
+          choices: {
+            Pass: "You can see their effects on fate; move the Omen to any space of the track without advancing Doom.",
+            Fail: "She reveals that she is a witch and uses the stars against you; lose 2 Sanity."
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: StrangeRemnants,
+      intro: "Cultists have been here enacting some ritual. You think you can undo the effects of their work by analyzing the items they left behind and the symbols they drew; test Lore.",
+      choices: {
+        Pass: {
+          intro: "That which they have opened, you can shut. Close 1 Gate of your choice on any space. While you are undoing the ritual, the police arrive and accuse you of vandalizing the area. You try to escape; test Observation.",
+          choices: {
+            Pass: "",
+            Fail: "Gain a Detained Condition."
+          }
+        },
+        Fail: {
+          intro: "A storm begins and the winds threaten to sweep you away. You fight to complete your task; test Strength.",
+          choices: {
+            Pass: "You undo the ritual; close 1 Gate of your choice on any space.",
+            Fail: "The wind carries you away; gain a Head Injury Condition."
+          }
+        }
+      }
+    }
   ]
 };

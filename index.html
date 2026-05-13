@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eldritch Horror Encounter Helper</title>
+    <link rel="stylesheet" href="css/index.css">
     <!-- Data -->
     <script src="js/global_variables.js"></script>
     <script src="js/deckdata_america.js"></script>
@@ -67,10 +68,32 @@
 
       <div id="expedition-buttons">
         <button type="button" onclick="shuffleExpeditionDeck()" id="shuffle-expedition">Shuffle the Expedition deck</button>
-        <button type="button" onclick="resolveSecretsOfThePastReckoning()" id="secrets-of-the-past"></button>
+        <button type="button" class="encounter" onclick="resolveSecretsOfThePastReckoning()" id="secrets-of-the-past"></button>
       </div>
       <div id="mystic-ruins-buttons">
         <button type="button" onclick="shuffleMysticRuinsDeck()">Shuffle the Mystic Ruins deck</button>
+      </div>
+      <div id="cosmic-alignment">
+        <div id="cosmic-alignment-II">
+          <button type="button" id="add-ruins-in-the-heart-of-the-jungle" class="cosmic-alignment-II" onclick="addRuinsInTheHeartOfTheJungle()">
+            Put "Cosmic Alignment: Ruins in the Heart of the Jungle" Adventure into play
+          </button>
+          <button type="button" id="add-ruins-under-the-stars" class="cosmic-alignment-II" onclick="addRuinsUnderTheStars()">
+            Put "Cosmic Alignment: Ruins Under the Stars" Adventure into play
+          </button>
+        </div>
+        <button type="button" id="ruins-in-the-heart-of-the-jungle" onclick="resolveCosmicAlignmentAdventureII(event, 'Chichen Itza', 'relics-of-the-amazon')">
+          Resolve "Cosmic Alignment: Ruins in the Heart of the Jungle" Adventure
+        </button>
+        <button type="button" id="ruins-under-the-stars" onclick="resolveCosmicAlignmentAdventureII(event, 'Stonehenge', 'relics-of-the-pyramids')">
+          Resolve "Cosmic Alignment: Ruins Under the Stars" Adventure
+        </button>
+        <button type="button" id="relics-of-the-amazon" class="encounter" data-space="The Amazon" onclick="resolveCosmicAlignmentAdventureIII(event, 'The Amazon')">
+          Resolve "Cosmic Alignment: Relics of the Amazon" Adventure
+        </button>
+        <button type="button" id="relics-of-the-pyramids" class="encounter" data-space="The Pyramids" onclick="resolveCosmicAlignmentAdventureIII(event, 'The Pyramids')">
+          Resolve "Cosmic Alignment: Relics of the Pyramids" Adventure
+        </button>
       </div>
       <div id="special-encounters"></div>
     </div>
