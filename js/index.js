@@ -109,6 +109,11 @@ function addSpecialEncounterButtons(deckNames) {
 }
 
 function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, buttonTextFunction) {
+  if (decks[deckName].length === 0) {
+   createDeckAndDiscardPile(deckName, discardPiles[deckName]);
+   shuffleArray(decks[deckName]);
+  }
+
   const card = decks[deckName][0];
 
   const button = document.createElement("button");
@@ -150,26 +155,38 @@ function buildDeckBySpaces(cardsBySpaces) {
 }
 
 function buildDreamQuestDeck() {
-  decks["Dream-Quest"] = buildDeckBySpaces(deckData["Dream-Quest"]);
+  const deckName = "Dream-Quest";
+  createDeckAndDiscardPile(
+    deckName,
+    buildDeckBySpaces(deckData[deckName])
+  );
 }
 
 function buildExpeditionDecks() {
   const allExpeditionCards = buildDeckBySpaces(deckData.Expedition);
   if (useSecondExpeditionDeck()) {
     const halfwayPoint = Math.ceil(allExpeditionCards.length / 2);
-    decks["Expedition-1"] = allExpeditionCards.slice(0, halfwayPoint);
-    decks["Expedition-2"] = allExpeditionCards.slice(halfwayPoint);
+
+    createDeckAndDiscardPile("Expedition-1", allExpeditionCards.slice(0, halfwayPoint));
+    createDeckAndDiscardPile("Expedition-2", allExpeditionCards.slice(halfwayPoint));
   } else {
-    decks["Expedition"] = allExpeditionCards;
+    createDeckAndDiscardPile("Expedition", allExpeditionCards);
   }   
 }
 
 function buildMysticRuinsDeck() {
-  decks["Mystic Ruins"] = buildDeckBySpaces(deckData["Mystic Ruins"]);
+  const deckName = "Mystic Ruins";
+  createDeckAndDiscardPile(
+    deckName,
+    buildDeckBySpaces(deckData[deckName])
+  );
 }
 
 function buildResearchDeck() {
-  decks["Research"] = buildDeck(deckData.Research[ancientOne])
+  createDeckAndDiscardPile(
+    "Research",
+    buildDeck(deckData.Research[ancientOne])
+  );
 }
 
 function buildSimpleDecks() {
@@ -179,8 +196,8 @@ function buildSimpleDecks() {
     "Europe",
     "General",
     "OtherWorld"
-  ].forEach(deckName => {
-    decks[deckName] = buildDeck(deckData[deckName]);
+  ].forEach((deckName) => {
+    createDeckAndDiscardPile(deckName, buildDeck(deckData[deckName]))
   });
 }
 
@@ -193,11 +210,16 @@ function buildSpecialEncounterDecks() {
 
     if (deck.length > 0) {
       deckNames.push(deckName);
-      decks[deckName] = deck;
+      createDeckAndDiscardPile(deckName, deck);
     }
   }
 
   return deckNames;
+}
+
+function createDeckAndDiscardPile(deckName, deck) {
+  decks[deckName] = deck;
+  discardPiles[deckName] = [];
 }
 
 function disableEncounterButtons() {
@@ -215,11 +237,21 @@ function disableEncounterButtonsFor(space) {
   });
 }
 
+function discard(deckName, card) {
+  discardPiles[deckName].unshift(card);
+}
+
 function drawCard(deckName) {
-  const deck = decks[deckName];
+  let deck = decks[deckName];
+  if (deck.length === 0) {
+    deck = discardPiles[deckName]; 
+    shuffleArray(deck)
+    createDeckAndDiscardPile(deckName, deck);
+  }
+
   const card = deck.shift();
 
-  deck.push(card); // return it to the bottom
+  discard(deckName, card);
 
   return card;
 }
@@ -281,17 +313,15 @@ function resolveExpeditionEncounterForSpace(event, space) {
     deckName += "-1"
   }
 
-  // removes the card from the deck
   let card = searchForCardForSpace(deckName, space);
+  shuffleTopCardDeck(deckName, addExpeditionEncounterButton);
   if (!card) {
     deckName = "Expedition-2";
     card = searchForCardForSpace(deckName, space);
+    shuffleTopCardDeck(deckName, addExpeditionEncounterButton);
   }
 
-  shuffleTopCardDeck(deckName, "expedition encounter top-card", addExpeditionEncounterButton);
-
-  // Guarantees the card is at the bottom
-  decks[deckName].push(card);
+  discard(deckName, card);
 
   startExpeditionEncounterWith(card);
 }
@@ -301,12 +331,10 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
 
   const deckName = "Mystic Ruins";
 
-  // removes the card from the deck
   const card = searchForCardForSpace(deckName, space);
 
-  // Guarantees the card is at the bottom
   shuffleMysticRuinsDeck();
-  decks[deckName].push(card);
+  discard(deckName, card);
 
   startMysticRuinsEncounterWith(card);
 }
@@ -348,12 +376,27 @@ function resolveSecretsOfThePastReckoning() {
   updateSecretsOfThePastButton();
 }
 
-function searchForCardForSpace(deckName, space) {
-  const deck = decks[deckName];
-
+function searchForCardForSpaceInDeck(deck, space) {
   // Per the rules, "Search" means to start at the *bottom* of the deck
   const cardIndex = deck.findLastIndex(card => card.space === space);
+
+  if (cardIndex === -1) {
+    return null;
+  }
+
   const card = deck.splice(cardIndex, 1)[0]; // remove the card from the deck
+  return card;  
+}
+
+function searchForCardForSpace(deckName, space) {
+  const deck = decks[deckName];
+  let card = searchForCardForSpaceInDeck(deck, space);
+
+  if (!card) {
+    const discardPile = discardPiles[deckName];
+    card = searchForCardForSpaceInDeck(discardPile, space);
+  }
+
   return card;
 }
 
@@ -377,19 +420,19 @@ function shuffleArray(arr) {
 }
 
 function shuffleDreamQuestDeck() {
-  shuffleTopCardDeck("Dream-Quest", "dream-quest encounter top-card", addDreamQuestEncounterButton);
+  shuffleTopCardDeck("Dream-Quest", addDreamQuestEncounterButton);
 }
 
 function shuffleExpeditionDeck() {
-  shuffleTopCardDeck("Expedition", "expedition encounter top-card", addExpeditionEncounterButton);
+  shuffleTopCardDeck("Expedition", addExpeditionEncounterButton);
 }
 
 function shuffleMysticRuinsDeck() {
-  shuffleTopCardDeck("Mystic Ruins", "mystic-ruins encounter top-card", addMysticRuinsEncounterButton);
+  shuffleTopCardDeck("Mystic Ruins", addMysticRuinsEncounterButton);
 }
 
-function shuffleTopCardDeck(deckLabel, classList, addButtonFunction) {
-  const buttons = Array.from(document.getElementsByClassName(classList));
+function shuffleTopCardDeck(deckLabel, addButtonFunction) {
+  const buttons = Array.from(document.querySelectorAll(`button.top-card[data-deck-name="${deckLabel}"]`));
 
   buttons.forEach(button => {
     button.remove();
@@ -443,8 +486,9 @@ function startEncounter(headerText, encounter) {
 function startExpeditionEncounter(event) {
   const button = event.target;
   const card = drawCardFromButtonDeck(button);
-
+  
   addExpeditionEncounterButton(button.dataset.deckName);
+  updateSecretsOfThePastButton();
 
   startExpeditionEncounterWith(card);
 }

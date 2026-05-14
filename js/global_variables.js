@@ -13,3 +13,4 @@ const preludesUsed = ["Litany of Secrets", "In Cosmic Alignment"];
 
 const deckData = {};
 const decks = {};
+const discardPiles = {};
