@@ -6,7 +6,7 @@ deckData.Dreamlands = [
       intro: "You find an abbey beyond the eastern gate and study the books in its library for anything helpful; test Lore-1.",
       choices: {
         Pass: "You discover a rare text; gain 1 Tome Artifact.",
-        Fail: "You read a tragic tale about a drug addict; lose Sanity 2 Sanity."
+        Fail: "You read a tragic tale about a drug addict; lose 2 Sanity."
       },
     },
 
@@ -19,7 +19,7 @@ deckData.Dreamlands = [
     },
 
     "Ulthar": {
-      intro: "As you cross a stone bridge, you feel a serene presence. Recover Sanity 1 Sanity. A voice speaks in an old dialect; test Lore-1.",
+      intro: "As you cross a stone bridge, you feel a serene presence. Recover 1 Sanity. A voice speaks in an old dialect; test Lore-1.",
       choices: {
         Pass: "It teaches you; gain 1 Talent Condition.",
         Fail: "The dead man's voice horrifies you; gain 1 Madness Condition."

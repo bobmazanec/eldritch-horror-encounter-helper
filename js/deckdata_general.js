@@ -18,12 +18,12 @@ deckData.General = [
       }
     },
 
-    Wilderness: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose Sanity 1 Sanity."
+    Wilderness: "The remains of a long-dead explorer lie before you. Some of his gear still seems salvageable, and he won't miss it. You dig through the dead man's pockets; gain 1 random Item Asset from the deck and lose 1 Sanity."
   }, {
     cardId: 8,
     expansionId: Core,
     City: {
-      intro: "A night of drinking and good cheer helps raise your spirits. Recover Sanity 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
+      intro: "A night of drinking and good cheer helps raise your spirits. Recover 2 Sanity. While you are celebrating, you hardly notice that you are being robbed; test Observation",
       choices: {
         Pass: "",
         Fail: "Discard 1 Item possession."

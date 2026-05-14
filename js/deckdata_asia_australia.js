@@ -6,7 +6,7 @@ deckData["Asia/Australia"] = [
       intro: "You search through old copies of The Shanghai Courier to find strange or unexplained stories; test Observation.",
       choices: {
         Pass: "You discover a pattern of arcane activity in the city; improve Lore.",
-        Fail: "Lose Sanity 1 Sanity as no pattern emerges from all this horror."
+        Fail: "Lose 1 Sanity as no pattern emerges from all this horror."
       }
     },
 
@@ -21,7 +21,7 @@ deckData["Asia/Australia"] = [
     Tokyo: {
       intro: "You ask the enigmatic Dragon Lords to rid the world of potential threats to Japan; test Influence.",
       choices: {
-        Pass: "Each Monster on a space of your choice loses Health 2 Health as the mysterious group casts their spells.",
+        Pass: "Each Monster on a space of your choice loses 2 Health as the mysterious group casts their spells.",
         Fail: "The Dragon Lords lash out at you; gain a Back Injury Condition."
       }
     }
@@ -31,7 +31,7 @@ deckData["Asia/Australia"] = [
     Shanghai: {
       intro: "You may become Delayed to explore some submerged pyramids off the coast of Okinawa.",
       choices: {
-        "Explore some submerged pyramids off the coast of Okinawa": 'You discover ancient writing that claims to "harm one\'s enemies;" 1 Monster of your choice on any space loses Health 3 Health.',
+        "Explore some submerged pyramids off the coast of Okinawa": 'You discover ancient writing that claims to "harm one\'s enemies;" 1 Monster of your choice on any space loses 3 Health.',
         "Don't": ""
       }
     },
@@ -58,7 +58,7 @@ deckData["Asia/Australia"] = [
       intro: "The Green Gang has hidden 200-years worth of stolen treasures in a vault. Despite the risk, you try to break in; test Observation.",
       choices: {
         Pass: "You discover several magical texts; improve Lore.",
-        Fail: "You are caught and punished without mercy; lose Health 1 Health and gain an Internal Injury Condition."
+        Fail: "You are caught and punished without mercy; lose 1 Health and gain an Internal Injury Condition."
       }
     },
 
@@ -74,7 +74,7 @@ deckData["Asia/Australia"] = [
       intro: "Your hotel room is haunted by a yūrei. You are terrified as the white-clad woman howls and passes through you; test Will.",
       choices: {
         Pass: "",
-        Fail: "Her lingering presence is a blight on your soul; lose Sanity 1 Sanity and gain a Cursed Condition."
+        Fail: "Her lingering presence is a blight on your soul; lose 1 Sanity and gain a Cursed Condition."
       }
     }
   }, {

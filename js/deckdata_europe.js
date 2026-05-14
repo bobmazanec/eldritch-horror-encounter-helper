@@ -33,7 +33,7 @@ deckData.Europe = [
     London: {
       intro: "Inside the Herefordshire Asylum, a patient asks you if you've seen the Yellow Sign. You listen to his story of the King in Yellow; test Observation.",
       choices: {
-        Pass: "Spawn Clue 2 Clues.",
+        Pass: "Spawn 2 Clues.",
         Fail: "His gibberish imprints itself onto your subconscious; gain a Hallucinations Condition."
       }
     },
@@ -42,7 +42,7 @@ deckData.Europe = [
       intro: "You have an inspirational dream in which you are a proud Roman quaestor. Improve Will. Your reverie is interrupted by a band of small, primitive men running wild outside. You try to negotiate with this lost tribe of Miri Nigri; test Influence.",
       choices: {
         Pass: "",
-        Fail: "Lose Health 1 Health and 1 Sanity as they continue their pursuit of some ancient grudge."
+        Fail: "Lose 1 Health and 1 Sanity as they continue their pursuit of some ancient grudge."
       }
     }
   }, {

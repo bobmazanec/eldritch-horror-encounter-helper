@@ -79,7 +79,7 @@ deckData.Research = {
         intro: "A meteor exploded in the air, scattering a glowing green powder. You try to find a sufficient amount of the compound; test Observation-1.",
         choices: {
           Pass: "Gain this Clue and move the Omen token to any space on the track without advancing Doom.",
-          Fail: "You are exposed to the terrible energy emanating from the substance; lose Health 1 Health."
+          Fail: "You are exposed to the terrible energy emanating from the substance; lose 1 Health."
         }
       }
     }, {
@@ -97,7 +97,7 @@ deckData.Research = {
         intro: "Your ship is destroyed by a glowing rock that fell from the sky! Gain this Clue. You struggle to reach wreckage that can keep you afloat; test Strength.",
         choices: {
           Pass: "",
-          Fail: "The undertow pulls you underwater; lose Health 2 Health."
+          Fail: "The undertow pulls you underwater; lose 2 Health."
         }
       },
 
@@ -111,7 +111,7 @@ deckData.Research = {
     }, {
       cardId: 13,
       expansionId: ForsakenLore,
-      City: "Inside the restricted section of the library, the book you sought is suddenly engulfed in green flames. To claim the ancient text, you will have to bow to the will of Tulzscha. You may spend Sanity 2 Sanity and gain a Dark Pact Condition to gain this Clue and 1 Tome Artifact.",
+      City: "Inside the restricted section of the library, the book you sought is suddenly engulfed in green flames. To claim the ancient text, you will have to bow to the will of Tulzscha. You may spend 2 Sanity and gain a Dark Pact Condition to gain this Clue and 1 Tome Artifact.",
 
       Sea: {
         intro: "You attempt to subdue a madman who is threatening the captain of the ship; test Strength-1.",
@@ -125,7 +125,7 @@ deckData.Research = {
         intro: "You track a family under the control of the shan back to their farm; test Observation.",
         choices: {
           Pass: "You observe them and learn of their plans; gain this Clue.",
-          Fail: "They take notice, beating you and leaving in the wild; lose Health 1 Health and gain an Internal Injury Condition."
+          Fail: "They take notice, beating you and leaving in the wild; lose 1 Health and gain an Internal Injury Condition."
         }
       }
     }
@@ -331,7 +331,7 @@ deckData.Research = {
         intro: "A flock of whip-poor-wills gathers around you, which is significant in some folktales; test Lore.",
         choices: {
           Pass: "You recall that these birds are an omen of death; gain this Clue.",
-          Fail: "You remember too late that they claim the souls of the dead, and you are buried under a landslide; lose Health 2 Health and gain an Internal Injury Condition."
+          Fail: "You remember too late that they claim the souls of the dead, and you are buried under a landslide; lose 2 Health and gain an Internal Injury Condition."
         }
       }
     }

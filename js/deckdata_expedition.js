@@ -13,7 +13,7 @@ deckData.Expedition = {
           }
         },
         Fail: {
-          intro: "You've been bit! Lose Health 1 Health and gain an Internal Injury Condition. Something about the snakes is odd. You try to identify what makes them unique; test Observation-1.",
+          intro: "You've been bit! Lose 1 Health and gain an Internal Injury Condition. Something about the snakes is odd. You try to identify what makes them unique; test Observation-1.",
           choices: {
             Pass: "You notice a crescent on the snake's head; retreat Doom by 1.",
             Fail: ""
@@ -97,7 +97,7 @@ deckData.Expedition = {
           }
         },
         Fail: {
-          intro: "You fall through the ice into a stone chamber. Lose Health 1 Health and gain a Back Injury Condition. You search the dark chamber; test Observation-1.",
+          intro: "You fall through the ice into a stone chamber. Lose 1 Health and gain a Back Injury Condition. You search the dark chamber; test Observation-1.",
           choices: {
             Pass: "You find the husk of an elder thing for study; retreat Doom by 1.",
             Fail: ""
@@ -179,7 +179,7 @@ deckData.Expedition = {
           Fail: "You wake up with no memory of how you escaped; gain an Amnesia Condition."
         },
         Fail: {
-          intro: "While struggling with your bonds, you feel undead hands tearing at you. Lose Health 1 Health and gain an Internal Injury Condition. You gaze into the darkness; test Observation-1.",
+          intro: "While struggling with your bonds, you feel undead hands tearing at you. Lose 1 Health and gain an Internal Injury Condition. You gaze into the darkness; test Observation-1.",
           choices: {
             Pass: "you identify mummies with the heads of animals; retreat Doom Doom by 1.",
             Fail: ""
@@ -195,14 +195,14 @@ deckData.Expedition = {
           intro: "You see a star map adjacent to a world map on the wall. You use the star map to determine a location on the world map; test Lore.",
           choices: {
             Pass: "You discover a hidden cabinet built into the wall; gain 1 Artifact.",
-            Fail: "The maps remain a mystery; you lose Sanity 2 Sanity."
+            Fail: "The maps remain a mystery; you lose 2 Sanity."
           }
         },
         Fail: {
           intro: "As you search, Nephren-Ka appears! With a wave of his hand, you are overcome by pain; test Strength-1.",
           choices: {
             Pass: "You crawl away; gain 2 Clues.",
-            Fail: "Lose Health 1 Health and gain an Internal Injury Condition."
+            Fail: "Lose 1 Health and gain an Internal Injury Condition."
           }
         }
       }
@@ -218,7 +218,7 @@ deckData.Expedition = {
             Fail: "You slowly find your way back to the exit; become Delayed."
           }
         },
-        Fail: "You exhaust yourself working into the night without result. Lose Health 1 Health. That night, a snake-eyed man dressed like a bedouin approaches you and offers you a deal. You may gain a Dark Pact to improve 1 skill of your choice."
+        Fail: "You exhaust yourself working into the night without result. Lose 1 Health. That night, a snake-eyed man dressed like a bedouin approaches you and offers you a deal. You may gain a Dark Pact to improve 1 skill of your choice."
       }
     }, {
       expansionId: UnderThePyramids,

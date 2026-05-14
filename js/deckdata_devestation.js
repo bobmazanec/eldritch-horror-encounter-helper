@@ -15,7 +15,7 @@ deckData.Devestation = [
         intro: "You search the area; test Observation-1.",
         choices: {
           Pass: "You find that the treasure was destroyed, but its fragment can still be used to ward off evil; retreat Doom by 1.",
-          Fail: "You search the desolate wasteland fruitlessly; lose Sanity 1 Sanity and gain 1 Madness Condition."
+          Fail: "You search the desolate wasteland fruitlessly; lose 1 Sanity and gain 1 Madness Condition."
         }
       }
     }
@@ -28,14 +28,14 @@ deckData.Devestation = [
         intro: "You gather the survivors and make an impassioned speech; test Influence-1.",
         choices: {
           Pass: "Their resistance is a worldwide inspiration; retreat Doom by 1.",
-          Fail: "They all eventually succumb to the cult; lose Sanity 3 Sanity."
+          Fail: "They all eventually succumb to the cult; lose 3 Sanity."
         }
       },
       "Infiltrate the cult": {
         intro: "The cult will not accept you unless you establish your arcane knowledge; test Lore-1.",
         choices: {
           Pass: "You sabotage the cultists and steal one of their prize possessions; gain 1 Artifact.",
-          Fail: "They attack you; lose Health 2 Health."
+          Fail: "They attack you; lose 2 Health."
         }
       }
     }

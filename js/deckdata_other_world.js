@@ -9,7 +9,7 @@ deckData.OtherWorld = [
         intro: "After gaining access to the Dreamlands, you find yourself fighting moonbeasts on a black galley sailing to the moon; test Strength.",
         choices: {
           Pass: "You steal their treasure and area able to barter with it; close this Gate.",
-          Fail: "You become lost in a forest on the moon; lose Health 2 Health and become Delayed."
+          Fail: "You become lost in a forest on the moon; lose 2 Health and become Delayed."
         }
       },
       Fail: "The gods of dreams exile you back to the waking world and punish you for your overreaching ambition. Your dream and the waking world become indistinguishable. Become Delayed and gain a Hallucinations Condition."
@@ -31,7 +31,7 @@ deckData.OtherWorld = [
         intro: "What was the nature of that blasphemous horror behind the mask? You consult your notes, trying to find what might disguise itself this way. Test Lore-1.",
         choices: {
           Pass: "You find the data you need; close this Gate.",
-          Fail: "Fear of the unknowable easts at your thoughts; lose Sanity 3 Sanity."
+          Fail: "Fear of the unknowable easts at your thoughts; lose 3 Sanity."
         }
       }
     }
@@ -52,7 +52,7 @@ deckData.OtherWorld = [
         intro: "The creature is terrifying, but if you can keep your calm, you will be able to overpower it; test Will.",
         choices: {
           Pass: "You subdue the creature and use it to return home; close this Gate.",
-          Fail: "Lose Health 1 Health."
+          Fail: "Lose 1 Health."
         }
       }
     }
@@ -87,13 +87,13 @@ deckData.OtherWorld = [
         intro: "The creature greedily accepts your offer. He tells you how to return home and destroy the doorway between worlds. Close this Gate. As he guides you, he secretly tries to steal some of your belongings. Test Observation.",
         choices: {
           Pass: "",
-          Fail: "Lose Sanity 1 Sanity and discard 1 Item possession."
+          Fail: "Lose 1 Sanity and discard 1 Item possession."
         }
       },
       Fail: {
         intro: [
-          "You are thrown onto a slave ship. Lose Sanity 2 Sanity.",
-          "A sailor offers to free you in exchange for secrets. You may spend Clue 2 Clues to close this Gate."
+          "You are thrown onto a slave ship. Lose 2 Sanity.",
+          "A sailor offers to free you in exchange for secrets. You may spend 2 Clues to close this Gate."
         ],
         choices: {
           "Close this Gate": "",

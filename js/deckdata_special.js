@@ -16,7 +16,7 @@ deckData.Special = {
                   "Don't": "Lose 3 Sanity."
                 }
               },
-              Fail: "Lose Sanity 3 Sanity."
+              Fail: "Lose 3 Sanity."
             }
           },
           Fail: [
@@ -33,7 +33,7 @@ deckData.Special = {
             intro: "'Umr-At-Tawil guides you through the gates to encounter Yog-Sothoth; test Influence. You may spend any number of Clues to add 1 success to your test result for each Clue spent.",
             choices: {
               "Your test result is 3 or greater": "You are allowed to return home; place Eldritch token 1 Eldritch token on the Ancient One sheet.",
-              "Your test result is less than 3": "Yog-Sothoth threatens to trap you on the doomed planet Yaddith; lose Sanity 3 Sanity."
+              "Your test result is less than 3": "Yog-Sothoth threatens to trap you on the doomed planet Yaddith; lose 3 Sanity."
             }
           },
           Fail: [

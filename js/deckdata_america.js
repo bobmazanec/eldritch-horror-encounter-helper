@@ -36,7 +36,7 @@ deckData.America = [
       intro: "You sneak into the temple and overhear the rough croaking of deep ones chanting. You recognize familiar elements to the words they are intoning; Test Lore.",
       choices: {
         Pass: "Gain 1 Ritual Spell.",
-        Fail: "It's nothing more than horrific noise; lose Sanity 1 Sanity."
+        Fail: "It's nothing more than horrific noise; lose 1 Sanity."
       }
     },
 
@@ -78,7 +78,7 @@ deckData.America = [
       intro: "The Examiner hires you to spend a night in the Winchester Mystery House. They provide you with experts in detecting the supernatural. Improve Observation. The odd architecture and the building's history threaten to unhinge your mind as the evening passes; test Will-1.",
       choices: {
         Pass: "",
-        Fail: "Lose Sanity 2 Sanity."
+        Fail: "Lose 2 Sanity."
       }
     }
   }, {
