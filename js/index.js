@@ -278,8 +278,8 @@ function resolveCosmicAlignmentAdventureII(event, space, nextId) {
   resolveMysticRuinsEncounterForSpace(event, space);
 }
 
-function resolveCosmicAlignmentAdventureIII(event, space) {
-  resolveExpeditionEncounterForSpace(event, space);
+function resolveCosmicAlignmentAdventureIII(event) {
+  resolveExpeditionEncounterForSpace(event, event.target.dataset.space);
 }
 
 function resolveOtherworldlyDreamsAdventureIII(event, space) {
