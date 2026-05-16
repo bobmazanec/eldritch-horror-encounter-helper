@@ -86,12 +86,12 @@ function addMysticRuinsEncounterButton(_) {
 }
 
 function addRuinsInTheHeartOfTheJungle() {
-  hideId("cosmic-alignment-II");
+  removeElementWithId("cosmic-alignment-II");
   showId("ruins-in-the-heart-of-the-jungle");
 }
 
 function addRuinsUnderTheStars() {
-  hideId("cosmic-alignment-II");
+  removeElementWithId("cosmic-alignment-II");
   showId("ruins-under-the-stars");
 }
 
@@ -241,10 +241,6 @@ function getCardsBySpaces(rawCardsBySpaces) {
   return allCards;
 }
 
-function hideId(id) {
-  document.getElementById(id).style.display = "none";
-}
-
 function numUniqueSpacesInDeck(deckName) {
   const spaces = new Set(decks[deckName].map(card => card.space));
   return spaces.size;
@@ -255,12 +251,16 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
+function removeElementWithId(id) {
+  document.getElementById(id).remove();
+}
+
 function removeDreamlandsButtons() {
-  document.getElementById("dreamlands").remove();
+  removeElementWithId("dreamlands");
 }
 
 function removeMysticRuinsButtons() {
-  document.getElementById("mystic-ruins-buttons").remove();
+  removeElementWithId("mystic-ruins-buttons");
 }
 
 function removeTopCardButton(button) {
@@ -278,7 +278,7 @@ function resolveCosmicAlignmentAdventureIII(event, space) {
 }
 
 function resolveExpeditionEncounterForSpace(event, space) {
-  hideId(event.target.id);
+  event.target.remove();
 
   let deckName = "Expedition";
   if (useSecondExpeditionDeck()) {
@@ -300,7 +300,7 @@ function resolveExpeditionEncounterForSpace(event, space) {
 }
 
 function resolveMysticRuinsEncounterForSpace(event, space) {
-  hideId(event.target.id);
+  event.target.remove();
 
   const deck = decks["Mystic Ruins"];
   const card = deck.searchForCard(findCardForSpace(space));
@@ -350,12 +350,6 @@ function resolveSecretsOfThePastReckoning() {
 
 function showId(id) {
   document.getElementById(id).style.display = "block";
-}
-
-function showOrHideDevestationEncounterButton() {
-  if (decks.Devestation.length === 0) {
-    hideId("devestation");
-  }
 }
 
 function shuffleDreamQuestDeck() {
@@ -569,7 +563,9 @@ if (preludesUsed.includes("Otherwordly Dreams")) {
   addOtherworldlyDreamsButtons();
 }
 
-showOrHideDevestationEncounterButton();
+if (decks.Devestation.isEmpty()) {
+  removeElementWithId("devestation");
+}
 
 if (useSecondExpeditionDeck()) {
   addExpeditionEncounterButton("Expedition-1");
