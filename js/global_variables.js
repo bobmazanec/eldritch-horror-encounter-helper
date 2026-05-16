@@ -9,7 +9,7 @@ const MasksOfNyarlathotep = 7;
 
 const ancientOne = "Hypnos";
 const expansionsUsed = [Core, ForsakenLore, MasksOfNyarlathotep, StrangeRemnants, TheDreamlands, CitiesInRuin];
-const preludesUsed = ["Litany of Secrets", "In Cosmic Alignment"];
+const preludesUsed = ["Litany of Secrets", "Otherworldly Dreams", "In Cosmic Alignment"];
 
 const deckData = {};
 const decks = {};

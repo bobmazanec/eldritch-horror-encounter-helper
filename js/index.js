@@ -1,5 +1,10 @@
 'use strict';
 
+function addOtherworldlyDreamsIIIButton(buttonId) {
+  removeElementWithId("otherworldly-dreams-III");
+  showId(buttonId);
+}
+
 function addChoiceButtons(encounterElement, encounterStep) {
   const buttonContainer = document.createElement("div");
 
@@ -277,6 +282,21 @@ function resolveCosmicAlignmentAdventureIII(event, space) {
   resolveExpeditionEncounterForSpace(event, space);
 }
 
+function resolveOtherworldlyDreamsAdventureIII(event, space) {
+  resolveDreamQuestEncounterForSpace(event, space);
+}
+
+function resolveDreamQuestEncounterForSpace(event, space) {
+  event.target.remove();
+
+  const deck = decks["Dream-Quest"];
+  const card = deck.searchForCard(findCardForSpace(space));
+
+  shuffleDreamQuestDeck();
+
+  startDreamQuestEncounterWith(card);
+}
+
 function resolveExpeditionEncounterForSpace(event, space) {
   event.target.remove();
 
@@ -406,6 +426,10 @@ function startDreamQuestEncounter(event) {
 
   addDreamQuestEncounterButton();
 
+  startDreamQuestEncounterWith(card);
+}
+
+function startDreamQuestEncounterWith(card) {
   startEncounter(
     `Dream-Quest - ${card.space}: ${card.cardId}`,
     card
@@ -532,6 +556,10 @@ function useMysticRuinsDeck() {
   );
 }
 
+function useOtherworldlyDreamsAdventure() {
+  return preludesUsed.includes("Otherworldly Dreams");
+}
+
 function useSecondExpeditionDeck() {
   return preludesUsed.includes("Litany of Secrets");
 }
@@ -543,6 +571,12 @@ buildResearchDeck();
 if (useCosmicAlignmentAdventure()) {
   showId("add-ruins-in-the-heart-of-the-jungle");
   showId("add-ruins-under-the-stars");
+}
+
+if (useOtherworldlyDreamsAdventure()) {
+  showId("add-aboard-the-black-galley");
+  showId("add-beyond-the-river-skai");
+  showId("add-the-blessings-of-nodens");
 }
 
 if (useDreamlandsBoard()) {

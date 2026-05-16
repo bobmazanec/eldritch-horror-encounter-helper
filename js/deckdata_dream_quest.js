@@ -94,5 +94,53 @@ deckData["Dream-Quest"] = {
         }
       }
     }
+  ],
+
+  "The Underworld": [
+    {
+      cardId: 1,
+      expansionId: TheDreamlands,
+      intro: "You hear the familiar voice of a friend calling to you from the darkness. Resolve the pass effect to go toward the sound; or resolve the fail effect to convince the person to come to you.",
+      choices: {
+        "Go toward the sound": {
+          intro: "The voice draws you into the Vale of Pnath; test Will-1.",
+          choices: {
+            Pass: "The see that your friend is now a ghoul, but he offers you a gift; gain 1 Artifact.",
+            Fail: "You are paralyzed with fear as a dhole devours your friends; lose 1 Sanity and discard 1 Ally Asset."
+          }
+        },
+        "Convince the person to come to you": {
+          intro: "You call out through the darkness; test Influence-1.",
+          choices: {
+            Pass: "You see he is now a ghoul but he can help you; close 1 Gate of your choice on any space.",
+            Fail: "Your friend tells you horrors that shake you to your core; lose 2 Sanity unless you discard 1 Talent Condition."
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: TheDreamlands,
+      intro: "As you ascend the Peaks of Thok, you hear gurgling voices ahead of you. You are certain that there are ghouls nearby and it takes all of your resolve to keep moving forward; test Will.",
+      choices: {
+        Pass: {
+          intro: " decrepit form lunges toward you. A Ghoul Monster ambushes you!",
+          choices: {
+            "Resolved the combat encounter": {
+              choices: {
+                "Passed the Strength test": "You steal an object that the ghoul kept in a moldy canvas bag; gain 1 Artifact.",
+                "Failed the Strength test": "The ghoul claims a nearby victim; discard 1 Ally Asset."
+              }
+            }
+          }
+        },
+        Fail: {
+          intro: "You descend into the Vale of Pnath. Among the bones and refuse you determine what might be of worth; test Lore-1.",
+          choices: {
+            Pass: "You find a treasure; gain 1 Artifact.",
+            Fail: "You should not have disturbed these remains; gain 1 Bane Condition."
+          }
+        }
+      }
+    }
   ]
 };
