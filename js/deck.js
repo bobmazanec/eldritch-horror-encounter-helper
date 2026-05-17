@@ -33,6 +33,12 @@ class deck {
     return this.drawStack.map(callback);
   }
 
+  putCardOnTop(card) {
+    if (card) {
+      this.drawStack.unshift(card);
+    }
+  }
+
   removeCardsFromDrawStack(callback) {
     // Callback identifies cards to be *removed* from the draw stack
     // So negate the callback's return value to keep cards that do *not* match
@@ -50,7 +56,7 @@ class deck {
     return array.findLastIndex(callback);
   }
 
-  searchForCard(callback) {
+  searchForCard(callback, discardIfFound = true) {
     // Per the rules, "Search" means to start at the *bottom* of the deck
     // Then search the discard pile if not found in the draw stack
 
@@ -63,7 +69,10 @@ class deck {
     }
 
     const card = cards.splice(cardIndex, 1)[0];
-    this.discard(card);
+
+    if (card && discardIfFound) {
+      this.discard(card);
+    }
 
     return card;
   }

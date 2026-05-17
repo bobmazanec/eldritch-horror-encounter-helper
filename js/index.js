@@ -321,6 +321,30 @@ function resolveExpeditionEncounterForSpace(event, space) {
   startExpeditionEncounterWith(card);
 }
 
+function resolveLeopardManSpawn(event) {
+  event.target.remove();
+
+  const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.encounter"));
+
+  buttons.forEach(button => {
+    button.remove();
+    const deck = decks[button.dataset.deckName];
+
+    // Do not discard the found card, since it is being moved in the deck
+    const card = deck.searchForCard(findCardForSpace("The Heart of Africa"), false);
+
+    deck.shuffle();
+    deck.putCardOnTop(card);
+
+    addExpeditionEncounterButton(deck.name);
+
+  });
+
+  const plural = buttons.length === 1 ? "" : "s";
+
+  addEncounterListElement(`Check Expedition token location${plural}`);
+}
+
 function resolveMysticRuinsEncounterForSpace(event, space) {
   event.target.remove();
 
@@ -549,6 +573,10 @@ function useCosmicAlignmentAdventure() {
   return preludesUsed.includes("In Cosmic Alignment");
 }
 
+function useCitiesInRuin() {
+  return expansionsUsed.includes(CitiesInRuin);
+}
+
 function useMysticRuinsDeck() {
   // True if either of the Ancient Ones or Preludes,
   return (
@@ -601,6 +629,10 @@ if (preludesUsed.includes("Otherwordly Dreams")) {
 
 if (decks.Devestation.isEmpty()) {
   removeElementWithId("devestation");
+}
+
+if (!useCitiesInRuin()) {
+  removeElementWithId("spawn-leopard-man");
 }
 
 if (useSecondExpeditionDeck()) {

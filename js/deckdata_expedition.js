@@ -87,10 +87,10 @@ deckData.Expedition = {
     {
       cardId: 1,
       expansionId: Core,
-      intro: "Flying over the area, you see evidence of an ancient stone city. You land your plane as close as you can and climb across the ice to reach the strange architecture; test Strength).",
+      intro: "Flying over the area, you see evidence of an ancient stone city. You land your plane as close as you can and climb across the ice to reach the strange architecture; test Strength.",
       choices: {
         Pass: {
-          intro: "The murals inside the city tell the story of the elder things. Retreat Doom by 1. However, your studies take a toll on your mind; test Will",
+          intro: "The murals inside the city tell the story of the elder things. Retreat Doom by 1. However, your studies take a toll on your mind; test Will.",
           choices: {
             Pass: "",
             Fail: "You block everything you've learned from your mind; gain an Amnesia Condition."
@@ -156,11 +156,95 @@ deckData.Expedition = {
             Fail: "You run away as soon as you can; gain a Despair Condition."
           }
         },
-        "Try and dig up the foundation before the blizzard starts.": {
+        "Try and dig up the foundation before the blizzard starts": {
           intro: "You quickly pull away the ancient stones; test Strength.",
           choices: {
             Pass: "You uncover a lost wonder; gain 1 Artifact.",
             Fail: "The storm descends forcing you to set up your tent in the bitter cold; gain 1 Illness Condition."
+          }
+        }
+      }
+    }
+  ],
+
+  "The Heart of Africa": [
+    {
+      cardId: 1,
+      expansionId: Core,
+      intro: "The whole jungle shakes, and the ground splits beneath your feet. You fall through the crevice into a vast subterranean tunnel; test Strength.",
+      choices: {
+        Pass: {
+          intro: "You follow the tunnel to the ancient city of G'harne. Retreat Doom Doom by 1. If you have read about G'harne, you know to leave quickly; test Lore.",
+          choices: {
+            Pass: "",
+            Fail: "You wake up in the jungle with no memory; gain an Amnesia Condition."
+          }
+        },
+        Fail: {
+          intro: "You land painfully on your spine. Lose 1 Health and gain a Back Injury Condition. While you're stuck here, you examine this tunnel; test Observation-1.",
+          choices: {
+            Pass: "You see that it was dug out by a large creature; retreat Doom by 1.",
+            Fail: ""
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: Core,
+      intro: "The old N'bangu man's map to the gray city of the white god relies on landmarks that are now overgrown by the dense jungle. You search carefully to recognize anything familiar Observation.",
+      choices: {
+        Pass: {
+          intro: "You find the remains of a white ape and study the bones; test Lore.",
+          choices: {
+            Pass: "You find a hastily drawn map that leads you to a hidden treasure; gain 1 Artifact.",
+            Fail: "Something about this creature make you doubt your own humanity; gain a Hallucinations Condition."
+          }
+        },
+        Fail: {
+          intro: "Stumbling across a copper mine, you are immediately accused of being a thief or a saboteur. You fight to escape into the jungle; test Strength-1.",
+          choices: {
+            Pass: "You find the gray city; gain 2 Clues.",
+            Fail: "Gain a Detained Condition."
+          }
+        }
+      }
+    }, {
+      cardId: 4,
+      expansionId: ForsakenLore,
+      intro: "In a part of the jungle avoided by all of the local tribes, you find a stone covered with strange dot patterns. You attempt to identify the origin of the shard and interpret the meaning of the patterns; test Lore-1.",
+      choices: {
+        Pass: {
+          intro: "You identify it as a missing piece of the G'harne Fragments that leads you to a long-forgotten cave. Inside, you search through the ruins of an abandoned lair of elder things; test Observation-1.",
+          choices: {
+            Pass: "You find a lost treasure; gain 1 Artifact.",
+            Fail: ""
+          }
+        },
+        Fail: {
+          intro: "Your failure hurts your reputation among your peers. Discard all Influence Improvement tokens. Soon, a rival expedition tries to steal the fragment; test Strength.",
+          choices: {
+            Pass: "You escape with the other expedition's notes; gain 2 Clues.",
+            Fail: "They leave you wounded; lose 2 Health."
+          }
+        }
+      }
+    }, {
+      cardId: 6,
+      expansionId: SignsOfCarcosa,
+      intro: "You consider your options for gaining access to the legendary canyons of Ituri-kendi. Resolve the pass effect to take the Ituri river into the canyon; or resolve the fail effect to approach through the jungle.",
+      choices: {
+        "Take the Ituri river into the canyon": {
+          intro: "The powerful current threatens to pull you under; test Strength-1.",
+          choices: {
+            Pass: "You find a strange object waiting for you on the shore; gain 1 Artifact.",
+            Fail: "You are attacked by giant leeches under the water; lose 2 Health."
+          }
+        },
+        "Approach through the jungle": {
+          intro: "You try to follow an ancient map to an abandoned city in the canyon walls; test Lore-1.",
+          choices: {
+            Pass: "You find a strange item in a prehistoric chamber; gain 1 Artifact.",
+            Fail: "Wandering in the jungle breaks your body; gain 1 Injury Condition."
           }
         }
       }
