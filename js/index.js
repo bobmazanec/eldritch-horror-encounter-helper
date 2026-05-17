@@ -394,6 +394,55 @@ function resolveSecretsOfThePastReckoning() {
   updateSecretsOfThePastButton();
 }
 
+function resolveUpheavalDisaster(event) {
+  event.target.parentElement.remove();
+  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const expeditionDecks = buttons.map(button => removeTopCardButton(button));
+  let spacesRemoved = new Set();
+
+  for (let i = 0; i < 3; i++) {
+    const cardSpaces = expeditionDecks.reduce(
+      (spaces, deck) => {
+        if (!deck.isEmpty()) {
+          spaces.add(deck.topCard().space);
+        }
+        return spaces;
+      },
+      new Set()
+    );
+
+    // Remove cards whose space matches the drawn card('s/s')
+    expeditionDecks.forEach(deck => {
+      deck.removeCardsFromDrawStack(
+        card => cardSpaces.has(card.space)
+      );
+    });
+
+    cardSpaces.forEach(space => disableEncounterButtonsFor(space));
+    spacesRemoved = spacesRemoved.union(cardSpaces);
+  }
+
+  expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
+  updateSecretsOfThePastButton();
+
+  const plural = buttons.length === 1 ? "" : "s";
+  const encounterElement = addEncounterListElement(`Resolved 'Upheaval' Disaster and shuffled the Expedition deck${plural}`);
+  const textNode = document.createElement("div");
+  textNode.innerHTML = `Check Expedition token location${plural}<br>Removed Expedition cards for`;
+  encounterElement.appendChild(textNode);
+  const ul = document.createElement('ul');
+  Array
+    .from(spacesRemoved)
+    .sort()
+    .forEach(space => {
+      const li = document.createElement('li');
+      li.textContent = space;
+      ul.appendChild(li)
+    });
+  textNode.appendChild(ul);
+  encounterElement.appendChild(textNode)
+}
+
 function showId(id) {
   document.getElementById(id).style.display = "block";
 }
@@ -628,7 +677,7 @@ if (preludesUsed.includes("Otherwordly Dreams")) {
 }
 
 if (decks.Devestation.isEmpty()) {
-  removeElementWithId("devestation");
+  removeElementWithId("cities-in-ruin");
 }
 
 if (!useCitiesInRuin()) {
