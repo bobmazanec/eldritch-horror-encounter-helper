@@ -75,6 +75,13 @@ class deck {
     }
   }
 
+  splitDeckInTwo() {
+    const halfwayPoint = Math.ceil(this.drawStack.length / 2);
+    const firstHalf = this.drawStack.slice(0, halfwayPoint);
+    const secondHalf = this.drawStack.splice(halfwayPoint);
+    return [firstHalf, secondHalf];
+  }
+
   topCard() {
     if (this.isEmpty()) {
       this.reset();

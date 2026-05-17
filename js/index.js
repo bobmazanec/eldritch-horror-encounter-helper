@@ -140,14 +140,16 @@ function buildDreamQuestDeck() {
 
 function buildExpeditionDecks() {
   const allExpeditionCards = getCardsBySpaces(deckData.Expedition);
+  const wholeDeck = new deck("Expedition", allExpeditionCards);
+  wholeDeck.shuffle();
+  
   if (useSecondExpeditionDeck()) {
-    const halfwayPoint = Math.ceil(allExpeditionCards.length / 2);
-
-    createDeck("Expedition-1", allExpeditionCards.slice(0, halfwayPoint));
-    createDeck("Expedition-2", allExpeditionCards.slice(halfwayPoint));
+    const deckHalves = wholeDeck.splitDeckInTwo();
+    createDeck("Expedition-1", deckHalves.shift());
+    createDeck("Expedition-2", deckHalves.shift());
   } else {
-    createDeck("Expedition", allExpeditionCards);
-  }   
+    decks["Expedition"] = wholeDeck;
+  }
 }
 
 function buildMysticRuinsDeck() {
