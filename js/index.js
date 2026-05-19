@@ -65,31 +65,6 @@ function addEncounterStepText(historyElement, encounterStep) {
   });
 }
 
-function addExpeditionCardsRemovedHistoryItem(title, spacesRemoved) {
-  const plural = useSecondExpeditionDeck() ? "s" : "";
-  const historyElement = addHistoryElement(`${title} and shuffled the Expedition deck${plural}`);
-  const textNode = document.createElement("div");
-
-  textNode.innerHTML = `Check Expedition token location${plural}<br>Removed Expedition cards for`;
-  historyElement.appendChild(textNode);
-  if (spacesRemoved.size == 1) {
-    textNode.innerHTML += ' ' + spacesRemoved.values().next().value;
-  } else {
-    const ul = document.createElement('ul');
-    Array
-      .from(spacesRemoved)
-      .sort()
-      .forEach(space => {
-        const li = document.createElement('li');
-        li.textContent = space;
-        ul.appendChild(li)
-      });
-    textNode.appendChild(ul);
-  }
-
-  historyElement.appendChild(textNode);
-}
-
 function addExpeditionEncounterButton(deckName) {
   addTopCardButton(deckName, "expedition-buttons", "expedition", startExpeditionEncounter, card => {
     return `Start ${card.space} Expedition Encounter`;
@@ -107,6 +82,36 @@ function addHistoryElement(headerText) {
   document.getElementById("history").prepend(historyElement);
 
   return historyElement;
+}
+
+function addModifiedExpeditionDeckHistoryItem(title, spacesRemoved = new Set()) {
+  const plural = useSecondExpeditionDeck() ? "s" : "";
+
+  const historyElement = addHistoryElement(`${title} and shuffled the Expedition deck${plural}`);
+  const textNode = document.createElement("div");
+
+  textNode.innerHTML = `Check Expedition token location${plural}`
+  
+  if (spacesRemoved.size > 0) {
+    textNode.innerHTML += '<br>Removed Expedition cards for';
+    historyElement.appendChild(textNode);
+    if (spacesRemoved.size == 1) {
+      textNode.innerHTML += ' ' + spacesRemoved.values().next().value;
+    } else {
+      const ul = document.createElement('ul');
+      Array
+        .from(spacesRemoved)
+        .sort()
+        .forEach(space => {
+          const li = document.createElement('li');
+          li.textContent = space;
+          ul.appendChild(li)
+        });
+      textNode.appendChild(ul);
+    }
+  }
+
+  historyElement.appendChild(textNode);
 }
 
 function addMysticRuinsEncounterButton(_) {
@@ -375,6 +380,7 @@ function resolveLeopardManSpawn(event) {
   event.target.remove();
 
   const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.encounter"));
+  let foundCard = false;
 
   buttons.forEach(button => {
     button.remove();
@@ -383,15 +389,21 @@ function resolveLeopardManSpawn(event) {
     // Do not discard the found card, since it is being moved in the deck
     const card = deck.searchForCard(findCardForSpace("The Heart of Africa"), false);
 
+    foundCard ||= !!card;
+
     deck.shuffle();
     deck.putCardOnTop(card);
 
     addExpeditionEncounterButton(deck.name);
   });
 
-  const plural = buttons.length === 1 ? "" : "s";
+  const plural = useSecondExpeditionDeck() ? "s" : "";
 
-  addHistoryElement(`Check Expedition token location${plural}`);
+  addModifiedExpeditionDeckHistoryItem(
+    `Resolved Leopard Man Spawn effect: ` +
+    (foundCard ? `Moved` : "Unable to move") +
+    ` Expedition token${plural} to The Heart of Africa`
+  );
 }
 
 function resolveMysticRuinsEncounterForSpace(event, space) {
@@ -438,7 +450,7 @@ function resolveSecretsOfThePastReckoning() {
     }
   });
 
-  addExpeditionCardsRemovedHistoryItem("Resolved 'Secrets of the Past' Mythos Reckoning", cardSpaces)
+  addModifiedExpeditionDeckHistoryItem("Resolved 'Secrets of the Past' Mythos Reckoning", cardSpaces)
 
   cardSpaces.forEach((space) => disableEncounterButtonsFor(space));
 
@@ -459,7 +471,7 @@ function resolveTheWorldShakesMythos(event) {
   expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
   updateSecretsOfThePastButton();
 
-  addExpeditionCardsRemovedHistoryItem("Resolved 'The World Shakes' Mythos", spacesRemoved)
+  addModifiedExpeditionDeckHistoryItem("Resolved 'The World Shakes' Mythos", spacesRemoved)
 }
 
 function resolveUpheavalDisaster(event) {
@@ -479,7 +491,7 @@ function resolveUpheavalDisaster(event) {
   expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
   updateSecretsOfThePastButton();
 
-  addExpeditionCardsRemovedHistoryItem("Resolved 'Upheaval' Disaster", spacesRemoved)
+  addModifiedExpeditionDeckHistoryItem("Resolved 'Upheaval' Disaster", spacesRemoved)
 }
 
 function showId(id) {
