@@ -450,6 +450,19 @@ function resolveSecretsOfThePastReckoning() {
   updateSecretsOfThePastButton();
 }
 
+function resolveTheWorldShakesMythos(event) {
+  event.target.remove();
+
+  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const expeditionDecks = buttons.map(button => removeTopCardButton(button));
+  const spacesRemoved = removeTopExpeditionCardSpaceCards(expeditionDecks);
+
+  expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
+  updateSecretsOfThePastButton();
+
+  addExpeditionCardsRemovedHistoryItem("Resolved 'The World Shakes' Mythos", spacesRemoved)
+}
+
 function resolveUpheavalDisaster(event) {
   event.target.parentElement.remove();
 
