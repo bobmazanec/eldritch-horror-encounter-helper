@@ -78,6 +78,31 @@ function addEncounterStepText(encounterElement, encounterStep) {
   });
 }
 
+function addExpeditionCardsRemovedHistoryItem(title, spacesRemoved) {
+  const plural = useSecondExpeditionDeck() ? "s" : "";
+  const encounterElement = addEncounterListElement(`${title} and shuffled the Expedition deck${plural}`);
+  const textNode = document.createElement("div");
+
+  textNode.innerHTML = `Check Expedition token location${plural}<br>Removed Expedition cards for`;
+  encounterElement.appendChild(textNode);
+  if (spacesRemoved.size == 1) {
+    textNode.innerHTML += ' ' + spacesRemoved.values().next().value;
+  } else {
+    const ul = document.createElement('ul');
+    Array
+      .from(spacesRemoved)
+      .sort()
+      .forEach(space => {
+        const li = document.createElement('li');
+        li.textContent = space;
+        ul.appendChild(li)
+      });
+    textNode.appendChild(ul);
+  }
+
+  encounterElement.appendChild(textNode);
+}
+
 function addExpeditionEncounterButton(deckName) {
   addTopCardButton(deckName, "expedition-buttons", "expedition", startExpeditionEncounter, card => {
     return `Start ${card.space} Expedition Encounter`;
@@ -248,6 +273,18 @@ function getCardsBySpaces(rawCardsBySpaces) {
   return allCards;
 }
 
+function getTopExpeditionCardSpaces(expeditionDecks) {
+  return expeditionDecks.reduce(
+    (spaces, deck) => {
+      if (!deck.isEmpty()) {
+        spaces.add(deck.topCard().space);
+      }
+      return spaces;
+    },
+    new Set()
+  );
+}
+
 function numUniqueSpacesInDeck(deckName) {
   const spaces = new Set(decks[deckName].map(card => card.space));
   return spaces.size;
@@ -273,6 +310,19 @@ function removeMysticRuinsButtons() {
 function removeTopCardButton(button) {
   button.remove();
   return decks[button.dataset.deckName];
+}
+
+function removeTopExpeditionCardSpaceCards(expeditionDecks) {
+  const cardSpaces = getTopExpeditionCardSpaces(expeditionDecks);
+
+  // Remove cards whose space matches the top card('s/s')
+  expeditionDecks.forEach(deck => {
+    deck.removeCardsFromDrawStack(
+      card => cardSpaces.has(card.space)
+    );
+  });
+  
+  return cardSpaces;
 }
 
 function resolveCosmicAlignmentAdventureII(event, space, nextId) {
@@ -357,18 +407,22 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
 }
 
 function resolveSecretsOfThePastReckoning() {
-  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const buttons = Array.from(document.querySelectorAll("button.expedition"));
   const cardSpaces = new Set();
   const deckNames = [];
+
+  let expeditionDeckIsEmpty = false;
   
   buttons.forEach((button) => {
     const deck = removeTopCardButton(button);
-    cardSpaces.add(deck.topCard().space);
-
-    deckNames.push(deck.name);
+    const card = deck.topCard();
+    
+    if (card) {
+      cardSpaces.add(card.space);
+      deckNames.push(deck.name);
+    }
+    expeditionDeckIsEmpty ||= deck.isEmpty();
   });
-
-  let expeditionDeckIsEmpty = false;
 
   deckNames.forEach(deckName => {
     const deck = decks[deckName];
@@ -385,6 +439,8 @@ function resolveSecretsOfThePastReckoning() {
     }
   });
 
+  addExpeditionCardsRemovedHistoryItem("Resolved 'Secrets of the Past' Mythos Reckoning", cardSpaces)
+
   cardSpaces.forEach((space) => disableEncounterButtonsFor(space));
 
   if (expeditionDeckIsEmpty) {
@@ -396,51 +452,22 @@ function resolveSecretsOfThePastReckoning() {
 
 function resolveUpheavalDisaster(event) {
   event.target.parentElement.remove();
+
   const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
   let spacesRemoved = new Set();
 
   for (let i = 0; i < 3; i++) {
-    const cardSpaces = expeditionDecks.reduce(
-      (spaces, deck) => {
-        if (!deck.isEmpty()) {
-          spaces.add(deck.topCard().space);
-        }
-        return spaces;
-      },
-      new Set()
-    );
+    const cardSpacesRemoved = removeTopExpeditionCardSpaceCards(expeditionDecks);
 
-    // Remove cards whose space matches the drawn card('s/s')
-    expeditionDecks.forEach(deck => {
-      deck.removeCardsFromDrawStack(
-        card => cardSpaces.has(card.space)
-      );
-    });
-
-    cardSpaces.forEach(space => disableEncounterButtonsFor(space));
-    spacesRemoved = spacesRemoved.union(cardSpaces);
+    cardSpacesRemoved.forEach(space => disableEncounterButtonsFor(space));
+    spacesRemoved = spacesRemoved.union(cardSpacesRemoved);
   }
 
   expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
   updateSecretsOfThePastButton();
 
-  const plural = buttons.length === 1 ? "" : "s";
-  const encounterElement = addEncounterListElement(`Resolved 'Upheaval' Disaster and shuffled the Expedition deck${plural}`);
-  const textNode = document.createElement("div");
-  textNode.innerHTML = `Check Expedition token location${plural}<br>Removed Expedition cards for`;
-  encounterElement.appendChild(textNode);
-  const ul = document.createElement('ul');
-  Array
-    .from(spacesRemoved)
-    .sort()
-    .forEach(space => {
-      const li = document.createElement('li');
-      li.textContent = space;
-      ul.appendChild(li)
-    });
-  textNode.appendChild(ul);
-  encounterElement.appendChild(textNode)
+  addExpeditionCardsRemovedHistoryItem("Resolved 'Upheaval' Disaster", spacesRemoved)
 }
 
 function showId(id) {
