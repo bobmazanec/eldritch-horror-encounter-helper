@@ -387,7 +387,6 @@ function resolveLeopardManSpawn(event) {
     deck.putCardOnTop(card);
 
     addExpeditionEncounterButton(deck.name);
-
   });
 
   const plural = buttons.length === 1 ? "" : "s";
