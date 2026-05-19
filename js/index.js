@@ -5,20 +5,20 @@ function addOtherworldlyDreamsIIIButton(buttonId) {
   showId(buttonId);
 }
 
-function addChoiceButtons(encounterElement, encounterStep) {
+function addChoiceButtons(historyElement, encounterStep) {
   const buttonContainer = document.createElement("div");
 
   for (const label in encounterStep.choices) {
     const button = document.createElement("button");
     button.textContent = label;
     button.onclick = () => {
-      addEncounterStep(encounterElement, encounterStep.choices[label], buttonContainer, label);
+      addEncounterStep(historyElement, encounterStep.choices[label], buttonContainer, label);
     };
 
     buttonContainer.appendChild(button);
   }
   
-  encounterElement.appendChild(buttonContainer);
+  historyElement.appendChild(buttonContainer);
 }
 
 function addDreamQuestEncounterButton() {
@@ -36,34 +36,21 @@ function addEncounterAction(buttonContainer, action) {
   buttonContainer.remove();
 }
 
-function addEncounterListElement(headerText) {
-  const encounterElement = document.createElement("div");
-  encounterElement.appendChild(document.createElement("hr"));
-
-  const headerElement = document.createElement("h3");
-  headerElement.textContent = headerText;
-  encounterElement.appendChild(headerElement);
-
-  document.getElementById("encounterList").prepend(encounterElement);
-
-  return encounterElement;
-}
-
-function addEncounterStep(encounterElement, encounterStep, priorButtonContainer = null, action = null) {
+function addEncounterStep(historyElement, encounterStep, priorButtonContainer = null, action = null) {
   if (action && priorButtonContainer) {
     addEncounterAction(priorButtonContainer, action);
   }
 
-  addEncounterStepText(encounterElement, encounterStep);
+  addEncounterStepText(historyElement, encounterStep);
 
   if (encounterStep.choices) {
-    addChoiceButtons(encounterElement, encounterStep);
+    addChoiceButtons(historyElement, encounterStep);
   } else {
     endEncounter();
   }
 }
 
-function addEncounterStepText(encounterElement, encounterStep) {
+function addEncounterStepText(historyElement, encounterStep) {
   let textItems;
   if (Array.isArray(encounterStep) || typeof(encounterStep) == "string") {
     textItems = encounterStep;
@@ -73,18 +60,18 @@ function addEncounterStepText(encounterElement, encounterStep) {
   [textItems].flat().forEach(textItem => {
     const textElement = document.createElement("p");
     textElement.textContent = textItem;
-    encounterElement.appendChild(textElement);
+    historyElement.appendChild(textElement);
     readAlound(textItem);
   });
 }
 
 function addExpeditionCardsRemovedHistoryItem(title, spacesRemoved) {
   const plural = useSecondExpeditionDeck() ? "s" : "";
-  const encounterElement = addEncounterListElement(`${title} and shuffled the Expedition deck${plural}`);
+  const historyElement = addHistoryElement(`${title} and shuffled the Expedition deck${plural}`);
   const textNode = document.createElement("div");
 
   textNode.innerHTML = `Check Expedition token location${plural}<br>Removed Expedition cards for`;
-  encounterElement.appendChild(textNode);
+  historyElement.appendChild(textNode);
   if (spacesRemoved.size == 1) {
     textNode.innerHTML += ' ' + spacesRemoved.values().next().value;
   } else {
@@ -100,13 +87,26 @@ function addExpeditionCardsRemovedHistoryItem(title, spacesRemoved) {
     textNode.appendChild(ul);
   }
 
-  encounterElement.appendChild(textNode);
+  historyElement.appendChild(textNode);
 }
 
 function addExpeditionEncounterButton(deckName) {
   addTopCardButton(deckName, "expedition-buttons", "expedition", startExpeditionEncounter, card => {
     return `Start ${card.space} Expedition Encounter`;
   });
+}
+
+function addHistoryElement(headerText) {
+  const historyElement = document.createElement("div");
+  historyElement.appendChild(document.createElement("hr"));
+
+  const headerElement = document.createElement("h3");
+  headerElement.textContent = headerText;
+  historyElement.appendChild(headerElement);
+
+  document.getElementById("history").prepend(historyElement);
+
+  return historyElement;
 }
 
 function addMysticRuinsEncounterButton(_) {
@@ -391,7 +391,7 @@ function resolveLeopardManSpawn(event) {
 
   const plural = buttons.length === 1 ? "" : "s";
 
-  addEncounterListElement(`Check Expedition token location${plural}`);
+  addHistoryElement(`Check Expedition token location${plural}`);
 }
 
 function resolveMysticRuinsEncounterForSpace(event, space) {
@@ -513,7 +513,7 @@ function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = 
   });
 
   const plural = buttons.length === 1 ? "" : "s";
-  addEncounterListElement(`Shuffled the ${deckLabel} deck${plural}`);
+  addHistoryElement(`Shuffled the ${deckLabel} deck${plural}`);
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -553,10 +553,10 @@ function startDreamQuestEncounterWith(card) {
 function startEncounter(headerText, encounter) {
   disableEncounterButtons();
 
-  const encounterElement = addEncounterListElement(headerText);
-  encounterElement.classList.add("encounter");
+  const historyElement = addHistoryElement(headerText);
+  historyElement.classList.add("encounter");
 
-  addEncounterStep(encounterElement, encounter);
+  addEncounterStep(historyElement, encounter);
 }
 
 function startExpeditionEncounter(event) {
