@@ -468,7 +468,7 @@ function resolveLeopardManSpawn(event) {
     // Do not discard the found card, since it is being moved in the deck
     const card = deck.searchForCard(findCardForSpace("The Heart of Africa"), false);
 
-    foundCard ||= !!card;
+    foundCard |= !!card;
 
     deck.shuffle();
     deck.putCardOnTop(card);
@@ -515,7 +515,7 @@ function resolveSecretsOfThePastReckoning() {
       cardSpaces.add(card.space);
       deckNames.push(deck.name);
     }
-    expeditionDeckIsEmpty ||= deck.isEmpty();
+    expeditionDeckIsEmpty |= deck.isEmpty();
   });
 
   deckNames.forEach(deckName => {
