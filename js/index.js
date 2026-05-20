@@ -235,6 +235,23 @@ function createDeckBySpaces(deckName) {
   );
 }
 
+function devestateCity(event, cityName) {
+  event.target.disabled = true;
+  const encounterButtonId = cityName.toLowerCase().replaceAll(/\s+/g, "-");
+  const encounterButton = document.getElementById(encounterButtonId);
+
+  encounterButton.textContent = "Start Devestation Encounter";
+  encounterButton.onclick = startDevestationEncounter;
+
+  const historyElement = addHistoryElement(`${cityName} is Devestated!`);
+  const textNode = document.createElement("p");
+  historyElement.appendChild(textNode);
+  textNode.textContent = `Remove any Clues in ${cityName}`;
+
+  removeExpeditionCardsFor(cityName, historyElement);
+  removeMysticRuinsCardsFor(cityName, historyElement);
+}
+
 function disableEncounterButtons() {
   updateEncounterButtons(true);
 }
@@ -314,6 +331,46 @@ function removeElementWithId(id) {
 
 function removeDreamlandsButtons() {
   removeElementWithId("dreamlands");
+}
+
+function removeExpeditionCardsFor(cityName, historyElement) {
+  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const expeditionDecks = buttons.map(button => removeTopCardButton(button));
+
+  let removedCards = false;
+
+  expeditionDecks.forEach(deck => {
+    removedCards |= deck.removeCardsFromDrawStack(
+      card => card.space === cityName
+    );
+
+    addExpeditionEncounterButton(deck.name);
+  });
+
+  if (removedCards) {
+    const plural = useSecondExpeditionDeck() ? "s" : "";
+    const textNode = document.createElement("p");
+
+    historyElement.appendChild(textNode);
+    textNode.textContent = `Removed ${cityName} from Expedition deck${plural} - check token location${plural}`;
+  }
+}
+
+function removeMysticRuinsCardsFor(cityName, historyElement) {
+  const button = document.querySelector("button.top-card.mystic-ruins");
+  const deck = removeTopCardButton(button);
+  const removedCards = deck.removeCardsFromDrawStack(
+    // e.g., "Stonehenge (London)"
+    card => card.space.includes(cityName)
+  );
+  addMysticRuinsEncounterButton(deck.name);
+
+  if (removedCards) {
+    const textNode = document.createElement("p");
+
+    historyElement.appendChild(textNode);
+    textNode.textContent = `Removed ${cityName} from Mystic Ruins deck - check token location`;
+  }
 }
 
 function removeMysticRuinsButtons() {
@@ -770,7 +827,11 @@ if (decks.Devestation.isEmpty()) {
   removeElementWithId("cities-in-ruin");
 }
 
-if (!useCitiesInRuin()) {
+if (useCitiesInRuin()) {
+  document.querySelectorAll("div .disaster").forEach(node => {
+    node.style.display = "block";
+  });
+} else {
   removeElementWithId("spawn-leopard-man");
 }
 

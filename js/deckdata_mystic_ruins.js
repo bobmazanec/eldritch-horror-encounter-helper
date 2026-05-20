@@ -1,5 +1,5 @@
 deckData["Mystic Ruins"] = {
-  Atlantis: [
+  "Atlantis (Space 8)": [
     {
       cardId: 1,
       expansionId: MasksOfNyarlathotep,
@@ -43,7 +43,7 @@ deckData["Mystic Ruins"] = {
     }
   ],
 
-  "Chichen Itza": [
+  "Chichen Itza (Space 7)": [
     {
       cardId: 1,
       expansionId: StrangeRemnants,
@@ -87,7 +87,51 @@ deckData["Mystic Ruins"] = {
     }
   ],
 
-  "Stonehenge": [
+  "Great Wall of China (Shanghai)": [
+    {
+      cardId: 1,
+      expansionId: StrangeRemnants,
+      intro: "A stranger stands outside Jiayuguan and asks for your permission to pass. You remember that this place was once called the Gate of the Demons. Resolve the pass effect to forbid him to enter; or resolve the fail effect to allow him to pass.",
+      choices: {
+        "Forbid him to enter": {
+          intro: "The man grows angry and tries to force his way past you; test Strength-1.",
+          choices: {
+            Pass: "The strange man says his kin will not bother you further; close 1 Gate of your choice on any space.",
+            Fail: "You see his true form; a Monster ambushes you!"
+          }
+        },
+        "Allow him to pass": {
+          intro: "After he goes by, you hunt him down; test Observation-1.",
+          choices: {
+            Pass: "He offers to use his magic in exchange for his freedom; move the Omen to any space of the track without advancing Doom.",
+            Fail: "You fear he is hunting you; gain a Paranoia Condition."
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: StrangeRemnants,
+      intro: "At the Temple of Lady Meng Jiang, you carefully study the couplet hanging from the columns. You believe a careful analysis will reveal a deeper meaning; test Lore.",
+      choices: {
+        Pass: {
+          intro: "The spirit of Lady Meng Jiang manifests and helps you in your quest. Close 1 Gate of your choice on any space. In her presence you are overwhelmed by her terrible sorrow; test Will.",
+          choices: {
+            Pass: "",
+            Fail: "Her heartbreaking story shakes you; lose 2 Sanity."
+          }
+        },
+        Fail: {
+          intro: "You ask a young, sad-looking woman to help you with the translation; test Influence.",
+          choices: {
+            Pass: "She is able to help you; close 1 Gate of your choice on any space.",
+            Fail: "She begins to cry and the walls collapse around you; lose 2 Health"
+          }
+        }
+      }
+    }
+  ],
+
+  "Stonehenge (London)": [
     {
       cardId: 1,
       expansionId: StrangeRemnants,

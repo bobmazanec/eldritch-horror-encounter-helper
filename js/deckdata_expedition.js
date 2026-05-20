@@ -427,6 +427,50 @@ deckData.Expedition = {
     }
   ],
 
+  London: [
+    {
+      cardId: 1,
+      expansionId: CitiesInRuin,
+      intro: "An ancient threat has taken root in Fleet River, a subterranean waterway that has been bricked up for nearly two hundred years. You try to convince the city officials to open the chamber; test Influence.",
+      choices: {
+        Pass: {
+          intro: "You trade a favor for access to the sealed area. Gain 1 Task Unique Asset. You search the murky river; test Observation.",
+          choices: {
+            Pass: "You find a vile statue and destroy it; advance the active Mystery Mystery by 1.",
+            Fail: "The foul water sickens you; lose 2 Health."
+          }
+        },
+        Fail: {
+          intro: "Breaking in at night, you find the water teeming with serpents. Gain 1 Madness Condition. You try to summon the courage to remove the snakes; test Will.",
+          choices: {
+            Pass: "You clear the area; retreat Doom by 1.",
+            Fail: "You scream and run; lose 1 Sanity."
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: CitiesInRuin,
+      intro: "You learn that a powerful occult object is being held in the Black Museum at Scotland Yard. Resolve the pass effect to convince the police to give you access; or resolve the fail effect to break in at night.",
+      choices: {
+        "Convince the police to give you access": {
+          intro: "You attempt to convince the police of your credentials; test Influence-1.",
+          choices: {
+            Pass: "You are given free access to the museum's notorious exhibits; gain 1 Artifact.",
+            Fail: "You are arrested on the spot; gain a Detained Condition."
+          }
+        },
+        "Break in at night": {
+          intro: "Your incursion goes smoothly until you reach a locked door inside the museum. Test Strength-1.",
+          choices: {
+            Pass: "You are free to search the items on display; gain 1 Artifact.",
+            Fail: "Your effort leaves you bruised; lose 2 Health."
+          }
+        }
+      }
+    }
+  ],
+
   "The Pyramids": [
     {
       expansionId: Core,
@@ -497,6 +541,50 @@ deckData.Expedition = {
           choices: {
             Pass: "You hear the whispers of long dead pharaohs; retreat Doom by 1.",
             Fail: "you run as fast as you can; gain a Despair Condition."
+          }
+        }
+      }
+    }
+  ],
+
+  Shanghai: [
+    {
+      cardId: 1,
+      expansionId: CitiesInRuin,
+      intro: "Visiting the Longhua Temple, you are horrified to encounter the spirits of thousands of victims who have been imprisoned and executed on this site. They cry out to you in a ghastly cacophony; test Will.",
+      choices: {
+        Pass: {
+          intro: "You listen to their stories and learn of their deaths. Improve Lore. They beg you to find their bodies; test Observation.",
+          choices: {
+            Pass: "The grateful spirits aid you in your case; advance the active Mystery Mystery by 1.",
+            Fail: "They inflict their wounds upon you; lose 2 Health."
+          }
+        },
+        Fail: {
+          intro: "You collapse in a panic. Lose Sanity 1 Sanity. You beg the spirits to have mercy; test Influence.",
+          choices: {
+            Pass: "The ghosts see the good within you and relent; retreat Doom by 1.",
+            Fail: "They terrorize you until you snap; gain 2 Madness Condition."
+          }
+        }
+      }
+    }, {
+      cardId: 2,
+      expansionId: CitiesInRuin,
+      intro: "A wealthy antiquities dealer's safe was dropped into a deep river. Resolve the pass effect to open the safe under the water's surface; or resolve the fail effect to try to get the safe back on dry land.",
+      choices: {
+        "Open the safe under the water's surface": {
+          intro: "You do your best to crack the combination lock while submerged; test Observation-1.",
+          choices: {
+            Pass: "The door springs open revealing an important treasure; gain 1 Artifact.",
+            Fail: "You lose something while fumbling about in the water; discard 1 Item possession."
+          }
+        },
+        "Try to get the safe back on dry land": {
+          intro: "The safe is extremely heavy and difficult to recover; test Strength-1.",
+          choices: {
+            Pass: "You push it up onto a sidewalk and open it easily; gain 1 Artifact.",
+            Fail: "You nearly drown yourself struggling against its tremendous weight; lose 2 Health."
           }
         }
       }

@@ -40,10 +40,14 @@ class deck {
   }
 
   removeCardsFromDrawStack(callback) {
+    const lengthBefore = this.drawStack.length;
+
     // Callback identifies cards to be *removed* from the draw stack
     // So negate the callback's return value to keep cards that do *not* match
     // Removed cards are not added to the discard pile
     this.drawStack = this.drawStack.filter(card => !callback(card));
+
+    return this.drawStack.length < lengthBefore;
   }
 
   reset() {

@@ -27,33 +27,55 @@
     <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
     <div id="app"></div>
     <div id="mainView">
-      Read America Encounter
-      <button type="button" class="encounter" onclick="startCityEncounter('America', 'Arkham')">Arkham</button>
-      <button type="button" class="encounter" onclick="startCityEncounter('America', 'Buenos Aires')">Buenos Aires</button>
-      <button type="button" class="encounter" onclick="startCityEncounter('America', 'San Francisco')">San Francisco</button>
+      America
+      <div>
+        <button type="button" id="arkham" class="encounter" onclick="startCityEncounter('America', 'Arkham')">Start Arkham Encounter</button>
+        <button type="button" id="buenos-aires" class="encounter" onclick="startCityEncounter('America', 'Buenos Aires')">Start Buenos Aires Encounter</button>
+        <button type="button" id="san-francisco" class="encounter" onclick="startCityEncounter('America', 'San Francisco')">Start San Francisco Encounter</button>
+      </div>
+      <div class="disaster">
+        <button type="button" onclick="devestateCity(event, 'Arkham')">Devestate Arkham</button>
+        <button type="button" onclick="devestateCity(event, 'Buenos Aires')">Devestate Buenos Aires</button>
+        <button type="button" onclick="devestateCity(event, 'San Francisco')">Devestate San Francisco</button>
+      </div>
       <br>
-      Read Asia/Australia Encounter
-      <button type="button" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Shanghai')">Shanghai</button>
-      <button type="button" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Sydney')">Sydney</button>
-      <button type="button" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Tokyo')">Tokyo</button>
+      Asia/Australia
+      <div>
+        <button type="button" id="shanghai" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Shanghai')">Start Shanghai Encounter</button>
+        <button type="button" id="sydney" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Sydney')">Start Sydney Encounter</button>
+        <button type="button" id="tokyo" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Tokyo')">Start Tokyo Encounter</button>
+      </div>
+      <div class="disaster">
+        <button type="button" onclick="devestateCity(event, 'Shanghai')">Devestate Shanghai</button>
+        <button type="button" onclick="devestateCity(event, 'Sydney')">Devestate Sydney</button>
+        <button type="button" onclick="devestateCity(event, 'Tokyo')">Devestate Tokyo</button>
+      </div>
       <br>
-      Read Europe Encounter
-      <button type="button" class="encounter" onclick="startCityEncounter('Europe', 'Istanbul')">Istanbul</button>
-      <button type="button" class="encounter" onclick="startCityEncounter('Europe', 'London')">London</button>
-      <button type="button" class="encounter" onclick="startCityEncounter('Europe', 'Rome')">Rome</button>
+      Europe
+      <div>
+        <button type="button" id="istanbul" class="encounter" onclick="startCityEncounter('Europe', 'Istanbul')">Start Istanbul Encounter</button>
+        <button type="button" id="london" class="encounter" onclick="startCityEncounter('Europe', 'London')">Start London Encounter</button>
+        <button type="button" id="rome" class="encounter" onclick="startCityEncounter('Europe', 'Rome')">Start Rome Encounter</button>
+      </div>
+      <div class="disaster">
+        <button type="button" onclick="devestateCity(event, 'Istanbul')">Devestate Istanbul</button>
+        <button type="button" onclick="devestateCity(event, 'London')">Devestate London</button>
+        <button type="button" onclick="devestateCity(event, 'Rome')">Devestate Rome</button>
+      </div>
       <br>
-      Read General Encounter
+      Start General Encounter
       <button type="button" class="encounter" onclick="startGeneralEncounter('City')">City</button>
       <button type="button" class="encounter" onclick="startGeneralEncounter('Wilderness')">Wilderness</button>
       <button type="button" class="encounter" onclick="startGeneralEncounter('Sea')">Sea</button>
       <br>
-      Read Research Encounter
+      Start Research Encounter
       <button type="button" class="encounter" onclick="startResearchEncounter('City')">City</button>
       <button type="button" class="encounter" onclick="startResearchEncounter('Wilderness')">Wilderness</button>
       <button type="button" class="encounter" onclick="startResearchEncounter('Sea')">Sea</button>
       <br>
+
       <div id="dreamlands">
-        Read Dreamlands Encounter
+        Start Dreamlands Encounter
         <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Celephaïs')">Celephaïs</button>
         <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Dylath-Leen')">Dylath-Leen</button>
         <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Ulthar')">Ulthar</button>
@@ -61,15 +83,14 @@
           <button type="button" onclick="shuffleDreamQuestDeck()">Shuffle the Dream-Quest deck</button>
         </div>
       </div>
+
       <div id="cities-in-ruin">
-        <button type="button" class="encounter" onclick="startDevestationEncounter()">Read Devestation Encounter</button>
-        <br>
         <div>
           <button type="button" onclick="resolveUpheavalDisaster(event)">Resolve Upheaval Disaster</button>
           <br>
         </div>
       </div>
-      <button type="button" class="encounter" onclick="startOtherWorldEncounter()">Read Other World Encounter</button>
+      <button type="button" class="encounter" onclick="startOtherWorldEncounter()">Start Other World Encounter</button>
 
       <div id="expedition-buttons">
         <button type="button" onclick="shuffleExpeditionDeck()" id="shuffle-expedition">Shuffle the Expedition deck</button>
@@ -83,10 +104,13 @@
       </div>
 
       <button type="button" onclick="resolveLeopardManSpawn(event)" id="spawn-leopard-man">Resolve Leopard Man Spawn Effect</button>
+
       <button type="button" onclick="resolveTheWorldShakesMythos(event)">Resolve "The World Shakes" Mythos Card Effect</button>
+
       <div id="mystic-ruins-buttons">
         <button type="button" onclick="shuffleMysticRuinsDeck()">Shuffle the Mystic Ruins deck</button>
       </div>
+
       <div id="cosmic-alignment">
         <div id="cosmic-alignment-II">
           <button type="button" id="add-ruins-in-the-heart-of-the-jungle" class="cosmic-alignment-II" onclick="addRuinsInTheHeartOfTheJungle()">
@@ -109,6 +133,7 @@
           Resolve "Cosmic Alignment: Relics of the Pyramids" Adventure
         </button>
       </div>
+
       <div id="otherworldly-dreams">
         <div id="otherworldly-dreams-III">
           <button type="button" id="add-aboard-the-black-galley" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('aboard-the-black-galley')">
@@ -131,6 +156,7 @@
           Resolve "Otherworldly Dreams: The Blessings of Nodens" Adventure
         </button>
       </div>
+
       <div id="special-encounters"></div>
     </div>
     <div>
