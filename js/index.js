@@ -295,6 +295,14 @@ function numUniqueSpacesInDeck(deckName) {
   return spaces.size;
 }
 
+function putCrawlingChaosMythosIntoPlay(event) {
+  event.target.remove();
+  showId("resolve-crawling-chaos-reckoning");
+  showId("solve-crawling-chaos");
+
+  addHistoryElement("Put 'The Crawling Chaos' Mythos card into play");
+}
+
 function readAlound(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(utterance);
@@ -339,8 +347,22 @@ function resolveCosmicAlignmentAdventureIII(event) {
   resolveExpeditionEncounterForSpace(event, event.target.dataset.space);
 }
 
-function resolveOtherworldlyDreamsAdventureIII(event, space) {
-  resolveDreamQuestEncounterForSpace(event, space);
+function resolveCrawlingChaosMythosReckoning() {
+  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const expeditionDecks = buttons.map(button => removeTopCardButton(button));
+  
+  expeditionDecks.forEach(deck => {
+    deck.drawCard();  // simply draw & discard
+    addExpeditionEncounterButton(deck.name);
+  });
+
+  const plural = useSecondExpeditionDeck() ? "s" : "";
+
+  const historyElement = addHistoryElement(`Discarded top Expedition card${plural}`);
+  const textNode = document.createElement("p");
+
+  textNode.textContent = `Check Expedition token location${plural}`
+  historyElement.appendChild(textNode);
 }
 
 function resolveDreamQuestEncounterForSpace(event, space) {
@@ -415,6 +437,10 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
   shuffleMysticRuinsDeck();
 
   startMysticRuinsEncounterWith(card);
+}
+
+function resolveOtherworldlyDreamsAdventureIII(event, space) {
+  resolveDreamQuestEncounterForSpace(event, space);
 }
 
 function resolveSecretsOfThePastReckoning() {
@@ -526,6 +552,11 @@ function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = 
 
   const plural = buttons.length === 1 ? "" : "s";
   addHistoryElement(`Shuffled the ${deckLabel} deck${plural}`);
+}
+
+function solveCrawlingChaosMythosRumor() {
+  removeElementWithId("crawling-chaos");
+  addHistoryElement("Solved 'The Crawling Chaos' Rumor");
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -677,6 +708,10 @@ function useCitiesInRuin() {
   return expansionsUsed.includes(CitiesInRuin);
 }
 
+function useMountainsOfMadness() {
+  return expansionsUsed.includes(MountainsOfMadness);
+}
+
 function useMysticRuinsDeck() {
   // True if either of the Ancient Ones or Preludes,
   return (
@@ -733,6 +768,12 @@ if (decks.Devestation.isEmpty()) {
 
 if (!useCitiesInRuin()) {
   removeElementWithId("spawn-leopard-man");
+}
+
+if (useMountainsOfMadness()) {
+  showId("add-crawling-chaos");
+} else {
+  removeElementWithId("crawling-chaos");
 }
 
 if (useSecondExpeditionDeck()) {
