@@ -312,7 +312,7 @@ function numUniqueSpacesInDeck(deckName) {
   return spaces.size;
 }
 
-function putCrawlingChaosMythosIntoPlay(event) {
+function putCrawlingChaosRumorIntoPlay(event) {
   event.target.remove();
   showId("resolve-crawling-chaos-reckoning");
   showId("solve-crawling-chaos");
@@ -404,7 +404,7 @@ function resolveCosmicAlignmentAdventureIII(event) {
   resolveExpeditionEncounterForSpace(event, event.target.dataset.space);
 }
 
-function resolveCrawlingChaosMythosReckoning() {
+function resolveCrawlingChaosRumorReckoning() {
   const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
   
@@ -615,7 +615,7 @@ function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = 
   historyElement.appendChild(textNode);
 }
 
-function solveCrawlingChaosMythosRumor() {
+function solveCrawlingChaosRumor() {
   removeElementWithId("crawling-chaos");
   addHistoryElement("Solved 'The Crawling Chaos' Rumor");
 }
