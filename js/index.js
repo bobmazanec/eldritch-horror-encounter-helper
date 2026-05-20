@@ -551,7 +551,11 @@ function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = 
   });
 
   const plural = buttons.length === 1 ? "" : "s";
-  addHistoryElement(`Shuffled the ${deckLabel} deck${plural}`);
+  const historyElement = addHistoryElement(`Shuffled the ${deckLabel} deck${plural}`);
+
+  const textNode = document.createElement("p");
+  textNode.textContent = `Check ${deckLabel} token location${plural}`;
+  historyElement.appendChild(textNode);
 }
 
 function solveCrawlingChaosMythosRumor() {
