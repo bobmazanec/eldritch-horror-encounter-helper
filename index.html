@@ -94,7 +94,11 @@
 
       <div id="expedition-buttons">
         <button type="button" onclick="shuffleExpeditionDeck()" id="shuffle-expedition">Shuffle the Expedition deck</button>
-        <button type="button" class="encounter" onclick="resolveSecretsOfThePastReckoning()" id="secrets-of-the-past"></button>
+        <div id="secrets-of-the-past">
+          <button type="button" class="secrets-of-the-past encounter" id="add-secrets-of-the-past" onclick="putSecretsOfThePastRumorIntoPlay(event)">Put 'Secrets of the Past' Rumor into play</button>
+          <button type="button" class="secrets-of-the-past encounter" id="resolve-secrets-of-the-past" onclick="resolveSecretsOfThePastRumorReckoning()"></button>
+          <button type="button" class="secrets-of-the-past encounter" id="solve-secrets-of-the-past" onclick="solveSecretsOfThePast(event)">Solve 'Secrets of the Past' Rumor</button>
+        </div>
       </div>
 
       <div id="crawling-chaos">
@@ -103,9 +107,9 @@
         <button type="button" onclick="solveCrawlingChaosRumor()" id="solve-crawling-chaos">Solve 'The Crawling Chaos' Rumor</button>
       </div>
 
-      <button type="button" onclick="resolveLeopardManSpawn(event)" id="spawn-leopard-man">Resolve Leopard Man Spawn Effect</button>
+      <button type="button" onclick="resolveLeopardManSpawn(event)" id="spawn-leopard-man">Resolve Leopard Man Spawn effect</button>
 
-      <button type="button" onclick="resolveTheWorldShakesMythos(event)">Resolve "The World Shakes" Mythos Card Effect</button>
+      <button type="button" onclick="resolveTheWorldShakesMythos(event)">Resolve "The World Shakes" Mythos Card effect</button>
 
       <div id="mystic-ruins-buttons">
         <button type="button" onclick="shuffleMysticRuinsDeck()">Shuffle the Mystic Ruins deck</button>
@@ -126,10 +130,10 @@
         <button type="button" id="ruins-under-the-stars" onclick="resolveCosmicAlignmentAdventureII(event, 'Stonehenge (London)', 'relics-of-the-pyramids')">
           Resolve "Cosmic Alignment: Ruins Under the Stars" Adventure
         </button>
-        <button type="button" id="relics-of-the-amazon" class="encounter" data-space="The Amazon" onclick="resolveCosmicAlignmentAdventureIII(event)">
+        <button type="button" id="relics-of-the-amazon" class="encounter expedition" data-space="The Amazon" onclick="resolveCosmicAlignmentAdventureIII(event)">
           Resolve "Cosmic Alignment: Relics of the Amazon" Adventure
         </button>
-        <button type="button" id="relics-of-the-pyramids" class="encounter" data-space="The Pyramids" onclick="resolveCosmicAlignmentAdventureIII(event)">
+        <button type="button" id="relics-of-the-pyramids" class="encounter expedition" data-space="The Pyramids" onclick="resolveCosmicAlignmentAdventureIII(event)">
           Resolve "Cosmic Alignment: Relics of the Pyramids" Adventure
         </button>
       </div>

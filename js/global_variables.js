@@ -15,3 +15,4 @@ const preludesUsed = ["Litany of Secrets", "Otherworldly Dreams", "In Cosmic Ali
 const deckData = {};
 const decks = {};
 const discardPiles = {};
+let   secretsOfThePastRumorInPlay = false;

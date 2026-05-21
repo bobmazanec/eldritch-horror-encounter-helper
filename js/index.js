@@ -157,9 +157,11 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
     button.onclick = onClick;
     button.textContent = buttonTextFunction(card);
   } else {
-    button.disabled = true;
     button.textContent = `The ${deckName} deck is empty`;
   }
+  
+  button.disabled = true;
+  enableEncounterButton(button); // if appropriate
 
   document.getElementById(buttonContainerId).appendChild(button);
 }
@@ -253,7 +255,7 @@ function devestateCity(event, cityName) {
 }
 
 function disableEncounterButtons() {
-  updateEncounterButtons(true);
+  updateEncounterButtons(button => button.disabled = true);
 }
 
 function disableEncounterButtonsFor(space) {
@@ -262,7 +264,7 @@ function disableEncounterButtonsFor(space) {
     // Disable it, and remove 'encounter' class
     // so it will not be re-enabled
     button.disabled = true;
-    button.classList.remove("encounter");
+    button.classList.add("no-cards-available");
     button.innerHTML += `<br>[No encounter cards remain for ${space}]`;
   });
 }
@@ -271,8 +273,22 @@ function drawCard(deckName) {
   return decks[deckName].drawCard();
 }
 
+function enableEncounterButton(button) {
+  if (
+    button.classList.contains("no-cards-available") ||
+    (
+      button.classList.contains("expedition") &&
+      secretsOfThePastRumorInPlay
+    )
+  ) {
+    return;
+  }
+
+  button.disabled = false;
+}
+
 function enableEncounterButtons() {
-  updateEncounterButtons(false);
+  updateEncounterButtons(enableEncounterButton);
 }
 
 function endEncounter(buttonContainer, encounter, action, key) {
@@ -320,6 +336,21 @@ function putCrawlingChaosRumorIntoPlay(event) {
   addHistoryElement("Put 'The Crawling Chaos' Mythos card into play");
 }
 
+function putSecretsOfThePastRumorIntoPlay(event) {
+  event.target.remove();
+  showId("resolve-secrets-of-the-past");
+  showId("solve-secrets-of-the-past");
+  updateSecretsOfThePastButton();
+
+  secretsOfThePastRumorInPlay = true;
+
+  // Disable, then re-enable if approriate
+  disableEncounterButtons();
+  enableEncounterButtons();
+
+  addHistoryElement("Put 'Secrets of the Past' Mythos card into play");
+}
+
 function readAlound(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(utterance);
@@ -334,7 +365,7 @@ function removeDreamlandsButtons() {
 }
 
 function removeExpeditionCardsFor(cityName, historyElement) {
-  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const buttons = Array.from(document.getElementsByClassName("encounter expedition.top-card"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
 
   let removedCards = false;
@@ -405,7 +436,7 @@ function resolveCosmicAlignmentAdventureIII(event) {
 }
 
 function resolveCrawlingChaosRumorReckoning() {
-  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const buttons = Array.from(document.querySelectorAll("button.expedition.top-card"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
   
   expeditionDecks.forEach(deck => {
@@ -458,7 +489,7 @@ function resolveExpeditionEncounterForSpace(event, space) {
 function resolveLeopardManSpawn(event) {
   event.target.remove();
 
-  const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.encounter"));
+  const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.top-card"));
   let foundCard = false;
 
   buttons.forEach(button => {
@@ -500,8 +531,8 @@ function resolveOtherworldlyDreamsAdventureIII(event, space) {
   resolveDreamQuestEncounterForSpace(event, space);
 }
 
-function resolveSecretsOfThePastReckoning() {
-  const buttons = Array.from(document.querySelectorAll("button.expedition"));
+function resolveSecretsOfThePastRumorReckoning() {
+  const buttons = Array.from(document.querySelectorAll("button.expedition.top-card"));
   const cardSpaces = new Set();
   const deckNames = [];
 
@@ -532,6 +563,8 @@ function resolveSecretsOfThePastReckoning() {
       addExpeditionEncounterButton(deckName);
     }
   });
+  
+  enableEncounterButtons();
 
   addModifiedExpeditionDeckHistoryItem("Resolved 'Secrets of the Past' Mythos Reckoning", cardSpaces)
 
@@ -547,9 +580,11 @@ function resolveSecretsOfThePastReckoning() {
 function resolveTheWorldShakesMythos(event) {
   event.target.remove();
 
-  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const buttons = Array.from(document.getElementsByClassName("expedition top-card"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
   const spacesRemoved = removeTopExpeditionCardSpaceCards(expeditionDecks);
+
+  spacesRemoved.forEach(space => disableEncounterButtonsFor(space));
 
   expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
   updateSecretsOfThePastButton();
@@ -560,7 +595,7 @@ function resolveTheWorldShakesMythos(event) {
 function resolveUpheavalDisaster(event) {
   event.target.parentElement.remove();
 
-  const buttons = Array.from(document.getElementsByClassName("encounter expedition"));
+  const buttons = Array.from(document.getElementsByClassName("encounter top-card expedition"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
   let spacesRemoved = new Set();
 
@@ -618,6 +653,15 @@ function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = 
 function solveCrawlingChaosRumor() {
   removeElementWithId("crawling-chaos");
   addHistoryElement("Solved 'The Crawling Chaos' Rumor");
+}
+
+function solveSecretsOfThePast(event) {
+  event.target.parentElement.remove();
+  addHistoryElement("Solved 'Secrets of the Past' Rumor");
+
+  secretsOfThePastRumorInPlay = false;
+  
+  enableEncounterButtons();
 }
 
 function startCityEncounter(deckName, cityName) {
@@ -732,13 +776,16 @@ function startSpecialEncounter(deckName) {
   );
 }
 
-function updateEncounterButtons(disabled) {
-  document.querySelectorAll("button.encounter").forEach(button => {
-    button.disabled = disabled;
-  });
+function updateEncounterButtons(updateButton) {
+  document
+    .querySelectorAll("button.encounter")
+    .forEach(updateButton);
 }
 
 function updateSecretsOfThePastButton() {
+  const button = document.getElementById("resolve-secrets-of-the-past");
+  if (!button) return;
+
   let text = "Resolve the 'Secrets of the Past' Mythos card's Reckoning effect<br>";
 
   if (useSecondExpeditionDeck()) {
@@ -751,7 +798,7 @@ function updateSecretsOfThePastButton() {
     text += `The Expedition deck has ${spaces} unique space${plural} remaining`;
   }
 
-  document.getElementById("secrets-of-the-past").innerHTML = text;
+  button.innerHTML = text;
 }
 
 function useDreamlandsBoard() {
@@ -848,6 +895,6 @@ if (useSecondExpeditionDeck()) {
 } else {
   addExpeditionEncounterButton("Expedition");
 }
-updateSecretsOfThePastButton();
+showId("add-secrets-of-the-past");
 
 addSpecialEncounterButtons(buildSpecialEncounterDecks());
