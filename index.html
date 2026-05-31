@@ -27,138 +27,365 @@
     <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
     <div id="app"></div>
     <div id="mainView">
-      America
-      <div>
-        <button type="button" id="arkham" class="encounter" onclick="startCityEncounter('America', 'Arkham')">Start Arkham Encounter</button>
-        <button type="button" id="buenos-aires" class="encounter" onclick="startCityEncounter('America', 'Buenos Aires')">Start Buenos Aires Encounter</button>
-        <button type="button" id="san-francisco" class="encounter" onclick="startCityEncounter('America', 'San Francisco')">Start San Francisco Encounter</button>
-      </div>
-      <div class="disaster">
-        <button type="button" onclick="devestateCity(event, 'Arkham')">Devestate Arkham</button>
-        <button type="button" onclick="devestateCity(event, 'Buenos Aires')">Devestate Buenos Aires</button>
-        <button type="button" onclick="devestateCity(event, 'San Francisco')">Devestate San Francisco</button>
-      </div>
-      <br>
-      Asia/Australia
-      <div>
-        <button type="button" id="shanghai" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Shanghai')">Start Shanghai Encounter</button>
-        <button type="button" id="sydney" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Sydney')">Start Sydney Encounter</button>
-        <button type="button" id="tokyo" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Tokyo')">Start Tokyo Encounter</button>
-      </div>
-      <div class="disaster">
-        <button type="button" onclick="devestateCity(event, 'Shanghai')">Devestate Shanghai</button>
-        <button type="button" onclick="devestateCity(event, 'Sydney')">Devestate Sydney</button>
-        <button type="button" onclick="devestateCity(event, 'Tokyo')">Devestate Tokyo</button>
-      </div>
-      <br>
-      Europe
-      <div>
-        <button type="button" id="istanbul" class="encounter" onclick="startCityEncounter('Europe', 'Istanbul')">Start Istanbul Encounter</button>
-        <button type="button" id="london" class="encounter" onclick="startCityEncounter('Europe', 'London')">Start London Encounter</button>
-        <button type="button" id="rome" class="encounter" onclick="startCityEncounter('Europe', 'Rome')">Start Rome Encounter</button>
-      </div>
-      <div class="disaster">
-        <button type="button" onclick="devestateCity(event, 'Istanbul')">Devestate Istanbul</button>
-        <button type="button" onclick="devestateCity(event, 'London')">Devestate London</button>
-        <button type="button" onclick="devestateCity(event, 'Rome')">Devestate Rome</button>
-      </div>
-      <br>
-      Start General Encounter
-      <button type="button" class="encounter" onclick="startGeneralEncounter('City')">City</button>
-      <button type="button" class="encounter" onclick="startGeneralEncounter('Wilderness')">Wilderness</button>
-      <button type="button" class="encounter" onclick="startGeneralEncounter('Sea')">Sea</button>
-      <br>
-      Start Research Encounter
-      <button type="button" class="encounter" onclick="startResearchEncounter('City')">City</button>
-      <button type="button" class="encounter" onclick="startResearchEncounter('Wilderness')">Wilderness</button>
-      <button type="button" class="encounter" onclick="startResearchEncounter('Sea')">Sea</button>
-      <br>
+      <div class="decks">
+        <div class="deck">
+          <div class="deckname">America</div>
+          <button type="button" id="arkham" class="encounter" onclick="startCityEncounter('America', 'Arkham')">
+            <img src="images/Arkham.webp" width="81" height="66" alt="Arkham">
+            <br>
+            Start Arkham Encounter
+          </button>
 
-      <div id="dreamlands">
-        Start Dreamlands Encounter
-        <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Celephaïs')">Celephaïs</button>
-        <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Dylath-Leen')">Dylath-Leen</button>
-        <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Ulthar')">Ulthar</button>
-        <div id="dream-quest-buttons">
+          <button type="button" id="buenos-aires" class="encounter" onclick="startCityEncounter('America', 'Buenos Aires')">
+            <img src="images/Buenos_Aires.webp" width="81" height="66" alt="Buenos Aires">
+            <br>
+            Start Buenos Aires Encounter
+          </button>
+
+          <button type="button" id="san-francisco" class="encounter" onclick="startCityEncounter('America', 'San Francisco')">
+            <img src="images/San_Francisco.webp" width="81" height="66" alt="San Francisco">
+            <br>
+            Start San Francisco Encounter
+          </button>
+
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Arkham')">
+            <img src="images/Arkham_Devastated.webp" width="81" height="66" alt="Devestate Arkham">
+            <br>
+            Devestate Arkham
+          </button>
+
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Buenos Aires')">
+            <img src="images/Buenos_Aires_Devastated.webp" width="81" height="66" alt="Devestate Buenos Aires">
+            <br>
+            Devestate Buenos Aires
+          </button>
+
+          <button type="button" class="disaster" onclick="devestateCity(event, 'San Francisco')">
+            <img src="images/San_Francisco_Devastated.webp" width="81" height="66" alt="Devestate San Francisco">
+            <br>
+            Devestate San Francisco
+          </button>
+        </div>
+
+        <div class="deck">
+          <div class="deckname">Asia/Australia</div>
+          <button type="button" id="shanghai" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Shanghai')">
+            <img src="images/Shanghai.webp" width="81" height="66" alt="Shanghai">
+            <br>
+            Start Shanghai Encounter
+          </button>
+          <button type="button" id="sydney" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Sydney')">
+            <img src="images/Sydney.webp" width="81" height="66" alt="Sydney">
+            <br>
+            Start Sydney Encounter
+          </button>
+          <button type="button" id="tokyo" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Tokyo')">
+            <img src="images/Tokyo.webp" width="81" height="66" alt="Tokyo">
+            <br>
+            Start Tokyo Encounter
+          </button>
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Shanghai')">
+            <img src="images/Shanghai_Devastated.webp" width="81" height="66" alt="Devestate Shanghai">
+            <br>
+            Devestate Shanghai
+          </button>
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Sydney')">
+            <img src="images/Sydney_Devastated.webp" width="81" height="66" alt="Devestate Sydney">
+            <br>
+            Devestate Sydney
+          </button>
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Tokyo')">
+            <img src="images/Tokyo_Devastated.webp" width="81" height="66" alt="Devestate Tokyo">
+            <br>
+            Devestate Tokyo
+          </button>
+        </div>
+
+        <div id="dream-quest-buttons" class="dreamlands deck">
+          <div class="deckname one-row">
+            <img src="images/Dream-Quest_Token.webp" width="95%" height="95%" alt="Dream-Quest token">
+            <br>
+            Dream-Quest
+          </div>
           <button type="button" onclick="shuffleDreamQuestDeck()">Shuffle the Dream-Quest deck</button>
         </div>
+
+        <div class="deck dreamlands">
+          <div class="deckname one-row">The Dreamlands</div>
+          <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Celephaïs')">
+            <img src="images/Celephaïs.webp" width="81" height="66" alt="Celephaïs">
+            <br>
+            Start Celephaïs Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Dylath-Leen')">
+            <img src="images/Dylath-Leen.webp" width="81" height="66" alt="Dylath-Leen">
+            <br>
+            Start Dylath-Leen Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Ulthar')">
+            <img src="images/Ulthar.webp" width="81" height="66" alt="Ulthar">
+            <br>
+            Start Ulthar Encounter
+          </button>
+        </div>
+
+        <div class="deck">
+          <div class="deckname">Europe</div>
+          <button type="button" id="istanbul" class="encounter" onclick="startCityEncounter('Europe', 'Istanbul')">
+            <img src="images/Istanbul.webp" width="81" height="66" alt="Istanbul">
+            <br>
+            Start Istanbul Encounter
+          </button>
+          <button type="button" id="london" class="encounter" onclick="startCityEncounter('Europe', 'London')">
+            <img src="images/London.webp" width="81" height="66" alt="London">
+            <br>
+            Start London Encounter
+          </button>
+          <button type="button" id="rome" class="encounter" onclick="startCityEncounter('Europe', 'Rome')">Start
+            <img src="images/Rome.webp" width="81" height="66" alt="Rome">
+            <br>
+            Start Rome Encounter
+          </button>
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Istanbul')">
+            <img src="images/Istanbul_Devastated.webp" width="81" height="66" alt="Devestate Istanbul">
+            <br>
+            Devestate Istanbul
+          </button>
+          <button type="button" class="disaster" onclick="devestateCity(event, 'London')">
+            <img src="images/London_Devastated.webp" width="81" height="66" alt="Devestate London">
+            <br>
+            Devestate London
+          </button>
+          <button type="button" class="disaster" onclick="devestateCity(event, 'Rome')">
+            <img src="images/Rome_Devastated.webp" width="81" height="66" alt="Devestate Rome">
+            <br>
+            Devestate Rome
+          </button>
+        </div>
+
+        <div id="expedition-buttons" class="deck">
+          <div class="deckname one-row">
+            <img src="images/Expedition_Token.webp" width="95%" height="95%" alt="Expedition token">
+            <br>
+            Expedition
+          </div>
+          <button type="button" onclick="shuffleExpeditionDeck()" id="shuffle-expedition">Shuffle the Expedition deck</button>
+        </div>
+
+        <div class="deck">
+          <div class="deckname">
+            General
+          </div>
+          <button type="button" class="encounter" onclick="startGeneralEncounter('City')">
+            <img src="images/City.webp" width="40" height="40" alt="City">
+            <br>
+            Start General City Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startGeneralEncounter('Wilderness')">
+            <img src="images/Wilderness.webp" width="40" height="40" alt="Wilderness">
+            <br>
+            Start General Wilderness Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startGeneralEncounter('Sea')">
+            <img src="images/Sea.webp" width="40" height="40" alt="Sea">
+            <br>
+            Start General Sea Encounter
+          </button>
+        </div>
+
+        <div id="mystic-ruins-buttons" class="deck">
+          <div class="deckname one-row">
+            <img src="images/Mystic-Ruins_Token.jpg" width="95%" height="95%" alt="Mystic Ruins token">
+            <br>
+            Mystic Ruins
+          </div>
+          <button type="button" onclick="shuffleMysticRuinsDeck()">Shuffle the Mystic Ruins deck</button>
+        </div>
+
+        <div class="deck">
+          <div class="deckname one-row">
+            <img src="images/Gate_Token.webp" width="95%" height="95%" alt="Other World token">
+            <br>
+            Other World
+          </div>
+
+          <button type="button" class="encounter" onclick="startOtherWorldEncounter()">
+            <img src="images/Other_World_Encounter.webp" width="40" height="66" alt="Other World">
+            <br>
+            Start Other World Encounter
+          </button>
+        </div>
+
+        <div class="deck">
+          <div class="deckname one-row">
+            <img src="images/Research.png" width="80%" height="80%" alt="Research">
+            <br>
+            Research
+          </div>
+          <button type="button" class="encounter" onclick="startResearchEncounter('City')">
+            <img src="images/City.webp" width="40" height="40" alt="City">
+            <br>
+            Start City Research Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startResearchEncounter('Wilderness')">
+            <img src="images/Wilderness.webp" width="40" height="40" alt="Wilderness">
+            <br>
+            Start Wilderness Research Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startResearchEncounter('Sea')">
+            <img src="images/Sea.webp" width="40" height="40" alt="Sea">
+            <br>
+            Start Sea Research Encounter
+          </button>
+        </div>
       </div>
 
-      <div id="cities-in-ruin">
-        <div>
-          <button type="button" onclick="resolveUpheavalDisaster(event)">Resolve Upheaval Disaster</button>
+      <div class="mythos">
+        <div class="deckname">
+          <img src="images/Mythos_Card.webp" width="80%" height="66" alt="Mythos card">
           <br>
+          Mythos Cards
         </div>
-      </div>
-      <button type="button" class="encounter" onclick="startOtherWorldEncounter()">Start Other World Encounter</button>
 
-      <div id="expedition-buttons">
-        <button type="button" onclick="shuffleExpeditionDeck()" id="shuffle-expedition">Shuffle the Expedition deck</button>
-        <div id="secrets-of-the-past">
-          <button type="button" class="secrets-of-the-past encounter" id="add-secrets-of-the-past" onclick="putSecretsOfThePastRumorIntoPlay(event)">Put 'Secrets of the Past' Rumor into play</button>
-          <button type="button" class="secrets-of-the-past encounter" id="resolve-secrets-of-the-past" onclick="resolveSecretsOfThePastRumorReckoning()"></button>
-          <button type="button" class="secrets-of-the-past encounter" id="solve-secrets-of-the-past" onclick="solveSecretsOfThePast(event)">Solve 'Secrets of the Past' Rumor</button>
-        </div>
-      </div>
+        <div id="crawling-chaos" class="card">
+          <img src="images/the-crawling-chaos.jpg" width="30%">
 
-      <div id="crawling-chaos">
-        <button type="button" onclick="putCrawlingChaosRumorIntoPlay(event)" id="add-crawling-chaos">Put 'The Crawling Chaos' Rumor into play</button>
-        <button type="button" onclick="resolveCrawlingChaosRumorReckoning()" id="resolve-crawling-chaos-reckoning">Resolve 'The Crawling Chaos' Rumor's Reckoning effect</button>
-        <button type="button" onclick="solveCrawlingChaosRumor()" id="solve-crawling-chaos">Solve 'The Crawling Chaos' Rumor</button>
-      </div>
-
-      <button type="button" onclick="resolveLeopardManSpawn(event)" id="spawn-leopard-man">Resolve Leopard Man Spawn effect</button>
-
-      <button type="button" onclick="resolveTheWorldShakesMythos(event)">Resolve "The World Shakes" Mythos Card effect</button>
-
-      <div id="mystic-ruins-buttons">
-        <button type="button" onclick="shuffleMysticRuinsDeck()">Shuffle the Mystic Ruins deck</button>
-      </div>
-
-      <div id="cosmic-alignment">
-        <div id="cosmic-alignment-II">
-          <button type="button" id="add-ruins-in-the-heart-of-the-jungle" class="cosmic-alignment-II" onclick="addRuinsInTheHeartOfTheJungle()">
-            Put "Cosmic Alignment: Ruins in the Heart of the Jungle" Adventure into play
+          <button type="button" onclick="putCrawlingChaosRumorIntoPlay(event)" id="add-crawling-chaos">
+            Put 'The Crawling Chaos' Rumor into play
           </button>
-          <button type="button" id="add-ruins-under-the-stars" class="cosmic-alignment-II" onclick="addRuinsUnderTheStars()">
-            Put "Cosmic Alignment: Ruins Under the Stars" Adventure into play
+
+          <button type="button" onclick="resolveCrawlingChaosRumorReckoning()" id="resolve-crawling-chaos-reckoning">
+            Resolve 'The Crawling Chaos' Rumor's Reckoning effect
+          </button>
+
+          <button type="button" onclick="solveCrawlingChaosRumor()" id="solve-crawling-chaos">
+            Solve 'The Crawling Chaos' Rumor
           </button>
         </div>
-        <button type="button" id="ruins-in-the-heart-of-the-jungle" onclick="resolveCosmicAlignmentAdventureII(event, 'Chichen Itza (Space 7)', 'relics-of-the-amazon')">
-          Resolve "Cosmic Alignment: Ruins in the Heart of the Jungle" Adventure
-        </button>
-        <button type="button" id="ruins-under-the-stars" onclick="resolveCosmicAlignmentAdventureII(event, 'Stonehenge (London)', 'relics-of-the-pyramids')">
-          Resolve "Cosmic Alignment: Ruins Under the Stars" Adventure
-        </button>
-        <button type="button" id="relics-of-the-amazon" class="encounter expedition" data-space="The Amazon" onclick="resolveCosmicAlignmentAdventureIII(event)">
-          Resolve "Cosmic Alignment: Relics of the Amazon" Adventure
-        </button>
-        <button type="button" id="relics-of-the-pyramids" class="encounter expedition" data-space="The Pyramids" onclick="resolveCosmicAlignmentAdventureIII(event)">
-          Resolve "Cosmic Alignment: Relics of the Pyramids" Adventure
-        </button>
-      </div>
 
-      <div id="otherworldly-dreams">
-        <div id="otherworldly-dreams-III">
-          <button type="button" id="add-aboard-the-black-galley" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('aboard-the-black-galley')">
-            Put "Otherworldly Dreams: Aboard the Black Galley" Adventure into play
+        <div id="secrets-of-the-past" class="card">
+          <img src="images/secrets-of-the-past.png" width="30%">
+
+          <button type="button" class="secrets-of-the-past encounter" id="add-secrets-of-the-past" onclick="putSecretsOfThePastRumorIntoPlay(event)">
+            Put 'Secrets of the Past' Rumor into play
           </button>
-          <button type="button" id="add-beyond-the-river-skai" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('beyond-the-river-skai')">
-            Put "Otherworldly Dreams: Beyond the River Skai" Adventure into play
+
+          <button type="button" class="secrets-of-the-past encounter" id="resolve-secrets-of-the-past" onclick="resolveSecretsOfThePastRumorReckoning()">
           </button>
-          <button type="button" id="add-the-blessings-of-nodens" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('the-blessings-of-nodens')">
-            Put "Otherworldly Dreams: The Blessings of Nodens" Adventure into play
+
+          <button type="button" class="secrets-of-the-past encounter" id="solve-secrets-of-the-past" onclick="solveSecretsOfThePast(event)">
+            Solve 'Secrets of the Past' Rumor
           </button>
         </div>
-        <button type="button" id="aboard-the-black-galley" onclick="resolveOtherworldlyDreamsAdventureIII(event, 'The Moon')">
-          Resolve "Otherworldly Dreams: Aboard the Black Galley" Adventure
-        </button>
-        <button type="button" id="beyond-the-river-skai" onclick="resolveOtherworldlyDreamsAdventureIII(event, 'The Enchanted Wood')">
-          Resolve "Otherworldly Dreams: Beyond the River Skai" Adventure
-        </button>
-        <button type="button" id="the-blessings-of-nodens" onclick="resolveOtherworldlyDreamsAdventureIII(event, 'The Underworld')">
-          Resolve "Otherworldly Dreams: The Blessings of Nodens" Adventure
-        </button>
+
+        <div class="card">
+          <img src="images/the-world-shakes.jpg" width="30%">
+          <br>
+          <button type="button" class="card" onclick="resolveTheWorldShakesMythos(event)">
+            Resolve "The World Shakes" Event
+          </button>
+        </div>
+      </div>
+
+      <div class="misc">
+        <div id="cities-in-ruin">
+          <div>
+            <img src="images/Disaster.webp" width="80%" height="66">
+            <br>
+            Disaster Card
+          </div>
+          <button type="button" onclick="resolveUpheavalDisaster(event)">
+            <img src="images/Upheaval.webp" width="81" height="81" alt="Upheaval Disaster">
+            <br>
+            Resolve Upheaval Disaster
+          </button>
+        </div>
+
+        <div id="spawn-leopard-man" onclick="resolveLeopardManSpawn(event)">
+          <button type="button">
+            <img src="images/Leopard_Man.webp" width="81" height="81" alt="Leopard Man monster token">
+            <br>
+            Resolve Leopard Man Spawn effect
+          </button>
+        </div>
+      </div>
+
+      <div class="adventures">
+        <div class="token">
+          <img src="images/Adventure_Token.webp" width="81" height="81" alt="Adventure token">
+          <br>
+          Adventure
+        </div>
+
+        <div id="cosmic-alignment" class="adventure">
+          <div class="image">
+            <img src="images/Cosmic_Alignment_Adventure.webp" width="81" height="66" alt="Cosmic Alignment">
+            <br>
+            Cosmic Alignment
+          </div>
+          <div id="cosmic-alignment-II">
+            <button type="button" id="add-ruins-in-the-heart-of-the-jungle" class="cosmic-alignment-II" onclick="addRuinsInTheHeartOfTheJungle()">
+              Put "Ruins in the Heart of the Jungle" Adventure into play
+            </button>
+            <button type="button" id="add-ruins-under-the-stars" class="cosmic-alignment-II" onclick="addRuinsUnderTheStars()">
+              Put "Ruins Under the Stars" Adventure into play
+            </button>
+          </div>
+          <button type="button" id="ruins-in-the-heart-of-the-jungle" onclick="resolveCosmicAlignmentAdventureII(event, 'Chichen Itza (Space 7)', 'relics-of-the-amazon')">
+            <img src="images/mystic-ruins/Chichen_Itza_(Space_7).webp">
+            <br>
+            Resolve "Ruins in the Heart of the Jungle" Adventure
+          </button>
+          <button type="button" id="ruins-under-the-stars" onclick="resolveCosmicAlignmentAdventureII(event, 'Stonehenge (London)', 'relics-of-the-pyramids')">
+            <img src="images/mystic-ruins/Stonehenge_(London).webp">
+            <br>
+            Resolve "Ruins Under the Stars" Adventure
+          </button>
+          <button type="button" id="relics-of-the-amazon" class="encounter expedition" data-space="The Amazon" onclick="resolveCosmicAlignmentAdventureIII(event)">
+            <img src="images/expedition/The_Amazon.webp">
+            <br>
+            Resolve "Relics of the Amazon" Adventure
+          </button>
+          <button type="button" id="relics-of-the-pyramids" class="encounter expedition" data-space="The Pyramids" onclick="resolveCosmicAlignmentAdventureIII(event)">
+            <img src="images/expedition/The_Pyramids.webp">
+            <br>
+            Resolve "Relics of the Pyramids" Adventure
+          </button>
+        </div>
+
+        <div id="otherworldly-dreams" class="adventure">
+          <div class="image">
+            <img src="images/Otherworldly_Dreams_Adventure.webp" width="81" height="66" alt="Cosmic Alignment">
+            <br>
+            Otherworldly Dreams
+          </div>
+          <div id="otherworldly-dreams-III">
+            <button type="button" id="add-aboard-the-black-galley" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('aboard-the-black-galley')">
+              Put "Aboard the Black Galley" Adventure into play
+            </button>
+            <button type="button" id="add-beyond-the-river-skai" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('beyond-the-river-skai')">
+              Put "Beyond the River Skai" Adventure into play
+            </button>
+            <button type="button" id="add-the-blessings-of-nodens" class="otherworldly-dreams-III" onclick="addOtherworldlyDreamsIIIButton('the-blessings-of-nodens')">
+              Put "The Blessings of Nodens" Adventure into play
+            </button>
+          </div>
+          <button type="button" id="aboard-the-black-galley" onclick="resolveOtherworldlyDreamsAdventureIII(event, 'The Moon')">
+            <img src="images/dream-quest/The_Moon.webp">
+            <br>
+            Resolve "Aboard the Black Galley" Adventure
+          </button>
+          <button type="button" id="beyond-the-river-skai" onclick="resolveOtherworldlyDreamsAdventureIII(event, 'The Enchanted Wood')">
+            <img src="images/dream-quest/The_Enchanted_Wood.webp">
+            <br>
+            Resolve "Beyond the River Skai" Adventure
+          </button>
+          <button type="button" id="the-blessings-of-nodens" onclick="resolveOtherworldlyDreamsAdventureIII(event, 'The Underworld')">
+            <img src="images/dream-quest/The_Underworld.webp">
+            <br>
+            Resolve "The Blessings of Nodens" Adventure
+          </button>
+        </div>
       </div>
 
       <div id="special-encounters"></div>

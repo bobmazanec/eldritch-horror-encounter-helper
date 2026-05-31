@@ -32,7 +32,7 @@ deckData.Special = {
           Pass: {
             intro: "'Umr-At-Tawil guides you through the gates to encounter Yog-Sothoth; test Influence. You may spend any number of Clues to add 1 success to your test result for each Clue spent.",
             choices: {
-              "Your test result is 3 or greater": "You are allowed to return home; place Eldritch token 1 Eldritch token on the Ancient One sheet.",
+              "Your test result is 3 or greater": "You are allowed to return home; place 1 Eldritch token on the Ancient One sheet.",
               "Your test result is less than 3": "Yog-Sothoth threatens to trap you on the doomed planet Yaddith; lose 3 Sanity."
             }
           },
@@ -49,7 +49,7 @@ deckData.Special = {
           Pass: {
             intro: "You sense your loved ones and mentally reach out to them for help (Influence). Roll 1 less die for each investigator that has been defeated or devoured.",
             choices: {
-              Pass: "Your body is snapped back to reality, place Eldritch token 1 Eldritch token on the Ancient One sheet.",
+              Pass: "Your body is snapped back to reality, place 1 Eldritch token on the Ancient One sheet.",
               Fail: "You drift further through worlds beyond; gain a Lost in Time and Space Condition."
             }
           },
@@ -66,7 +66,7 @@ deckData.Special = {
           Pass: {
             intro: "He introduces himself as Randolph Carter and offers you his Silver Key. You try to harness its power (Lore). You may gain a Dark Pact Condition to roll 3 additional dice.",
             choices: {
-              "Your test result is 3 or greater": "The key works; place Eldritch token 1 Eldritch token on the Ancient One sheet.",
+              "Your test result is 3 or greater": "The key works; place 1 Eldritch token on the Ancient One sheet.",
               "Your test result is less than 3": "You're hopelessly lost; gain a Lost in Time and Space Condition."
             }
           },
@@ -87,7 +87,7 @@ deckData.Special = {
           Pass: {
             intro: "You watch the wizard study, hoping to learn a ritual that will return you home; test Lore.",
             choices: {
-              Pass: "You open a mystic gateway to return you home; close this Gate and place Eldritch token 1 Eldritch token on the active Mystery",
+              Pass: "You open a mystic gateway to return you home; close this Gate and place 1 Eldritch token on the active Mystery",
               Fail: "You tamper with powers beyond your control; gain a Cursed Condition."
             }
           },
@@ -107,7 +107,7 @@ deckData.Special = {
           Pass: {
             intro: "As you step through the portal, a creature also tries to pass through, and you must use the machine to close the portal; test Lore-1.",
             choices: {
-              Pass: "Close this Gate and place Eldritch token 1 Eldritch token on the active Mystery.",
+              Pass: "Close this Gate and place 1 Eldritch token on the active Mystery.",
               Fail: {
                 intro: "The creature escapes and attacks you; a Monster ambushes you!",
                 choices: {

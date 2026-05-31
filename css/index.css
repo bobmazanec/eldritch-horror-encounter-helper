@@ -1,19 +1,126 @@
-#crawling-chaos button {
-  display: none;
+#mainView {
+  #cities-in-ruin {
+    display: grid;
+    grid: auto-flow / 120px 100px;
+  }
+
+  #crawling-chaos button {
+    display: none;
+
+    img: {
+      justify-self: center;
+    }
+  }
+
+  #cosmic-alignment button {
+    display: none;
+  }
+
+  #otherworldly-dreams button {
+    display: none;
+  }
+
+  #secrets-of-the-past button {
+    display: none;
+  }
+
+  #special-encounters {
+    display: grid;
+    grid: auto-flow / 230px repeat(3, 120px);
 }
 
-#cosmic-alignment button {
-  display: none;
-}
+  .adventures {
+    display: grid;
+    grid: auto-flow / 120px 1fr 1fr;
+    margin-top: 1em;
+    outline: thin solid black;
 
-#otherworldly-dreams button {
-  display: none;
-}
+    .adventure {
+      display: grid;
+      grid: auto-flow / 100px 1fr;
+      outline: thin solid black;
+      padding: 1em;
 
-#secrets-of-the-past button {
-  display: none;
-}
+      .image {
+        align-self: center;
+        grid-row: span 2;
+        justify-self: center;
+      }
+    }
 
-.disaster {
-  display: none;
+    .token {
+      align-self: center;
+      grid-row: span 2;
+      justify-self: center;
+    }
+  }
+
+  #cities-in-ruin {
+    margin-top: 1em;
+    outline: thin solid black;
+  }
+
+  .decks {
+    display: grid;
+    grid: auto-flow / 1fr 1fr 1fr;
+    row-gap: 1em;
+
+    .deck {
+      outline: thin solid black;
+      display: grid;
+      grid: auto-flow / 120px repeat(3, 100px);
+      grid-auto-rows: subgrid;
+
+      button {
+        align-self: center;
+      }
+
+      .deckname {
+        align-self: center;
+        grid-row: span 2;
+        justify-self: center;
+        margin: 1em;
+
+        &:has(img) {
+          align-self: center;
+        }
+
+        &.one-row {
+          grid-row: span 1;
+        }
+      }
+    }
+  }
+
+  .disaster {
+    display: none;
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+  .misc {
+    display: grid;
+    grid: auto-flow / 1fr 1fr 1fr;
+  }
+
+  .mythos {
+    display: grid;
+    margin-top: 1em;
+    outline: thin solid black;
+    grid: auto-flow / 120px 1fr 1fr 1fr;
+
+    .card {
+      align-content: center;
+      grid-auto-rows: subgrid;
+      justify-content: center;
+      outline: thin solid black;
+    }
+  }
+
+  #spawn-leopard-man {
+    margin-top: 1em;
+    outline: thin solid black;
+  }
 }

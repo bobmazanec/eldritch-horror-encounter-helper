@@ -131,15 +131,35 @@ function addRuinsUnderTheStars() {
 }
 
 function addSpecialEncounterButtons(deckNames) {
-  const buttonContainer = document.getElementById("special-encounters");
+  if (deckNames.length === 0) {
+    return;
+  }
+
+  const outerDiv = document.getElementById("special-encounters");
+
+  const labelDiv = document.createElement("div");
+
+  const aoImg = document.createElement("img");
+  aoImg.src = makeImageName(`images/${ancientOne}.webp`);
+
+  labelDiv.appendChild(aoImg);
+  labelDiv.innerHTML += `<br>${ancientOne} Special Encounters`;
+  labelDiv.style = "display: inline";
+
+  outerDiv.appendChild(labelDiv);
 
   deckNames.forEach(deckName => {
+    const img = document.createElement("img");
+    img.src = makeImageName(`images/${deckName}.webp`);
+
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("encounter");
     button.onclick = () => startSpecialEncounter(deckName);
-    button.textContent = `Start ${deckName} Encounter`;
-    buttonContainer.appendChild(button);
+
+    button.appendChild(img);
+    button.innerHTML += `<br>Start ${deckName} Encounter`;
+    outerDiv.appendChild(button);
   });
 }
 
@@ -155,7 +175,11 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
   if (card) {
     button.classList.add("encounter");
     button.onclick = onClick;
-    button.textContent = buttonTextFunction(card);
+
+    const img = document.createElement("img");
+    img.src = `images/${buttonClass}/${makeImageName(card.space)}.webp`;
+    button.appendChild(img);
+    button.innerHTML += "<br>" + buttonTextFunction(card);
   } else {
     button.textContent = `The ${deckName} deck is empty`;
   }
@@ -238,12 +262,27 @@ function createDeckBySpaces(deckName) {
 }
 
 function devestateCity(event, cityName) {
-  event.target.disabled = true;
+  // Removing would mess up the grid layout
+  event.currentTarget.classList.add("hidden");
+
+  // If 3 hidden (Devestation) buttons, remove them so the row can
+  // go away
+  const hiddens = event.currentTarget.parentElement.querySelectorAll(".hidden");
+  if (hiddens.length === 3) {
+    Array.from(hiddens).forEach(e => e.remove());
+  }
+
   const encounterButtonId = cityName.toLowerCase().replaceAll(/\s+/g, "-");
   const encounterButton = document.getElementById(encounterButtonId);
 
-  encounterButton.textContent = "Start Devestation Encounter";
-  encounterButton.onclick = startDevestationEncounter;
+  encounterButton.innerHTML = null;
+  const img = document.createElement("img");
+  img.src = "images/Devastation_Token.webp";
+  img.height = 66;
+  img.width = 66;
+  encounterButton.appendChild(img);
+  encounterButton.innerHTML += `<br>Start Devestation Encounter in ${cityName}`;
+  encounterButton.setAttribute("onclick", "startDevestationEncounter(event)");
 
   const historyElement = addHistoryElement(`${cityName} is Devestated!`);
   const textNode = document.createElement("p");
@@ -323,6 +362,10 @@ function getTopExpeditionCardSpaces(expeditionDecks) {
   );
 }
 
+function makeImageName(name) {
+  return name.replace(/\s+/g, "_");
+}
+
 function numUniqueSpacesInDeck(deckName) {
   const spaces = new Set(decks[deckName].map(card => card.space));
   return spaces.size;
@@ -361,7 +404,9 @@ function removeElementWithId(id) {
 }
 
 function removeDreamlandsButtons() {
-  removeElementWithId("dreamlands");
+  Array
+    .from(document.getElementsByClassName("dreamlands"))
+    .forEach(el => el.remove());
 }
 
 function removeExpeditionCardsFor(cityName, historyElement) {
@@ -432,6 +477,7 @@ function resolveCosmicAlignmentAdventureII(event, space, nextId) {
 }
 
 function resolveCosmicAlignmentAdventureIII(event) {
+  event.currentTarget.parentElement.remove();
   resolveExpeditionEncounterForSpace(event, event.target.dataset.space);
 }
 
@@ -487,7 +533,7 @@ function resolveExpeditionEncounterForSpace(event, space) {
 }
 
 function resolveLeopardManSpawn(event) {
-  event.target.remove();
+  event.currentTarget.remove();
 
   const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.top-card"));
   let foundCard = false;
@@ -517,7 +563,7 @@ function resolveLeopardManSpawn(event) {
 }
 
 function resolveMysticRuinsEncounterForSpace(event, space) {
-  event.target.remove();
+  event.currentTarget.remove();
 
   const deck = decks["Mystic Ruins"];
   const card = deck.searchForCard(findCardForSpace(space));
@@ -528,6 +574,7 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
 }
 
 function resolveOtherworldlyDreamsAdventureIII(event, space) {
+  event.currentTarget.parentElement.remove();
   resolveDreamQuestEncounterForSpace(event, space);
 }
 
@@ -578,7 +625,7 @@ function resolveSecretsOfThePastRumorReckoning() {
 }
 
 function resolveTheWorldShakesMythos(event) {
-  event.target.remove();
+  event.target.parentElement.remove();
 
   const buttons = Array.from(document.getElementsByClassName("expedition top-card"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
@@ -683,7 +730,7 @@ function startDevestationEncounter(spaceType) {
 }
 
 function startDreamQuestEncounter(event) {
-  const deck = removeTopCardButton(event.target);
+  const deck = removeTopCardButton(event.currentTarget);
   const card = deck.drawCard();
 
   addDreamQuestEncounterButton();
@@ -840,6 +887,10 @@ function useSecondExpeditionDeck() {
 buildSimpleDecks();
 buildExpeditionDecks();
 buildResearchDeck();
+
+if (!useCosmicAlignmentAdventure() && !useOtherworldlyDreamsAdventure()) {
+  document.querySelector(".adventures").remove();
+}
 
 if (useCosmicAlignmentAdventure()) {
   showId("add-ruins-in-the-heart-of-the-jungle");
