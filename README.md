@@ -26,3 +26,21 @@ If you are **not** using a Ruby Devcontainer, you will need to install the requi
 ```
 $ bundle install
 ```
+
+### Be in the Directory
+`$ cd html2json`
+
+### Get the Wiki HTML and Run the Script(s)
+To run a given `*_encounter_to_js` script, save the Wiki HTML it expects into the `wiki-html/` directory.
+
+Run the script and redirect its output to the expected `js/deckdata_<name>.js` file.
+
+For example, having saved https://eldritchhorror.fandom.com/wiki/General_Encounter to `wiki-html/General_Encounter.html`,
+```
+$ ./general_encounter_to_js > ../js/deckdata_general.js
+```
+
+| Script | source file | suggested output file
+| ------ | ----------- | ---------------------
+| `general_encounter_to_js.rb` | [`wiki-html/General_Encounter.html`](https://eldritchhorror.fandom.com/wiki/General_Encounter) | `../js/deckdata_general.js`
+
