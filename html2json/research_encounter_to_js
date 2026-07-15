@@ -1,0 +1,10 @@
+#! /usr/bin/env ruby
+
+require './process_city_wilderness_sea'
+
+ancient_one = ARGV.shift
+filename_base = ancient_one.gsub ' ', '_'
+
+process_city_wilderness_sea_cards \
+  "#{filename_base}_Research_Encounters",
+  %Q(Research["#{ancient_one}"])

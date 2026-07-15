@@ -5,36 +5,40 @@ require 'yaml'
 
 require './string_extensions'
 
-def add_encounter_step(dest, text)
+def add_encounter_step(text)
   # JSON appears to be emitted in order set, so set things in this general
   # order so the JSON reads kinda like the cards:
   # intro
   # choices
   #   pass
   #   fail
-    
+
+  step = {} # assume Hash for now
   choices = {}
 
-  if md = text.match(/(?<intro>.*\)[.!])(?<pass_fail>\s+If you (pass|fail),.*)?/)
+  if md = text.match(/(?<intro>.*?\(.*?)\s+(?<pass_fail>If you (pass|fail)([,;]| gain)\s+.*)/)
+    # The "\(" part is to match the "(<skill icon>" part of the tests;
+    # sadly, some of the closing parentheses are missing in the HTML
+    #
     # e.g., something like
-    #   You make sure no one is watching before sneaking out of the shop with your stolen goods (...<span title="Observation">...). 
+    #   [...] (...<span title="Observation">...). 
     #   If you pass, gain 1 <a...>Item</a> Asset from the reserve or 1 random Item Asset from the deck.
-    #   If you fail, you are caught by the store owner and arrested; gain a <a...>Detained</a> Condition.
+    #   If you fail, [...]; gain a <a...>Detained</a> Condition.
     # (HTML trimmed & newlines added for clarity)
     # becomes
     # {
-    #   "intro": "You make sure no one is watching before sneaking out of the shop with your stolen goods; test Observation.",
+    #   "intro": "[...]; test Observation.",
     #   "choices": {
     #     "Pass": "Gain 1 Item Asset from the reserve or 1 random Item Asset from the deck.",
-    #     "Fail": "You are caught by the store owner and arrested; gain a Detained Condition."
+    #     "Fail": "[...]; gain a Detained Condition."
     #   }
     # }
     # Pass or Fail might be omitted and left ""
-    dest["intro"] = md[:intro]
+    step["intro"] = md[:intro]
 
     pass_fail = md[:pass_fail]
 
-    fail = if md_fail = pass_fail&.match(/If you fail, (?<fail>.*)/)
+    fail = if md_fail = pass_fail&.match(/If you fail[,;] (?<fail>.*)/)
       pass_fail.delete_suffix! md_fail[0] # Remove "If you fail, [...]"
 
       md_fail[:fail]
@@ -42,65 +46,109 @@ def add_encounter_step(dest, text)
       ""
     end
 
-    choices["Pass"] = if md_pass = pass_fail&.match(/If you pass, (?<pass>.*)/)
+    pass = if md_pass = pass_fail&.match(/If you pass[,;]?\s+(?<pass>.*)/)
       md_pass[:pass].strip_html.capitalize_first_letter
     else
       ""
     end
 
-    choices["Fail"] = fail.strip_html.capitalize_first_letter
-
-    dest["choices"] = choices
+    step["choices"] = {
+      "Pass": add_encounter_step(pass),
+      "Fail": add_encounter_step(fail)
+    }
   elsif matches = text.match(/(?<intro>.+ You may.+ to (?<narrative>.+\.)) If you .+?, (?<result>.+)/)
     # e.g., something like
-    #   A school of dolphins has surrounded your ship, trying to keep you here. You may become <a...>Delayed</a> to spend the night in this spot.
-    #   If you become Delayed, the Elder God Nodens visits your dreams, and you wake with profound new insights;
+    #   [...]. You may become <a...>Delayed</a> to spend the night in this spot.
+    #   If you become Delayed, [...] you wake with profound new insights;
     #   spawn <a...>2 Clues</a>.
     # (HTML trimmed & newlines added for clarity)
     # becomes
     # {
-    #   "intro": "A school of dolphins has surrounded your ship, trying to keep you here. You may become Delayed to spend the night in this spot.",
+    #   "intro": "[...]. You may become Delayed to spend the night in this spot.",
     #   "choices": {
-    #     "Spend the night in this spot.": "The Elder God Nodens visits your dreams, and you wake with profound new insights; spawn 2 Clues.",
+    #     "Spend the night in this spot.": "[...] you wake with profound new insights; spawn 2 Clues.",
     #     "Don't": ""
     #   }
     # }
-    dest["intro"] = matches[:intro]
+    step["intro"] = matches[:intro]
 
     do_it = matches[:narrative].strip_html.capitalize_first_letter
 
     choices[do_it] = matches[:result].strip_html.capitalize_first_letter
     choices["Don't"] = ""
-    dest["choices"] = choices
-  elsif matches = text.match(/(?<intro>.+ You may (?<gain_condition>.+\.)) If you .+?, (?<result>.+)/)
-    dest["intro"] = matches[:intro]
+    step["choices"] = choices
+  elsif matches = text.match(/(?<intro>.+ You may (?<action>.+\.)) If you .+?, (?<result>.+)/)
+    # e.g., something like
+    #   [...] You may gain a <a...>Debt</a> Condition.
+    #   If you gain the Condition, he shares what he knows; gain 1 <a...>Task</a> Unique Asset.
+    # (HTML trimmed & newlines added for clarity)
+    # becomes
+    # {
+    #   "intro": "[...] You may gain a Debt Condition.",
+    #   "choices": {
+    #     "Gain a Debt Condition.": "He shares what he knows; gain 1 Task Unique Asset.",
+    #     "Don't": ""
+    # }
+    step["intro"] = matches[:intro]
 
-    do_it = matches[:gain_condition].strip_html.capitalize_first_letter
+    do_it = matches[:action].strip_html.capitalize_first_letter
 
-    choices[do_it] = matches[:result].strip_html.capitalize_first_letter
-    choices["Don't"] = ""
-    dest["choices"] = choices
+    step["choices"] = {
+      do_it => add_encounter_step(matches[:result]),
+      "Don't" => ""
+    }
   elsif you_may = text.match(/You may (?<action>.+)( to (?<effect>.+))/)
+    # e.g., something like
+    # [...] You may spend <span...><span...><img...></span></span> <a...>1 Clue</a> to gain 1 <a...>Artifact</a>.
+    # (HTML trimmed & newlines added for clarity)
+    # becomes
+    # {
+    #   "intro": "[...] You may spend 1 Clue to gain 1 Artifact.",
+    #   "choices": {
+    #     "Spend 1 Clue to gain 1 Artifact.": "",
+    #     "Don't": ""
+    #   }
+    # }
+    # Neither choice has a further result/consequence, but include the choices to maintain suspense & consistency
     action = you_may[:effect]
 
     do_it = action.strip_html.capitalize_first_letter
     
-    choices[do_it] = ""
-    choices["Don't"] = ""
     intro = text
+    did_it = ""
 
     if md2 = text.match(/#{you_may[:action].strip_html}, (?<result>.+)$/)
       intro = text.delete_suffix md2[0]
-      choices[do_it] = md2[:result].strip_html.capitalize_first_letter
+      did_it = add_encounter_step md2[:result]
     end
 
-    dest["intro"] = intro
-    dest["choices"] = choices
+    step["intro"] = intro
+    step["choices"] = {
+      do_it => did_it,
+      "Don't" => ""
+    }
+  elsif matches = text.match(/(?<intro>.+[aA]mbushes[^.!]*? you.)(?<result>.*)/)
+    # e.g., something like
+    #   [...] A <a...>Monster</a> ambushes you!
+    #   If you defeat it, gain this <a...>Clue</a>
+    # (HTML trimmed & newlines added for clarity)
+    # becomes
+    # {
+    #   "intro": "[...] A Monster ambushes you!",
+    #   "choices": {
+    #     "Resolved combat encounter": "[...] If you defeat it, gain this Clue"
+    # }
+    step["intro"] = matches[:intro]
+    step["choices"] = {
+      "Resolved combat encounter": add_encounter_step(matches[:result])
+    }
   else
-    dest["intro"] = text
+    step = text.strip_html.capitalize_first_letter
   end
 
-  dest["intro"] = dest["intro"].strip_html
+  step["intro"] = step["intro"].strip_html.capitalize_first_letter if step.is_a?(Hash)
+
+  step
 end
 
 def process_city_wilderness_sea_cards(filename, deck_data_key)
@@ -122,7 +170,7 @@ def process_city_wilderness_sea_cards(filename, deck_data_key)
 
       entry[:expansion_id] = cells[1].at_css('a')['href'].split('/').last
       entry[:encounter] = {}
-      add_encounter_step entry[:encounter], cells[2].inner_html.strip
+      entry[:encounter] = add_encounter_step cells[2].inner_html.strip
 
       entries[card_id] = entry
     end
