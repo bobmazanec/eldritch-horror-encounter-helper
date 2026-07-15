@@ -31,7 +31,10 @@ $ bundle install
 `$ cd html2json`
 
 ### Get the Wiki HTML and Run the Script(s)
-To run a given `*_encounter_to_js` script, save the Wiki HTML it expects into the `wiki-html/` directory.
+To run all the scripts, save all of the Wiki pages listed below into the `wiki-html/` directory and then run
+```
+$ ./html2js_all.sh
+```
 
 To run a given `*_encounter_to_js` script,
 - Save the Wiki HTML it expects into the `wiki-html/` directory.
