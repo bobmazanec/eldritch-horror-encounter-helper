@@ -1,0 +1,23 @@
+#! /usr/bin/env ruby
+
+# require 'debug'
+require 'json'
+require 'nokogiri'
+
+require './add_encounter_step'
+
+doc = Nokogiri::HTML(File.open(("wiki-html/Location_Encounter.html")))
+
+headers = doc.css 'h2:has(+figure + h3)'
+
+headers.each do |header|
+  puts header.at_css('span.mw-headline').text.sub(/ Encounters.*/, '')
+  here = header.next_element
+  3.times do
+    while here.name != 'h3' && here.next_element
+      here = here.next_element
+    end
+    puts '-' + here.at_css('span.mw-headline').text
+    here = here.next_element
+  end
+end
