@@ -85,10 +85,10 @@
     row-gap: 1em;
 
     .deck {
-      outline: thin solid black;
       display: grid;
       grid: auto-flow / 120px repeat(3, 100px);
       grid-auto-rows: subgrid;
+      outline: thin solid black;
 
       button {
         align-self: center;
