@@ -780,6 +780,15 @@ function startGeneralEncounter(spaceType) {
   );
 }
 
+function startLocationEncounter(deckName, cityName) {
+  const card = drawCard(deckName);
+
+  startEncounter(
+    `${deckName} ${card.cardId}: ${cityName}`,
+    card[cityName]
+  );
+}
+
 function startMysticRuinsEncounter(event) {
   const deck = removeTopCardButton(event.target);
   const card = deck.drawCard();
