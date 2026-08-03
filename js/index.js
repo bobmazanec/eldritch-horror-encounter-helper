@@ -229,7 +229,7 @@ function filterByExpansion(cards) {
 function buildSimpleDecks() {
   [
     "America", "Asia/Australia",
-    "Devestation", "Dreamlands",
+    "Devastation", "Dreamlands",
     "Europe",
     "General",
     "OtherWorld"
@@ -261,11 +261,11 @@ function createDeckBySpaces(deckName) {
   );
 }
 
-function devestateCity(event, cityName) {
+function devastateCity(event, cityName) {
   // Removing would mess up the grid layout
   event.currentTarget.classList.add("hidden");
 
-  // If 3 hidden (Devestation) buttons, remove them so the row can
+  // If 3 hidden (Devastation) buttons, remove them so the row can
   // go away
   const hiddens = event.currentTarget.parentElement.querySelectorAll(".hidden");
   if (hiddens.length === 3) {
@@ -281,10 +281,10 @@ function devestateCity(event, cityName) {
   img.height = 66;
   img.width = 66;
   encounterButton.appendChild(img);
-  encounterButton.innerHTML += `<br>Start Devestation Encounter in ${cityName}`;
-  encounterButton.setAttribute("onclick", "startDevestationEncounter(event)");
+  encounterButton.innerHTML += `<br>Start Devastation Encounter in ${cityName}`;
+  encounterButton.setAttribute("onclick", "startDevastationEncounter(event)");
 
-  const historyElement = addHistoryElement(`${cityName} is Devestated!`);
+  const historyElement = addHistoryElement(`${cityName} is Devastated!`);
   const textNode = document.createElement("p");
   historyElement.appendChild(textNode);
   textNode.textContent = `Remove any Clues in ${cityName}`;
@@ -711,20 +711,11 @@ function solveSecretsOfThePast(event) {
   enableEncounterButtons();
 }
 
-function startCityEncounter(deckName, cityName) {
-  const card = drawCard(deckName);
+function startDevastationEncounter(spaceType) {
+  const card = drawCard("Devastation");
 
   startEncounter(
-    `${deckName} ${card.cardId}: ${cityName}`,
-    card[cityName]
-  );
-}
-
-function startDevestationEncounter(spaceType) {
-  const card = drawCard("Devestation");
-
-  startEncounter(
-    `Devestation: ${card.cardId}`,
+    `Devastation: ${card.cardId}`,
     card
   );
 }
@@ -930,7 +921,7 @@ if (preludesUsed.includes("Otherwordly Dreams")) {
   addOtherworldlyDreamsButtons();
 }
 
-if (decks.Devestation.isEmpty()) {
+if (decks.Devastation.isEmpty()) {
   removeElementWithId("cities-in-ruin");
 }
 
