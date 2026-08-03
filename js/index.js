@@ -399,14 +399,18 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
+function removeByClassName(className) {
+  Array
+    .from(document.getElementsByClassName(className))
+    .forEach(el => el.remove());
+}
+
 function removeElementWithId(id) {
   document.getElementById(id).remove();
 }
 
 function removeDreamlandsButtons() {
-  Array
-    .from(document.getElementsByClassName("dreamlands"))
-    .forEach(el => el.remove());
+  removeByClassName("dreamlands");
 }
 
 function removeExpeditionCardsFor(cityName, historyElement) {
