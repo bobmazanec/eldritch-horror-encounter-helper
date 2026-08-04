@@ -214,6 +214,10 @@ function buildMysticRuinsDeck() {
 
 function buildResearchDeck() {
   createDeck("Research", filterByExpansion(deckData.Research[ancientOne]));
+
+  if (useAntarcticaBoard()) {
+    createDeck("Antarctica Research", filterByExpansion(deckData.Research.Antarctica));
+  }
 }
 
 function createDeck(deckName, cards) {
@@ -232,7 +236,8 @@ function buildSimpleDecks() {
     "Devastation", "Dreamlands",
     "Europe",
     "General",
-    "OtherWorld"
+    "Mountain",
+    "OtherWorld", "Outpost", 
   ].forEach(deckName => {
     createDeck(deckName, filterByExpansion(deckData[deckName]));
   });
@@ -397,6 +402,10 @@ function putSecretsOfThePastRumorIntoPlay(event) {
 function readAlound(text) {
   const utterance = new SpeechSynthesisUtterance(text);
   speechSynthesis.speak(utterance);
+}
+
+function removeAntarcticaButtons() {
+  removeByClassName("antarctica");
 }
 
 function removeByClassName(className) {
@@ -852,6 +861,13 @@ function updateSecretsOfThePastButton() {
   button.innerHTML = text;
 }
 
+function useAntarcticaBoard() {
+  return (
+    ancientOne == "Elder Things" ||
+    preludesUsed.includes("Doomsayer from Antarctica")
+  );
+}
+
 function useDreamlandsBoard() {
   return (
     ancientOne == "Hypnos" ||
@@ -941,6 +957,10 @@ if (useMountainsOfMadness()) {
   showId("add-crawling-chaos");
 } else {
   removeElementWithId("crawling-chaos");
+}
+
+if (!useAntarcticaBoard()) {
+  removeAntarcticaButtons();
 }
 
 if (useSecondExpeditionDeck()) {
