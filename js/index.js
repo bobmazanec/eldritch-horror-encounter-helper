@@ -232,9 +232,9 @@ function filterByExpansion(cards) {
 
 function buildSimpleDecks() {
   [
-    "America", "Asia/Australia",
+    "Africa", "America", "Asia/Australia",
     "Devastation", "Dreamlands",
-    "Europe",
+    "Egypt", "Europe",
     "General",
     "Mountain",
     "OtherWorld", "Outpost", 
@@ -412,6 +412,10 @@ function removeByClassName(className) {
   Array
     .from(document.getElementsByClassName(className))
     .forEach(el => el.remove());
+}
+
+function removeEgyptButtons() {
+  removeByClassName("egypt");
 }
 
 function removeElementWithId(id) {
@@ -868,6 +872,14 @@ function useAntarcticaBoard() {
   );
 }
 
+function useCosmicAlignmentAdventure() {
+  return preludesUsed.includes("In Cosmic Alignment");
+}
+
+function useCitiesInRuin() {
+  return expansionsUsed.includes(CitiesInRuin);
+}
+
 function useDreamlandsBoard() {
   return (
     ancientOne == "Hypnos" ||
@@ -875,12 +887,14 @@ function useDreamlandsBoard() {
   );
 }
 
-function useCosmicAlignmentAdventure() {
-  return preludesUsed.includes("In Cosmic Alignment");
-}
-
-function useCitiesInRuin() {
-  return expansionsUsed.includes(CitiesInRuin);
+function useEgyptBoard() {
+  return (
+    expansionsUsed.includes(UnderThePyramids) && (
+      ancientOne == "Nephren-Ka" ||
+      preludesUsed.includes("In the Lightless Chamber") ||
+      preludesUsed.includes("Under the Pyramids")
+    )
+  );
 }
 
 function useMountainsOfMadness() {
@@ -961,6 +975,10 @@ if (useMountainsOfMadness()) {
 
 if (!useAntarcticaBoard()) {
   removeAntarcticaButtons();
+}
+
+if (!useEgyptBoard()) {
+  removeEgyptButtons();
 }
 
 if (useSecondExpeditionDeck()) {
