@@ -212,6 +212,10 @@ function buildMysticRuinsDeck() {
   createDeckBySpaces("Mystic Ruins");
 }
 
+function buildOtherWorldDeck() {
+  createDeckBySpaces("OtherWorld");
+}
+
 function buildResearchDeck() {
   createDeck("Research", filterByExpansion(deckData.Research[ancientOne]));
 
@@ -235,9 +239,9 @@ function buildSimpleDecks() {
     "Africa", "America", "Asia/Australia",
     "Devastation", "Dreamlands",
     "Egypt", "Europe",
-    "General",
+    "General Encounter",
     "Mountain",
-    "OtherWorld", "Outpost", 
+    "Outpost",
   ].forEach(deckName => {
     createDeck(deckName, filterByExpansion(deckData[deckName]));
   });
@@ -780,7 +784,7 @@ function startExpeditionEncounterWith(card) {
 }
 
 function startGeneralEncounter(spaceType) {
-  const card = drawCard("General");
+  const card = drawCard("General Encounter");
 
   startEncounter(
     `General ${card.cardId}: ${spaceType}`,
@@ -920,6 +924,7 @@ function useSecondExpeditionDeck() {
 
 buildSimpleDecks();
 buildExpeditionDecks();
+buildOtherWorldDeck();
 buildResearchDeck();
 
 if (!useCosmicAlignmentAdventure() && !useOtherworldlyDreamsAdventure()) {
