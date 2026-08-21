@@ -46,7 +46,7 @@ class EncounterParser
     Yuggoth
   ].freeze
   COMPLEX_LOCATION_FILES = {
-    'Dream-Quest_Encounter' => 'DreamQuest',
+    'Dream-Quest_Encounter' => 'Dream-Quest',
     'Expedition_Encounters' => 'Expedition',
     'Mystic_Ruins_Encounter' => 'MysticRuins'
   }.freeze
@@ -1779,7 +1779,7 @@ class EncounterParser
     if location_bucketed_key
       all_cards = file_result[:deck_data].values.flat_map { |cards| cards }
       bucketed = bucket_cards_by_location(all_cards)
-      lines << "deckData.#{location_bucketed_key} = #{JSON.pretty_generate(bucketed)};"
+      lines << "deckData['#{location_bucketed_key}'] = #{JSON.pretty_generate(bucketed)};"
       lines << ''
       File.write(output_file, lines.join("\n"))
       return output_file
