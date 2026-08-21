@@ -68,30 +68,11 @@ Input pages are expected to resemble MediaWiki HTML and may contain:
 
 Generated files are JavaScript fragments intended to be loaded by `../index.html` that has already created a `deckData` object. They are not standalone JSON documents or standalone JavaScript programs.
 
-Depending on the source page, the parser writes data to one of these structures:
-
-```js
-deckData["Deck Name"] = [...];
-deckData.Research["Ancient One"] = [...];
-deckData.Special = {...};
-deckData.OtherWorld["Location"] = [...];
-deckData.Expedition = {...};
-deckData.DreamQuest = {...};
-deckData.MysticRuins = {...};
-```
-
-Cards generally contain:
-
-- `cardId`
-- `expansionId`
-- `intro`
-- `choices`
-
 Location-based cards can additionally contain location keys whose values are encounter payloads. The parser sorts cards and generated deck keys for stable output.
 
-The parser also normalizes common encounter structures, including skill tests, pass/fail effects, optional actions, combat results, ambushes, movement choices, and nested choices.
+The parser also normalizes common encounter structures, including skill tests, pass/fail effects, optional actions, ambush combat results, movement choices, and nested choices.
 
-The parser generally maintains most of the original card and encounter text from the HTML; however, it does make some changes to facilitate presenting only the portions of the encounter relevant to the player's choices and/or test results.
+The parser generally maintains most of the original card and encounter text from the HTML; however, it does make some changes and additions to facilitate presenting only the portions of the encounter relevant to the player's choices and/or test results.
 
 ## Regenerating Data
 
@@ -102,7 +83,7 @@ ruby parse_html_to_deck_data.rb
 ```
 
 I don't recommend committing the HTML and generated JS files to the repository. However, you can use `git` to identify changes:
-- remove `js/deckdata_*.js` from `.gitignore` temporarily
+- Remove `js/deckdata_*.js` from `.gitignore` temporarily
 - `git add js/deckdata_*.js`
 - `ruby parse_html_to_deck_data.rb`
 - Use `git diff` to see changes in the generated output.
