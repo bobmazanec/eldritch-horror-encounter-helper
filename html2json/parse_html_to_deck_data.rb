@@ -48,7 +48,7 @@ class EncounterParser
   COMPLEX_LOCATION_FILES = {
     'Dream-Quest_Encounter' => 'Dream-Quest',
     'Expedition_Encounters' => 'Expedition',
-    'Mystic_Ruins_Encounter' => 'MysticRuins'
+    'Mystic_Ruins_Encounter' => 'Mystic Ruins'
   }.freeze
   LOCATION_ENCOUNTER_FILES = %w[Location_Encounter].freeze
   LOCATION_ENCOUNTER_DECKS = [
@@ -1701,8 +1701,7 @@ class EncounterParser
     text = normalize_space(heading)
     return '' if text.empty?
 
-    text = text.gsub(/\s+Encounters?\z/i, '')
-    text = text.gsub(/\s+Encounter\z/i, '')
+    text = text.gsub(/\s+Encounters?/i, '')
     text.strip
   end
 
