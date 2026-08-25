@@ -31,12 +31,11 @@
     }
   }
 
-  #cosmic-alignment button {
+  #cosmic-alignment, #otherworldly-dreams {
     display: none;
-  }
-
-  #otherworldly-dreams button {
-    display: none;
+    button {
+      display: none;
+    }
   }
 
   #secrets-of-the-past button {

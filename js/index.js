@@ -120,6 +120,10 @@ function addMysticRuinsEncounterButton(_) {
   })
 }
 
+function addOtherworldlyDreamsButtons() {
+  showId("otherworldly-dreams-III");
+}
+
 function addRuinsInTheHeartOfTheJungle() {
   removeElementWithId("cosmic-alignment-II");
   showId("ruins-in-the-heart-of-the-jungle");
@@ -887,7 +891,7 @@ function useCitiesInRuin() {
 function useDreamlandsBoard() {
   return (
     ancientOne == "Hypnos" ||
-    preludesUsed.includes("Otherworldly Dreams")
+    preludesUsed.includes(OtherworldlyDreams)
   );
 }
 
@@ -915,7 +919,7 @@ function useMysticRuinsDeck() {
 }
 
 function useOtherworldlyDreamsAdventure() {
-  return preludesUsed.includes("Otherworldly Dreams");
+  return preludesUsed.includes(OtherworldlyDreams);
 }
 
 function useSecondExpeditionDeck() {
@@ -932,11 +936,13 @@ if (!useCosmicAlignmentAdventure() && !useOtherworldlyDreamsAdventure()) {
 }
 
 if (useCosmicAlignmentAdventure()) {
+  showId("cosmic-alignment");
   showId("add-ruins-in-the-heart-of-the-jungle");
   showId("add-ruins-under-the-stars");
 }
 
 if (useOtherworldlyDreamsAdventure()) {
+  showId("otherworldly-dreams");
   showId("add-aboard-the-black-galley");
   showId("add-beyond-the-river-skai");
   showId("add-the-blessings-of-nodens");
@@ -956,7 +962,7 @@ if (useMysticRuinsDeck()) {
   removeMysticRuinsButtons();
 }
 
-if (preludesUsed.includes("Otherwordly Dreams")) {
+if (preludesUsed.includes(OtherworldlyDreams)) {
   addOtherworldlyDreamsButtons();
 }
 
