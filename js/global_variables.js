@@ -13,23 +13,29 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-const Core = 0;
-const ForsakenLore = 1;
-const MountainsOfMadness = 2;
-const StrangeRemnants = 3;
-const UnderThePyramids = 4;
-const SignsOfCarcosa = 5;
-const CitiesInRuin = 6;
-const TheDreamlands = 7;
-const MasksOfNyarlathotep = 8;
+const Core = "Eldritch Horror";
+const CitiesInRuin = "Cities in Ruin";
+const ForsakenLore = "Forsaken Lore";
+const MasksOfNyarlathotep = "Masks of Nyarlathotep";
+const MountainsOfMadness = "Mountains of Madness";
+const SignsOfCarcosa = "Signs of Carcosa";
+const StrangeRemnants = "Strange Remnants";
+const TheDreamlands = "The Dreamlands";
+const UnderThePyramids = "Under the Pyramids";
 
-const ancientOne = "Hypnos";
-const expansionsUsed = ["Eldritch_Horror", "Cities_in_Ruin", "Forsaken_Lore", "Masks_of_Nyarlathotep", "Mountains_of_Madness", "Signs_of_Carcosa", "Strange_Remnants", "The_Dreamlands", "Under_the_Pyramids", Core, CitiesInRuin, ForsakenLore, MasksOfNyarlathotep, MountainsOfMadness, SignsOfCarcosa, StrangeRemnants, TheDreamlands, UnderThePyramids];
-const preludesUsed = ["Litany of Secrets", "Otherworldly Dreams", "In Cosmic Alignment"];
+const InCosmicAlignment = "In Cosmic Alignment";
+const InTheLightlessChamber = "In the Lightless Chamber";
+const LitanyOfSecrets = "Litany of Secrets";
+const OtherworldlyDreams = "Otherworldly Dreams";
+
+const ancientOne = "Azathoth";
+const expansionsUsed = [Core, CitiesInRuin, ForsakenLore, MasksOfNyarlathotep, SignsOfCarcosa, StrangeRemnants, TheDreamlands, MountainsOfMadness, UnderThePyramids];
+const preludesUsed = [OtherworldlyDreams /*, InCosmicAlignment, InTheLightlessChamber, LitanyOfSecrets*/];
 
 const deckData = {
-  Research: {}
+  OtherWorld: {},
+  Research: {},
+  Special: {}
 };
 const decks = {};
-const discardPiles = {};
 let   secretsOfThePastRumorInPlay = false;
