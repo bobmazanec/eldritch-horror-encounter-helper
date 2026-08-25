@@ -13,6 +13,24 @@
 // with this program; if not, write to the Free Software Foundation, Inc.,
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+// Ancient Ones
+const ElderThings = "Elder Things";
+
+// Cards
+const SecretsOfThePast = "Secrets of the Past";
+const TheCrawlingChaos = "The Crawling Chaos";
+
+// Deck names
+const AntarcticaResearch = "Antarctica Research";
+const Devastation = "Devastation";
+const DreamQuest = "Dream-Quest";
+const Expedition = "Expedition";
+const General = "General Encounter";
+const MysticRuins = "Mystic Ruins";
+const OtherWorld = "OtherWorld";
+const Research = "Research";
+
+// Expansions
 const Core = "Eldritch Horror";
 const CitiesInRuin = "Cities in Ruin";
 const ForsakenLore = "Forsaken Lore";
@@ -23,14 +41,19 @@ const StrangeRemnants = "Strange Remnants";
 const TheDreamlands = "The Dreamlands";
 const UnderThePyramids = "Under the Pyramids";
 
+// Preludes
 const InCosmicAlignment = "In Cosmic Alignment";
 const InTheLightlessChamber = "In the Lightless Chamber";
 const LitanyOfSecrets = "Litany of Secrets";
 const OtherworldlyDreams = "Otherworldly Dreams";
+const TheStarsAlign = "The Stars Align";
 
-const ancientOne = "Azathoth";
+// Spaces
+const TheHeartOfAfrica = "The Heart of Africa";
+
+const ancientOne = ElderThings;
 const expansionsUsed = [Core, CitiesInRuin, ForsakenLore, MasksOfNyarlathotep, SignsOfCarcosa, StrangeRemnants, TheDreamlands, MountainsOfMadness, UnderThePyramids];
-const preludesUsed = [OtherworldlyDreams /*, InCosmicAlignment, InTheLightlessChamber, LitanyOfSecrets*/];
+const preludesUsed = [OtherworldlyDreams, InCosmicAlignment, InTheLightlessChamber, LitanyOfSecrets, TheStarsAlign];
 
 const deckData = {
   OtherWorld: {},
