@@ -558,8 +558,6 @@ function resolveExpeditionEncounterForSpace(event, space) {
 }
 
 function resolveLeopardManSpawn(event) {
-  event.currentTarget.remove();
-
   const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.top-card"));
   let foundCard = false;
 
