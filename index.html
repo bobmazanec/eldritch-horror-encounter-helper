@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<!--
+  Eldritch Horror Encounter Helper
+  Present Eldritch Horror encounters step-by-step
+
+  Copyright (C) 2026 Bob Mazanec
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along
+  with this program; if not, write to the Free Software Foundation, Inc.,
+  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -8,18 +27,41 @@
     <!-- Data -->
     <script src="js/global_variables.js"></script>
     <script src="js/deck.js"></script>
-    <script src="js/deckdata_america.js"></script>
-    <script src="js/deckdata_asia_australia.js"></script>
-    <script src="js/deckdata_devestation.js"></script>
-    <script src="js/deckdata_dream_quest.js"></script>
-    <script src="js/deckdata_dreamlands.js"></script>
-    <script src="js/deckdata_europe.js"></script>
-    <script src="js/deckdata_expedition.js"></script>
-    <script src="js/deckdata_general.js"></script>
-    <script src="js/deckdata_mystic_ruins.js"></script>
-    <script src="js/deckdata_other_world.js"></script>
-    <script src="js/deckdata_research.js"></script>
-    <script src="js/deckdata_special.js"></script>
+    <script src="js/deckdata_abhoth_research_encounters.js"></script>
+    <script src="js/deckdata_antarctica_research_encounters.js"></script>
+    <script src="js/deckdata_antediluvium_research_encounters.js"></script>
+    <script src="js/deckdata_atlach-nacha_research_encounters.js"></script>
+    <script src="js/deckdata_azathoth_research_encounters.js"></script>
+    <script src="js/deckdata_city_of_the_great_race.js"></script>
+    <script src="js/deckdata_cthulhu_research_encounters.js"></script>
+    <script src="js/deckdata_devastation.js"></script>
+    <script src="js/deckdata_dream-quest_encounter.js"></script>
+    <script src="js/deckdata_elder_things_research_encounters.js"></script>
+    <script src="js/deckdata_expedition_encounters.js"></script>
+    <script src="js/deckdata_general_encounter.js"></script>
+    <script src="js/deckdata_great_hall_of_celaeno.js"></script>
+    <script src="js/deckdata_hastur_research_encounters.js"></script>
+    <script src="js/deckdata_hypnos_research_encounters.js"></script>
+    <script src="js/deckdata_ithaqua_research_encounters.js"></script>
+    <script src="js/deckdata_location_encounter.js"></script>
+    <script src="js/deckdata_lost_carcosa.js"></script>
+    <script src="js/deckdata_mystic_ruins_encounter.js"></script>
+    <script src="js/deckdata_nephren-ka_research_encounters.js"></script>
+    <script src="js/deckdata_nyarlathotep_research_encounters.js"></script>
+    <script src="js/deckdata_plateau_of_leng.js"></script>
+    <script src="js/deckdata_shub-niggurath_research_encounters.js"></script>
+    <script src="js/deckdata_shudde_m'ell_research_encounters.js"></script>
+    <script src="js/deckdata_special_encounters.js"></script>
+    <script src="js/deckdata_syzygy_research_encounters.js"></script>
+    <script src="js/deckdata_the_abyss.js"></script>
+    <script src="js/deckdata_the_dreamlands_(other_world).js"></script>
+    <script src="js/deckdata_the_future.js"></script>
+    <script src="js/deckdata_the_past.js"></script>
+    <script src="js/deckdata_the_underworld_(other_world).js"></script>
+    <script src="js/deckdata_unknown_kadath_(other_world).js"></script>
+    <script src="js/deckdata_yig_research_encounters.js"></script>
+    <script src="js/deckdata_yog-sothoth_research_encounters.js"></script>
+    <script src="js/deckdata_yuggoth.js"></script>
     <!-- Logic -->
     <script defer src="js/index.js"></script>
   </head>
@@ -28,81 +70,123 @@
     <div id="app"></div>
     <div id="mainView">
       <div class="decks">
+        <div class="deck egypt">
+          <div class="deckname">Africa</div>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Africa', 'The Nile River')">
+            <img src="images/The_Nile_River.webp" width="81" height="66" alt="The Nile River">
+            <br>
+            Start The Nile River Encounter
+          </button>
+
+          <button type="button" class="encounter" onclick="startLocationEncounter('Africa', 'The Sahara Desert')">
+            <img src="images/The_Sahara_Desert.webp" width="81" height="66" alt="The Sahara Desert">
+            <br>
+            Start The Sahara Desert Encounter
+          </button>
+
+          <button type="button" class="encounter" onclick="startLocationEncounter('Africa', 'Tel el-Amarna')">
+            <img src="images/Tel_el-Amarna.webp" width="81" height="66" alt="Tel el-Amarna">
+            <br>
+            Start Tel el-Amarna Encounter
+          </button>
+        </div>
+
         <div class="deck">
           <div class="deckname">America</div>
-          <button type="button" id="arkham" class="encounter" onclick="startCityEncounter('America', 'Arkham')">
+          <button type="button" id="arkham" class="encounter" onclick="startLocationEncounter('America', 'Arkham')">
             <img src="images/Arkham.webp" width="81" height="66" alt="Arkham">
             <br>
             Start Arkham Encounter
           </button>
 
-          <button type="button" id="buenos-aires" class="encounter" onclick="startCityEncounter('America', 'Buenos Aires')">
+          <button type="button" id="buenos-aires" class="encounter" onclick="startLocationEncounter('America', 'Buenos Aires')">
             <img src="images/Buenos_Aires.webp" width="81" height="66" alt="Buenos Aires">
             <br>
             Start Buenos Aires Encounter
           </button>
 
-          <button type="button" id="san-francisco" class="encounter" onclick="startCityEncounter('America', 'San Francisco')">
+          <button type="button" id="san-francisco" class="encounter" onclick="startLocationEncounter('America', 'San Francisco')">
             <img src="images/San_Francisco.webp" width="81" height="66" alt="San Francisco">
             <br>
             Start San Francisco Encounter
           </button>
 
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Arkham')">
-            <img src="images/Arkham_Devastated.webp" width="81" height="66" alt="Devestate Arkham">
+          <div class="disaster"></div>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Arkham')">
+            <img src="images/Arkham_Devastated.webp" width="81" height="66" alt="Devastate Arkham">
             <br>
-            Devestate Arkham
+            Devastate Arkham
           </button>
 
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Buenos Aires')">
-            <img src="images/Buenos_Aires_Devastated.webp" width="81" height="66" alt="Devestate Buenos Aires">
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Buenos Aires')">
+            <img src="images/Buenos_Aires_Devastated.webp" width="81" height="66" alt="Devastate Buenos Aires">
             <br>
-            Devestate Buenos Aires
+            Devastate Buenos Aires
           </button>
 
-          <button type="button" class="disaster" onclick="devestateCity(event, 'San Francisco')">
-            <img src="images/San_Francisco_Devastated.webp" width="81" height="66" alt="Devestate San Francisco">
+          <button type="button" class="disaster" onclick="devastateCity(event, 'San Francisco')">
+            <img src="images/San_Francisco_Devastated.webp" width="81" height="66" alt="Devastate San Francisco">
             <br>
-            Devestate San Francisco
+            Devastate San Francisco
+          </button>
+        </div>
+
+        <div class="deck antarctica">
+          <div class="deckname">
+            <img src="images/Clue_Icon.webp" width="80%" height="80%" alt="Clue Token">
+            <img src="images/Antarctica_Side_Board.webp" width="80%" height="80%" alt="Antarctica Side Board">
+            <br>
+            Antarctica Research
+          </div>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Antarctica Research', 'Frozen Waste or Snowy Mountains')">
+            Start Frozen Waste or Snowy Mountains Antarctica Research Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Antarctica Research', 'Miskatonic Outpost or Lake Camp')">
+            Start Miskatonic Outpost or Lake Camp Antarctica Research Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Antarctica Research', 'City of the Elder Things or Plateau of Leng')">
+            Start City of the Elder Things or Plateau of Leng Antarctica Research Encounter
           </button>
         </div>
 
         <div class="deck">
           <div class="deckname">Asia/Australia</div>
-          <button type="button" id="shanghai" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Shanghai')">
+          <button type="button" id="shanghai" class="encounter" onclick="startLocationEncounter('Asia/Australia', 'Shanghai')">
             <img src="images/Shanghai.webp" width="81" height="66" alt="Shanghai">
             <br>
             Start Shanghai Encounter
           </button>
-          <button type="button" id="sydney" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Sydney')">
+          <button type="button" id="sydney" class="encounter" onclick="startLocationEncounter('Asia/Australia', 'Sydney')">
             <img src="images/Sydney.webp" width="81" height="66" alt="Sydney">
             <br>
             Start Sydney Encounter
           </button>
-          <button type="button" id="tokyo" class="encounter" onclick="startCityEncounter('Asia/Australia', 'Tokyo')">
+          <button type="button" id="tokyo" class="encounter" onclick="startLocationEncounter('Asia/Australia', 'Tokyo')">
             <img src="images/Tokyo.webp" width="81" height="66" alt="Tokyo">
             <br>
             Start Tokyo Encounter
           </button>
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Shanghai')">
-            <img src="images/Shanghai_Devastated.webp" width="81" height="66" alt="Devestate Shanghai">
+          <div class="disaster"></div>
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Shanghai')">
+            <img src="images/Shanghai_Devastated.webp" width="81" height="66" alt="Devastate Shanghai">
             <br>
-            Devestate Shanghai
+            Devastate Shanghai
           </button>
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Sydney')">
-            <img src="images/Sydney_Devastated.webp" width="81" height="66" alt="Devestate Sydney">
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Sydney')">
+            <img src="images/Sydney_Devastated.webp" width="81" height="66" alt="Devastate Sydney">
             <br>
-            Devestate Sydney
+            Devastate Sydney
           </button>
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Tokyo')">
-            <img src="images/Tokyo_Devastated.webp" width="81" height="66" alt="Devestate Tokyo">
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Tokyo')">
+            <img src="images/Tokyo_Devastated.webp" width="81" height="66" alt="Devastate Tokyo">
             <br>
-            Devestate Tokyo
+            Devastate Tokyo
           </button>
         </div>
 
         <div id="dream-quest-buttons" class="dreamlands deck">
-          <div class="deckname one-row">
+          <div class="deckname">
             <img src="images/Dream-Quest_Token.webp" width="95%" height="95%" alt="Dream-Quest token">
             <br>
             Dream-Quest
@@ -111,60 +195,80 @@
         </div>
 
         <div class="deck dreamlands">
-          <div class="deckname one-row">The Dreamlands</div>
-          <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Celephaïs')">
+          <div class="deckname">The Dreamlands</div>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Dreamlands', 'Celephaïs')">
             <img src="images/Celephaïs.webp" width="81" height="66" alt="Celephaïs">
             <br>
             Start Celephaïs Encounter
           </button>
-          <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Dylath-Leen')">
+          <button type="button" class="encounter" onclick="startLocationEncounter('Dreamlands', 'Dylath-Leen')">
             <img src="images/Dylath-Leen.webp" width="81" height="66" alt="Dylath-Leen">
             <br>
             Start Dylath-Leen Encounter
           </button>
-          <button type="button" class="encounter" onclick="startCityEncounter('Dreamlands', 'Ulthar')">
+          <button type="button" class="encounter" onclick="startLocationEncounter('Dreamlands', 'Ulthar')">
             <img src="images/Ulthar.webp" width="81" height="66" alt="Ulthar">
             <br>
             Start Ulthar Encounter
           </button>
         </div>
 
+        <div class="deck egypt">
+          <div class="deckname">Egypt</div>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Egypt', 'Alexandria')">
+            <img src="images/Alexandria.webp" width="81" height="66" alt="Alexandria">
+            <br>
+            Start Alexandria Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Egypt', 'The Bent Pyramid')">
+            <img src="images/The_Bent_Pyramid.webp" width="81" height="66" alt="Giza">
+            <br>
+            Start The Bent Pyramid Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Egypt', 'Cairo')">
+            <img src="images/Cairo.webp" width="81" height="66" alt="Cairo">
+            <br>
+            Start Cairo Encounter
+          </button>
+        </div>
+
         <div class="deck">
           <div class="deckname">Europe</div>
-          <button type="button" id="istanbul" class="encounter" onclick="startCityEncounter('Europe', 'Istanbul')">
+          <button type="button" id="istanbul" class="encounter" onclick="startLocationEncounter('Europe', 'Istanbul')">
             <img src="images/Istanbul.webp" width="81" height="66" alt="Istanbul">
             <br>
             Start Istanbul Encounter
           </button>
-          <button type="button" id="london" class="encounter" onclick="startCityEncounter('Europe', 'London')">
+          <button type="button" id="london" class="encounter" onclick="startLocationEncounter('Europe', 'London')">
             <img src="images/London.webp" width="81" height="66" alt="London">
             <br>
             Start London Encounter
           </button>
-          <button type="button" id="rome" class="encounter" onclick="startCityEncounter('Europe', 'Rome')">Start
+          <button type="button" id="rome" class="encounter" onclick="startLocationEncounter('Europe', 'Rome')">
             <img src="images/Rome.webp" width="81" height="66" alt="Rome">
             <br>
             Start Rome Encounter
           </button>
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Istanbul')">
-            <img src="images/Istanbul_Devastated.webp" width="81" height="66" alt="Devestate Istanbul">
+          <div class="disaster"></div>
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Istanbul')">
+            <img src="images/Istanbul_Devastated.webp" width="81" height="66" alt="Devastate Istanbul">
             <br>
-            Devestate Istanbul
+            Devastate Istanbul
           </button>
-          <button type="button" class="disaster" onclick="devestateCity(event, 'London')">
-            <img src="images/London_Devastated.webp" width="81" height="66" alt="Devestate London">
+          <button type="button" class="disaster" onclick="devastateCity(event, 'London')">
+            <img src="images/London_Devastated.webp" width="81" height="66" alt="Devastate London">
             <br>
-            Devestate London
+            Devastate London
           </button>
-          <button type="button" class="disaster" onclick="devestateCity(event, 'Rome')">
-            <img src="images/Rome_Devastated.webp" width="81" height="66" alt="Devestate Rome">
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Rome')">
+            <img src="images/Rome_Devastated.webp" width="81" height="66" alt="Devastate Rome">
             <br>
-            Devestate Rome
+            Devastate Rome
           </button>
         </div>
 
         <div id="expedition-buttons" class="deck">
-          <div class="deckname one-row">
+          <div class="deckname">
             <img src="images/Expedition_Token.webp" width="95%" height="95%" alt="Expedition token">
             <br>
             Expedition
@@ -193,8 +297,27 @@
           </button>
         </div>
 
+        <div class="deck antarctica">
+          <div class="deckname">Mountain</div>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Mountain', 'City of the Elder Things')">
+            <img src="images/City_of_the_Elder_Things.webp" width="81" height="66" alt="City of the Elder Things">
+            <br>
+            Start City of the Elder Things Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Mountain', 'Plateau of Leng')">
+            <img src="images/Plateau_of_Leng.webp" width="81" height="66" alt="Plateau of Leng">
+            <br>
+            Start Plateau of Leng Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Mountain', 'Snowy Mountains')">
+            <img src="images/Snowy_Mountains.webp" width="81" height="66" alt="Snowy Mountains">
+            <br>
+            Start Snowy Mountains Encounter
+          </button>
+        </div>
+
         <div id="mystic-ruins-buttons" class="deck">
-          <div class="deckname one-row">
+          <div class="deckname">
             <img src="images/Mystic-Ruins_Token.jpg" width="95%" height="95%" alt="Mystic Ruins token">
             <br>
             Mystic Ruins
@@ -203,7 +326,7 @@
         </div>
 
         <div class="deck">
-          <div class="deckname one-row">
+          <div class="deckname">
             <img src="images/Gate_Token.webp" width="95%" height="95%" alt="Other World token">
             <br>
             Other World
@@ -216,9 +339,28 @@
           </button>
         </div>
 
+        <div class="deck antarctica">
+          <div class="deckname">Outpost</div>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Outpost', 'Frozen Waste')">
+            <img src="images/Frozen_Waste.webp" width="81" height="66" alt="Frozen Waste">
+            <br>
+            Start Frozen Waste Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Outpost', 'Lake Camp')">
+            <img src="images/Lake_Camp.webp" width="81" height="66" alt="Lake Camp">
+            <br>
+            Start Lake Camp Encounter
+          </button>
+          <button type="button" class="encounter" onclick="startLocationEncounter('Outpost', 'Miskatonic Outpost')">
+            <img src="images/Miskatonic_Outpost.webp" width="81" height="66" alt="Miskatonic Outpost">
+            <br>
+            Start Miskatonic Outpost Encounter
+          </button>
+        </div>
+
         <div class="deck">
-          <div class="deckname one-row">
-            <img src="images/Research.png" width="80%" height="80%" alt="Research">
+          <div class="deckname">
+            <img src="images/Clue_Icon.webp" width="80%" height="80%" alt="Clue Token">
             <br>
             Research
           </div>
@@ -394,5 +536,31 @@
       <h2 id>History</h2>
       <div id="history"></div>
     </div>
+    <footer>
+      <div id="copyright">
+        <hr>
+        <small>
+          <p>Copyright &copy; 2026 by Bob Mazanec</p>
+          <p>
+            <a href="https://boardgamegeek.com/boardgame/146021/eldritch-horror">Eldritch Horror</a>
+            is a tabletop board game published by
+            <a href="https://www.fantasyflightgames.com/en/products/eldritch-horror/">Fantasy Flight Games,</a>
+            who owns all Copyright to the material.
+          </p>
+          <p>
+            This website is inspired by
+            <a href="https://boardgamegeek.com/thread/3186841/eh-card-clerk-plus-website">Eldritch Horror Card Clerk+</a>.
+          </p>
+          <p>
+            Eldritch Horror Encounter Helper is not affiliated with Fantasy Flight Games.
+            All trademarks are property of their respective owners.
+          </p>
+          <p>
+            Eldritch Horror Encounter Helper comes with ABSOLUTELY NO WARRANTY.
+            This is free software, and you are welcome to redistribute it.
+          </p>
+        </small>
+      </div>
+    </footer>
   </body>
 </html>

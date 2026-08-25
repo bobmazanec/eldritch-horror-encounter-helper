@@ -61,7 +61,7 @@ function addEncounterStepText(historyElement, encounterStep) {
     const textElement = document.createElement("p");
     textElement.innerHTML = textItem;
     historyElement.appendChild(textElement);
-    readAlound(textItem);
+    readAlound(textElement.innerHTML);
   });
 }
 
@@ -212,8 +212,16 @@ function buildMysticRuinsDeck() {
   createDeckBySpaces("Mystic Ruins");
 }
 
+function buildOtherWorldDeck() {
+  createDeckBySpaces("OtherWorld");
+}
+
 function buildResearchDeck() {
   createDeck("Research", filterByExpansion(deckData.Research[ancientOne]));
+
+  if (useAntarcticaBoard()) {
+    createDeck("Antarctica Research", filterByExpansion(deckData.Research.Antarctica));
+  }
 }
 
 function createDeck(deckName, cards) {
@@ -228,11 +236,12 @@ function filterByExpansion(cards) {
 
 function buildSimpleDecks() {
   [
-    "America", "Asia/Australia",
-    "Devestation", "Dreamlands",
-    "Europe",
-    "General",
-    "OtherWorld"
+    "Africa", "America", "Asia/Australia",
+    "Devastation", "Dreamlands",
+    "Egypt", "Europe",
+    "General Encounter",
+    "Mountain",
+    "Outpost",
   ].forEach(deckName => {
     createDeck(deckName, filterByExpansion(deckData[deckName]));
   });
@@ -261,11 +270,11 @@ function createDeckBySpaces(deckName) {
   );
 }
 
-function devestateCity(event, cityName) {
+function devastateCity(event, cityName) {
   // Removing would mess up the grid layout
   event.currentTarget.classList.add("hidden");
 
-  // If 3 hidden (Devestation) buttons, remove them so the row can
+  // If 3 hidden (Devastation) buttons, remove them so the row can
   // go away
   const hiddens = event.currentTarget.parentElement.querySelectorAll(".hidden");
   if (hiddens.length === 3) {
@@ -281,10 +290,10 @@ function devestateCity(event, cityName) {
   img.height = 66;
   img.width = 66;
   encounterButton.appendChild(img);
-  encounterButton.innerHTML += `<br>Start Devestation Encounter in ${cityName}`;
-  encounterButton.setAttribute("onclick", "startDevestationEncounter(event)");
+  encounterButton.innerHTML += `<br>Start Devastation Encounter in ${cityName}`;
+  encounterButton.setAttribute("onclick", "startDevastationEncounter(event)");
 
-  const historyElement = addHistoryElement(`${cityName} is Devestated!`);
+  const historyElement = addHistoryElement(`${cityName} is Devastated!`);
   const textNode = document.createElement("p");
   historyElement.appendChild(textNode);
   textNode.textContent = `Remove any Clues in ${cityName}`;
@@ -399,14 +408,26 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
+function removeAntarcticaButtons() {
+  removeByClassName("antarctica");
+}
+
+function removeByClassName(className) {
+  Array
+    .from(document.getElementsByClassName(className))
+    .forEach(el => el.remove());
+}
+
+function removeEgyptButtons() {
+  removeByClassName("egypt");
+}
+
 function removeElementWithId(id) {
   document.getElementById(id).remove();
 }
 
 function removeDreamlandsButtons() {
-  Array
-    .from(document.getElementsByClassName("dreamlands"))
-    .forEach(el => el.remove());
+  removeByClassName("dreamlands");
 }
 
 function removeExpeditionCardsFor(cityName, historyElement) {
@@ -711,20 +732,11 @@ function solveSecretsOfThePast(event) {
   enableEncounterButtons();
 }
 
-function startCityEncounter(deckName, cityName) {
-  const card = drawCard(deckName);
+function startDevastationEncounter(spaceType) {
+  const card = drawCard("Devastation");
 
   startEncounter(
-    `${deckName} ${card.cardId}: ${cityName}`,
-    card[cityName]
-  );
-}
-
-function startDevestationEncounter(spaceType) {
-  const card = drawCard("Devestation");
-
-  startEncounter(
-    `Devestation: ${card.cardId}`,
+    `Devastation: ${card.cardId}`,
     card
   );
 }
@@ -772,11 +784,20 @@ function startExpeditionEncounterWith(card) {
 }
 
 function startGeneralEncounter(spaceType) {
-  const card = drawCard("General");
+  const card = drawCard("General Encounter");
 
   startEncounter(
     `General ${card.cardId}: ${spaceType}`,
     card[spaceType]
+  );
+}
+
+function startLocationEncounter(deckName, cityName) {
+  const card = drawCard(deckName);
+
+  startEncounter(
+    `${deckName} ${card.cardId}: ${cityName}`,
+    card[cityName]
   );
 }
 
@@ -848,10 +869,10 @@ function updateSecretsOfThePastButton() {
   button.innerHTML = text;
 }
 
-function useDreamlandsBoard() {
+function useAntarcticaBoard() {
   return (
-    ancientOne == "Hypnos" ||
-    preludesUsed.includes("Otherworldly Dreams")
+    ancientOne == "Elder Things" ||
+    preludesUsed.includes("Doomsayer from Antarctica")
   );
 }
 
@@ -861,6 +882,23 @@ function useCosmicAlignmentAdventure() {
 
 function useCitiesInRuin() {
   return expansionsUsed.includes(CitiesInRuin);
+}
+
+function useDreamlandsBoard() {
+  return (
+    ancientOne == "Hypnos" ||
+    preludesUsed.includes("Otherworldly Dreams")
+  );
+}
+
+function useEgyptBoard() {
+  return (
+    expansionsUsed.includes(UnderThePyramids) && (
+      ancientOne == "Nephren-Ka" ||
+      preludesUsed.includes("In the Lightless Chamber") ||
+      preludesUsed.includes("Under the Pyramids")
+    )
+  );
 }
 
 function useMountainsOfMadness() {
@@ -886,6 +924,7 @@ function useSecondExpeditionDeck() {
 
 buildSimpleDecks();
 buildExpeditionDecks();
+buildOtherWorldDeck();
 buildResearchDeck();
 
 if (!useCosmicAlignmentAdventure() && !useOtherworldlyDreamsAdventure()) {
@@ -921,7 +960,7 @@ if (preludesUsed.includes("Otherwordly Dreams")) {
   addOtherworldlyDreamsButtons();
 }
 
-if (decks.Devestation.isEmpty()) {
+if (decks.Devastation.isEmpty()) {
   removeElementWithId("cities-in-ruin");
 }
 
@@ -937,6 +976,14 @@ if (useMountainsOfMadness()) {
   showId("add-crawling-chaos");
 } else {
   removeElementWithId("crawling-chaos");
+}
+
+if (!useAntarcticaBoard()) {
+  removeAntarcticaButtons();
+}
+
+if (!useEgyptBoard()) {
+  removeEgyptButtons();
 }
 
 if (useSecondExpeditionDeck()) {
