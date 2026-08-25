@@ -61,7 +61,7 @@ function addEncounterStepText(historyElement, encounterStep) {
     const textElement = document.createElement("p");
     textElement.innerHTML = textItem;
     historyElement.appendChild(textElement);
-    readAlound(textItem);
+    readAlound(textElement.innerHTML);
   });
 }
 
