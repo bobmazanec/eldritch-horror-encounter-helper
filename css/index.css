@@ -18,15 +18,42 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
 #mainView {
+  .section-hidden {
+    display: none !important;
+  }
+
+  div[id$="-section"] {
+    width: fit-content;
+    margin-inline: auto;
+    margin-top: 1em;
+    outline: thin solid black;
+
+    .mythos {
+      display: grid;
+      margin-top: 1em;
+      grid: auto-flow / 120px max-content max-content max-content;
+
+      .card {
+        display: grid;
+        align-content: center;
+        grid-auto-rows: subgrid;
+        justify-content: center;
+        outline: thin solid black;
+
+        img {
+          width: 100px;
+          justify-self: center;
+        }
+      }
+    }
+  }
+
   #cities-in-ruin {
     display: grid;
     grid: auto-flow / 120px 100px;
   }
 
-  #crawling-chaos button {
-    display: none;
-
-    img: {
+  #crawling-chaos button img: {
       justify-self: center;
     }
   }
@@ -42,16 +69,16 @@
     display: none;
   }
 
-  #special-encounters {
+  #special-encounters-section {
     display: grid;
-    grid: auto-flow / 230px repeat(3, 120px);
-}
+    grid-template-columns: 230px;
+    grid-auto-columns: min-content;
+    grid-auto-flow: column;
+  }
 
   .adventures {
     display: grid;
     grid: auto-flow / 120px 1fr 1fr;
-    margin-top: 1em;
-    outline: thin solid black;
 
     .adventure {
       display: grid;
@@ -73,37 +100,31 @@
     }
   }
 
-  #cities-in-ruin {
-    margin-top: 1em;
-    outline: thin solid black;
-  }
-
-  .decks {
+  .deck {
     display: grid;
-    grid: auto-flow / 1fr 1fr 1fr;
-    row-gap: 1em;
+    grid: auto-flow / 120px repeat(3, 100px);
+    grid-auto-rows: subgrid;
 
-    .deck {
-      display: grid;
-      grid: auto-flow / 120px repeat(3, 100px);
-      grid-auto-rows: subgrid;
-      outline: thin solid black;
+    button {
+      align-self: center;
+      height: 100%;
+    }
 
-      button {
+    .deckname {
+      align-self: center;
+      justify-self: center;
+      margin: 1em;
+
+      &:has(img) {
         align-self: center;
-        height: 100%;
-      }
-
-      .deckname {
-        align-self: center;
-        justify-self: center;
-        margin: 1em;
-
-        &:has(img) {
-          align-self: center;
-        }
       }
     }
+  }
+
+  .flexible-width {
+    grid-template-columns: 120px;
+    grid-auto-columns: 100px;
+    grid-auto-flow: column;
   }
 
   .disaster {
@@ -117,24 +138,5 @@
   .misc {
     display: grid;
     grid: auto-flow / 1fr 1fr 1fr;
-  }
-
-  .mythos {
-    display: grid;
-    margin-top: 1em;
-    outline: thin solid black;
-    grid: auto-flow / 120px 1fr 1fr 1fr;
-
-    .card {
-      align-content: center;
-      grid-auto-rows: subgrid;
-      justify-content: center;
-      outline: thin solid black;
-    }
-  }
-
-  #spawn-leopard-man {
-    margin-top: 1em;
-    outline: thin solid black;
   }
 }

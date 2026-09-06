@@ -22,7 +22,7 @@ function addChoiceButtons(historyElement, encounterStep) {
 }
 
 function addDreamQuestEncounterButton() {
-  addTopCardButton(DreamQuest, "dream-quest-buttons", "dream-quest", startDreamQuestEncounter, card => {
+  addTopCardButton(DreamQuest, "dream-quest-deck", "dream-quest", startDreamQuestEncounter, card => {
     return `Start ${card.space} Dream-Quest Encounter`;
   })
 }
@@ -66,7 +66,7 @@ function addEncounterStepText(historyElement, encounterStep) {
 }
 
 function addExpeditionEncounterButton(deckName) {
-  addTopCardButton(deckName, "expedition-buttons", "expedition", startExpeditionEncounter, card => {
+  addTopCardButton(deckName, "expedition-deck", "expedition", startExpeditionEncounter, card => {
     return `Start ${card.space} Expedition Encounter`;
   });
 }
@@ -115,7 +115,7 @@ function addModifiedExpeditionDeckHistoryItem(title, spacesRemoved = new Set()) 
 }
 
 function addMysticRuinsEncounterButton(_) {
-  addTopCardButton(MysticRuins, "mystic-ruins-buttons", "mystic-ruins", startMysticRuinsEncounter, card => {
+  addTopCardButton(MysticRuins, "mystic-ruins-deck", "mystic-ruins", startMysticRuinsEncounter, card => {
     return `Start ${card.space} Mystic Ruins Encounter`;
   })
 }
@@ -139,7 +139,7 @@ function addSpecialEncounterButtons(deckNames) {
     return;
   }
 
-  const outerDiv = document.getElementById("special-encounters");
+  const outerDiv = document.getElementById("special-encounters-section");
 
   const labelDiv = document.createElement("div");
 
@@ -475,7 +475,7 @@ function removeMysticRuinsCardsFor(cityName, historyElement) {
 }
 
 function removeMysticRuinsButtons() {
-  removeElementWithId("mystic-ruins-buttons");
+  removeElementWithId("mystic-ruins-section");
 }
 
 function removeTopCardButton(button) {
@@ -558,7 +558,7 @@ function resolveExpeditionEncounterForSpace(event, space) {
 }
 
 function resolveLeopardManSpawn(event) {
-  const buttons = Array.from(document.querySelectorAll("#expedition-buttons button.expedition.top-card"));
+  const buttons = Array.from(document.querySelectorAll("#expedition-section button.expedition.top-card"));
   let foundCard = false;
 
   buttons.forEach(button => {
@@ -684,6 +684,31 @@ function resolveUpheavalDisaster(event) {
 
 function showId(id) {
   document.getElementById(id).style.display = "block";
+}
+
+function setupSectionVisibility(sectionVisibility) {
+  const fieldset = document.querySelector("fieldset.visibility");
+  const template = document.getElementById("sectionVisibilityItemTemplate");
+
+  Object.entries(sectionVisibility).forEach(([sectionName, config]) => {
+    const sectionElement = document.querySelector(config.selector);
+
+    if (!sectionElement) {
+      return;
+    }
+
+    if (config.isVisible) {
+      const label = template.content.firstElementChild.cloneNode(true);
+      const checkbox = label.querySelector("input");
+      label.append(` ${sectionName}`);
+      checkbox.addEventListener("change", () => {
+        sectionElement.classList.toggle("section-hidden", !checkbox.checked);
+      });
+      fieldset.appendChild(label);
+    } else {
+      sectionElement.classList.add("section-hidden");
+    }
+  });
 }
 
 function shuffleDreamQuestDeck() {
@@ -964,10 +989,6 @@ if (preludesUsed.includes(OtherworldlyDreams)) {
   addOtherworldlyDreamsButtons();
 }
 
-if (decks.Devastation.isEmpty()) {
-  removeElementWithId("cities-in-ruin");
-}
-
 if (useCitiesInRuin()) {
   document.querySelectorAll("div .disaster").forEach(node => {
     node.style.display = "block";
@@ -1000,3 +1021,26 @@ if (useSecondExpeditionDeck()) {
 showId("add-secrets-of-the-past");
 
 addSpecialEncounterButtons(buildSpecialEncounterDecks());
+
+setupSectionVisibility({
+  Adventure: { selector: "#adventures-section", isVisible: useCosmicAlignmentAdventure() || useOtherworldlyDreamsAdventure() },
+  Africa: { selector: "#africa-section", isVisible: useEgyptBoard() },
+  America: { selector: "#america-section", isVisible: true },
+  "Antarctica Research": { selector: "#antarctica-research-section", isVisible: useAntarcticaBoard() },
+  "Asia/Australia": { selector: "#asia-australia-section", isVisible: true },
+  Disaster: { selector: "#cities-in-ruin-section", isVisible: useCitiesInRuin() },
+  "Dream-Quest": { selector: "#dream-quest-section", isVisible: useDreamlandsBoard() },
+  "The Dreamlands": { selector: "#dreamlands-section", isVisible: useDreamlandsBoard() },
+  Egypt: { selector: "#egypt-section", isVisible: useEgyptBoard() },
+  Europe: { selector: "#europe-section", isVisible: true },
+  Expedition: { selector: "#expedition-section", isVisible: true },
+  General: { selector: "#general-section", isVisible: true },
+  Monster: { selector: "#monsters-section", isVisible: useCitiesInRuin() },
+  Mountain: { selector: "#mountain-section", isVisible: useAntarcticaBoard() },
+  "Mystic Ruins": { selector: "#mystic-ruins-section", isVisible: useMysticRuinsDeck() },
+  Mythos: { selector: "#mythos-section", isVisible: true },
+  "Other World": { selector: "#other-world-section", isVisible: true },
+  Outpost: { selector: "#outpost-section", isVisible: useAntarcticaBoard() },
+  Research: { selector: "#research-section", isVisible: true },
+  Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section").childElementCount > 0 }
+});
