@@ -48,11 +48,6 @@
     }
   }
 
-  #cities-in-ruin {
-    display: grid;
-    grid: auto-flow / 120px 100px;
-  }
-
   #crawling-chaos button img: {
       justify-self: center;
     }
@@ -126,14 +121,6 @@
     grid-template-columns: 120px;
     grid-auto-columns: 100px;
     grid-auto-flow: column;
-  }
-
-  .disaster {
-    display: none;
-  }
-
-  .hidden {
-    visibility: hidden;
   }
 
   .misc {

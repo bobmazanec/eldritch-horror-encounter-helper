@@ -400,26 +400,8 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
-function removeAntarcticaButtons() {
-  removeByClassName("antarctica");
-}
-
-function removeByClassName(className) {
-  Array
-    .from(document.getElementsByClassName(className))
-    .forEach(el => el.remove());
-}
-
-function removeEgyptButtons() {
-  removeByClassName("egypt");
-}
-
 function removeElementWithId(id) {
   document.getElementById(id).remove();
-}
-
-function removeDreamlandsButtons() {
-  removeByClassName("dreamlands");
 }
 
 function removeExpeditionCardsFor(cityName, historyElement) {
@@ -460,10 +442,6 @@ function removeMysticRuinsCardsFor(cityName, historyElement) {
     historyElement.appendChild(textNode);
     textNode.textContent = `Removed ${cityName} from Mystic Ruins deck - check token location`;
   }
-}
-
-function removeMysticRuinsButtons() {
-  removeElementWithId("mystic-ruins-section");
 }
 
 function removeTopCardButton(button) {
@@ -938,13 +916,14 @@ function useSecondExpeditionDeck() {
 }
 
 buildSimpleDecks();
+buildDreamQuestDeck();
 buildExpeditionDecks();
+buildMysticRuinsDeck();
 buildOtherWorldDeck();
 buildResearchDeck();
 
-if (!useCosmicAlignmentAdventure() && !useOtherworldlyDreamsAdventure()) {
-  document.querySelector(".adventures").remove();
-}
+addDreamQuestEncounterButton();
+addMysticRuinsEncounterButton();
 
 if (useCosmicAlignmentAdventure()) {
   showId("cosmic-alignment");
@@ -959,44 +938,15 @@ if (useOtherworldlyDreamsAdventure()) {
   showId("add-the-blessings-of-nodens");
 }
 
-if (useDreamlandsBoard()) {
-  buildDreamQuestDeck();
-  addDreamQuestEncounterButton();
-} else {
-  removeDreamlandsButtons();
-}
-
-if (useMysticRuinsDeck()) {
-  buildMysticRuinsDeck();
-  addMysticRuinsEncounterButton();
-} else {
-  removeMysticRuinsButtons();
-}
 
 if (preludesUsed.includes(OtherworldlyDreams)) {
   addOtherworldlyDreamsButtons();
-}
-
-if (useCitiesInRuin()) {
-  document.querySelectorAll("div .disaster").forEach(node => {
-    node.style.display = "block";
-  });
-} else {
-  removeElementWithId("spawn-leopard-man");
 }
 
 if (useMountainsOfMadness()) {
   showId("add-crawling-chaos");
 } else {
   removeElementWithId("crawling-chaos");
-}
-
-if (!useAntarcticaBoard()) {
-  removeAntarcticaButtons();
-}
-
-if (!useEgyptBoard()) {
-  removeEgyptButtons();
 }
 
 if (useSecondExpeditionDeck()) {
