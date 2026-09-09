@@ -15,6 +15,7 @@
 
 // Ancient Ones
 const ElderThings = "Elder Things";
+const NephrenKa = "Nephren-Ka";
 
 // Cards
 const SecretsOfThePast = "Secrets of the Past";
@@ -42,6 +43,7 @@ const TheDreamlands = "The Dreamlands";
 const UnderThePyramids = "Under the Pyramids";
 
 // Preludes
+const DoomsayerFromAntarctica = "Doomsayer from Antarctica";
 const InCosmicAlignment = "In Cosmic Alignment";
 const InTheLightlessChamber = "In the Lightless Chamber";
 const LitanyOfSecrets = "Litany of Secrets";

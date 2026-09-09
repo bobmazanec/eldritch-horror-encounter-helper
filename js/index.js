@@ -865,7 +865,7 @@ function updateSecretsOfThePastButton() {
 function useAntarcticaBoard() {
   return (
     ancientOne == ElderThings ||
-    preludesUsed.includes("Doomsayer from Antarctica")
+    preludesUsed.includes(DoomsayerFromAntarctica)
   );
 }
 
@@ -887,7 +887,7 @@ function useDreamlandsBoard() {
 function useEgyptBoard() {
   return (
     expansionsUsed.includes(UnderThePyramids) && (
-      ancientOne == "Nephren-Ka" ||
+      ancientOne == NephrenKa ||
       preludesUsed.includes(InTheLightlessChamber) ||
       preludesUsed.includes(UnderThePyramids)
     )
