@@ -102,8 +102,9 @@
 
   .deck {
     display: grid;
-    grid: auto-flow / 120px repeat(3, 100px);
-    grid-auto-rows: subgrid;
+    grid-template-columns: 120px;
+    grid-auto-columns: 100px;
+    grid-auto-flow: column;
 
     button {
       align-self: center;

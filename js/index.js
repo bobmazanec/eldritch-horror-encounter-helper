@@ -276,31 +276,19 @@ function createDeckBySpaces(deckName) {
 
 function devastateCity(event, cityName) {
   // Removing would mess up the grid layout
-  event.currentTarget.classList.add("hidden");
-
-  // If 3 hidden (Devastation) buttons, remove them so the row can
-  // go away
-  const hiddens = event.currentTarget.parentElement.querySelectorAll(".hidden");
-  if (hiddens.length === 3) {
-    Array.from(hiddens).forEach(e => e.remove());
-  }
+  event.currentTarget.remove();
 
   const encounterButtonId = cityName.toLowerCase().replaceAll(/\s+/g, "-");
-  const encounterButton = document.getElementById(encounterButtonId);
-
-  encounterButton.innerHTML = null;
-  const img = document.createElement("img");
-  img.src = "images/Devastation_Token.webp";
-  img.height = 66;
-  img.width = 66;
-  encounterButton.appendChild(img);
-  encounterButton.innerHTML += `<br>Start Devastation Encounter in ${cityName}`;
-  encounterButton.setAttribute("onclick", "startDevastationEncounter(event)");
+  document.getElementById(encounterButtonId).remove();
 
   const historyElement = addHistoryElement(`${cityName} is Devastated!`);
   const textNode = document.createElement("p");
   historyElement.appendChild(textNode);
   textNode.textContent = `Remove any Clues in ${cityName}`;
+
+  if (++numCitiesDevastated === 9) {
+    alert(`All 9 named Cities are devastated - investigators lose the game.`);
+  }
 
   removeExpeditionCardsFor(cityName, historyElement);
   removeMysticRuinsCardsFor(cityName, historyElement);
@@ -435,7 +423,7 @@ function removeDreamlandsButtons() {
 }
 
 function removeExpeditionCardsFor(cityName, historyElement) {
-  const buttons = Array.from(document.getElementsByClassName("encounter expedition.top-card"));
+  const buttons = Array.from(document.querySelectorAll("button.expedition.top-card"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
 
   let removedCards = false;
@@ -1028,7 +1016,8 @@ setupSectionVisibility({
   America: { selector: "#america-section", isVisible: true },
   "Antarctica Research": { selector: "#antarctica-research-section", isVisible: useAntarcticaBoard() },
   "Asia/Australia": { selector: "#asia-australia-section", isVisible: true },
-  Disaster: { selector: "#cities-in-ruin-section", isVisible: useCitiesInRuin() },
+  Devastation: { selector: "#devastation-section", isVisible: useCitiesInRuin() },
+  Disaster: { selector: "#disaster-section", isVisible: useCitiesInRuin() },
   "Dream-Quest": { selector: "#dream-quest-section", isVisible: useDreamlandsBoard() },
   "The Dreamlands": { selector: "#dreamlands-section", isVisible: useDreamlandsBoard() },
   Egypt: { selector: "#egypt-section", isVisible: useEgyptBoard() },

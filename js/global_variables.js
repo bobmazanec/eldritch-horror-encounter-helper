@@ -55,6 +55,7 @@ const ancientOne = ElderThings;
 const expansionsUsed = [Core, CitiesInRuin, ForsakenLore, MasksOfNyarlathotep, SignsOfCarcosa, StrangeRemnants, TheDreamlands, MountainsOfMadness, UnderThePyramids];
 const preludesUsed = [OtherworldlyDreams, InCosmicAlignment, InTheLightlessChamber, LitanyOfSecrets, TheStarsAlign];
 
+let numCitiesDevastated = 0;
 const deckData = {
   OtherWorld: {},
   Research: {},

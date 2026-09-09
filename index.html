@@ -116,26 +116,6 @@
             <br>
             Start San Francisco Encounter
           </button>
-
-          <div class="disaster"></div>
-
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Arkham')">
-            <img src="images/Arkham_Devastated.webp" width="81" height="66" alt="Devastate Arkham">
-            <br>
-            Devastate Arkham
-          </button>
-
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Buenos Aires')">
-            <img src="images/Buenos_Aires_Devastated.webp" width="81" height="66" alt="Devastate Buenos Aires">
-            <br>
-            Devastate Buenos Aires
-          </button>
-
-          <button type="button" class="disaster" onclick="devastateCity(event, 'San Francisco')">
-            <img src="images/San_Francisco_Devastated.webp" width="81" height="66" alt="Devastate San Francisco">
-            <br>
-            Devastate San Francisco
-          </button>
         </div>
       </div>
 
@@ -176,28 +156,12 @@
             <br>
             Start Tokyo Encounter
           </button>
-          <div class="disaster"></div>
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Shanghai')">
-            <img src="images/Shanghai_Devastated.webp" width="81" height="66" alt="Devastate Shanghai">
-            <br>
-            Devastate Shanghai
-          </button>
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Sydney')">
-            <img src="images/Sydney_Devastated.webp" width="81" height="66" alt="Devastate Sydney">
-            <br>
-            Devastate Sydney
-          </button>
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Tokyo')">
-            <img src="images/Tokyo_Devastated.webp" width="81" height="66" alt="Devastate Tokyo">
-            <br>
-            Devastate Tokyo
-          </button>
         </div>
       </div>
 
       <div id="dream-quest-section" class="dreamlands">
         <h3>Dream-Quest</h3>
-        <div id="dream-quest-deck" class="deck flexible-width">
+        <div id="dream-quest-deck" class="deck">
           <div class="deckname">
             <img src="images/Dream-Quest_Token.webp" width="95%" height="95%" alt="Dream-Quest token">
           </div>
@@ -265,28 +229,12 @@
             <br>
             Start Rome Encounter
           </button>
-          <div class="disaster"></div>
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Istanbul')">
-            <img src="images/Istanbul_Devastated.webp" width="81" height="66" alt="Devastate Istanbul">
-            <br>
-            Devastate Istanbul
-          </button>
-          <button type="button" class="disaster" onclick="devastateCity(event, 'London')">
-            <img src="images/London_Devastated.webp" width="81" height="66" alt="Devastate London">
-            <br>
-            Devastate London
-          </button>
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Rome')">
-            <img src="images/Rome_Devastated.webp" width="81" height="66" alt="Devastate Rome">
-            <br>
-            Devastate Rome
-          </button>
         </div>
       </div>
 
       <div id="expedition-section">
         <h3>Expedition</h3>
-        <div id="expedition-deck" class="deck flexible-width">
+        <div id="expedition-deck" class="deck">
           <div class="deckname">
             <img src="images/Expedition_Token.webp" width="95%" height="95%" alt="Expedition token">
           </div>
@@ -338,7 +286,7 @@
 
       <div id="mystic-ruins-section">
         <h3>Mystic Ruins</h3>
-        <div id="mystic-ruins-deck" class="deck flexible-width">
+        <div id="mystic-ruins-deck" class="deck">
           <div class="deckname">
             <img src="images/Mystic-Ruins_Token.jpg" width="95%" height="95%" alt="Mystic Ruins token">
           </div>
@@ -348,7 +296,7 @@
 
       <div id="other-world-section">
         <h3>Other World</h3>
-        <div class="deck flexible-width">
+        <div class="deck">
           <div class="deckname">
             <img src="images/Gate_Token.webp" width="95%" height="95%" alt="Other World token">
           </div>
@@ -454,12 +402,76 @@
         </div>
       </div>
 
-      <div id="cities-in-ruin-section">
+      <div id="devastation-section">
+        <h3>Devastation</h3>
+        <button type="button" onclick="startDevastationEncounter(event)">
+          <img src="images/Devastation_Token.webp" width="66" height="66" alt="Devastation">
+          <br>
+          Start Devastation Encounter
+        </button>
+      </div>
+
+      <div id="disaster-section">
         <h3>Disaster</h3>
-        <div class="deck flexible-width">
+        <div class="deck">
           <div>
-            <img src="images/Disaster.webp" width="80%" height="66">
+            <img src="images/Disaster.webp" width="80%" height="100%">
           </div>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Arkham')">
+            <img src="images/Arkham_Devastated.webp" width="81" height="66" alt="Devastate Arkham">
+            <br>
+            Devastate Arkham
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Buenos Aires')">
+            <img src="images/Buenos_Aires_Devastated.webp" width="81" height="66" alt="Devastate Buenos Aires">
+            <br>
+            Devastate Buenos Aires
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Istanbul')">
+            <img src="images/Istanbul_Devastated.webp" width="81" height="66" alt="Devastate Istanbul">
+            <br>
+            Devastate Istanbul
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'London')">
+            <img src="images/London_Devastated.webp" width="81" height="66" alt="Devastate London">
+            <br>
+            Devastate London
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Rome')">
+            <img src="images/Rome_Devastated.webp" width="81" height="66" alt="Devastate Rome">
+            <br>
+            Devastate Rome
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'San Francisco')">
+            <img src="images/San_Francisco_Devastated.webp" width="81" height="66" alt="Devastate San Francisco">
+            <br>
+            Devastate San Francisco
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Shanghai')">
+            <img src="images/Shanghai_Devastated.webp" width="81" height="66" alt="Devastate Shanghai">
+            <br>
+            Devastate Shanghai
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Sydney')">
+            <img src="images/Sydney_Devastated.webp" width="81" height="66" alt="Devastate Sydney">
+            <br>
+            Devastate Sydney
+          </button>
+
+          <button type="button" class="disaster" onclick="devastateCity(event, 'Tokyo')">
+            <img src="images/Tokyo_Devastated.webp" width="81" height="66" alt="Devastate Tokyo">
+            <br>
+            Devastate Tokyo
+          </button>
+
           <button type="button" onclick="resolveUpheavalDisaster(event)">
             <img src="images/Upheaval.webp" width="81" height="81" alt="Upheaval Disaster">
             <br>
