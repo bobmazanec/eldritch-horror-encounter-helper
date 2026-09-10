@@ -29,7 +29,6 @@
 
     .mythos {
       display: grid;
-      margin-top: 1em;
       grid: auto-flow / 120px max-content max-content max-content;
 
       .card {
@@ -65,7 +64,7 @@
 
   #special-encounters-section {
     display: grid;
-    grid-template-columns: 230px;
+    grid-template-columns: 250px;
     grid-auto-columns: min-content;
     grid-auto-flow: column;
   }
@@ -108,7 +107,6 @@
     .deckname {
       align-self: center;
       justify-self: center;
-      margin: 1em;
 
       &:has(img) {
         align-self: center;
