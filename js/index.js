@@ -67,7 +67,7 @@ function addEncounterStepText(historyElement, encounterStep) {
 
 function addExpeditionEncounterButton(deckName) {
   addTopCardButton(deckName, "expedition-deck", "expedition", startExpeditionEncounter, card => {
-    return `Start ${card.space} Expedition Encounter`;
+    return `Start <strong>${card.space}</strong> Expedition Encounter`;
   });
 }
 
@@ -157,7 +157,7 @@ function addSpecialEncounterButtons(deckNames) {
     button.onclick = () => startSpecialEncounter(deckName);
 
     button.appendChild(img);
-    button.innerHTML += `<br>Start ${deckName} Encounter`;
+    button.innerHTML += `<br>Start <strong>${deckName}</strong> Encounter`;
     div.appendChild(button);
   });
 }
