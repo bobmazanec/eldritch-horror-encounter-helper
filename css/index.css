@@ -22,11 +22,10 @@
     display: none !important;
   }
 
-  div[id$="-section"] {
+  fieldset[id$="-section"] {
     width: fit-content;
     margin-inline: auto;
     margin-top: 1em;
-    outline: thin solid black;
 
     .mythos {
       display: grid;
