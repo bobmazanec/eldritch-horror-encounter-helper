@@ -62,9 +62,9 @@
     display: none;
   }
 
-  #special-encounters-section {
+  #special-decks {
     display: grid;
-    grid-template-columns: 250px;
+    grid-template-columns: 280px;
     grid-auto-columns: min-content;
     grid-auto-flow: column;
   }

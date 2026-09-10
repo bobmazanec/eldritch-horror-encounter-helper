@@ -139,18 +139,13 @@ function addSpecialEncounterButtons(deckNames) {
     return;
   }
 
-  const outerDiv = document.getElementById("special-encounters-section");
-
-  const labelDiv = document.createElement("div");
+  const div = document.getElementById("special-decks");
 
   const aoImg = document.createElement("img");
   aoImg.src = makeImageName(`images/${ancientOne}.webp`);
 
-  labelDiv.appendChild(aoImg);
-  labelDiv.innerHTML += `<br>${ancientOne} Special Encounters`;
-  labelDiv.style = "display: inline";
-
-  outerDiv.appendChild(labelDiv);
+  aoImg.style = "display: block";
+  div.appendChild(aoImg);
 
   deckNames.forEach(deckName => {
     const img = document.createElement("img");
@@ -163,7 +158,7 @@ function addSpecialEncounterButtons(deckNames) {
 
     button.appendChild(img);
     button.innerHTML += `<br>Start ${deckName} Encounter`;
-    outerDiv.appendChild(button);
+    div.appendChild(button);
   });
 }
 
