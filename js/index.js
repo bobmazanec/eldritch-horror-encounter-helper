@@ -5,20 +5,30 @@ function addOtherworldlyDreamsIIIButton(buttonId) {
   showId(buttonId);
 }
 
-function addChoiceButtons(historyElement, encounterStep) {
+function addChoiceButton(buttonContainer, text, onClick) {
+  const button = document.createElement("button");
+  button.textContent = text;
+  button.onclick = onClick;
+
+  buttonContainer.appendChild(button);
+}
+
+function addChoiceButtons(encounterStep) {
   const buttonContainer = document.createElement("div");
 
-  for (const label in encounterStep.choices) {
-    const button = document.createElement("button");
-    button.textContent = label;
-    button.onclick = () => {
-      addEncounterStep(historyElement, encounterStep.choices[label], buttonContainer, label);
-    };
-
-    buttonContainer.appendChild(button);
+  if (!encounterStep.choices) {
+      addChoiceButton(buttonContainer, "Continue", (event) => {
+        endEncounter(event);
+      });
+  } else {
+    for (const label in encounterStep.choices) {
+      addChoiceButton(buttonContainer, label, () => {
+        addEncounterStep(encounterStep.choices[label], buttonContainer, label);
+      });
+    }
   }
   
-  historyElement.appendChild(buttonContainer);
+  dialog.appendChild(buttonContainer);
 }
 
 function addDreamQuestEncounterButton() {
@@ -36,21 +46,17 @@ function addEncounterAction(buttonContainer, action) {
   buttonContainer.remove();
 }
 
-function addEncounterStep(historyElement, encounterStep, priorButtonContainer = null, action = null) {
+function addEncounterStep(encounterStep, priorButtonContainer = null, action = null) {
   if (action && priorButtonContainer) {
     addEncounterAction(priorButtonContainer, action);
   }
 
-  addEncounterStepText(historyElement, encounterStep);
+  addEncounterStepText(encounterStep);
 
-  if (encounterStep.choices) {
-    addChoiceButtons(historyElement, encounterStep);
-  } else {
-    endEncounter();
-  }
+  addChoiceButtons(encounterStep);
 }
 
-function addEncounterStepText(historyElement, encounterStep) {
+function addEncounterStepText(encounterStep) {
   let textItems;
   if (Array.isArray(encounterStep) || typeof(encounterStep) == "string") {
     textItems = encounterStep;
@@ -60,7 +66,7 @@ function addEncounterStepText(historyElement, encounterStep) {
   [textItems].flat().forEach(textItem => {
     const textElement = document.createElement("p");
     textElement.innerHTML = textItem;
-    historyElement.appendChild(textElement);
+    dialog.appendChild(textElement);
     readAlound(textElement.innerHTML);
   });
 }
@@ -71,47 +77,16 @@ function addExpeditionEncounterButton(deckName) {
   });
 }
 
-function addHistoryElement(headerText) {
+function addHistoryElement(html) {
   const historyElement = document.createElement("div");
+
   historyElement.appendChild(document.createElement("hr"));
 
-  const headerElement = document.createElement("h3");
-  headerElement.textContent = headerText;
-  historyElement.appendChild(headerElement);
+  historyElement.innerHTML += html;
 
   document.getElementById("history").prepend(historyElement);
 
   return historyElement;
-}
-
-function addModifiedExpeditionDeckHistoryItem(title, spacesRemoved = new Set()) {
-  const plural = useSecondExpeditionDeck() ? "s" : "";
-
-  const historyElement = addHistoryElement(`${title} and shuffled the Expedition deck${plural}`);
-  const textNode = document.createElement("div");
-
-  textNode.innerHTML = `Check Expedition token location${plural}`
-  
-  if (spacesRemoved.size > 0) {
-    textNode.innerHTML += '<br>Removed Expedition cards for';
-    historyElement.appendChild(textNode);
-    if (spacesRemoved.size == 1) {
-      textNode.innerHTML += ' ' + spacesRemoved.values().next().value;
-    } else {
-      const ul = document.createElement('ul');
-      Array
-        .from(spacesRemoved)
-        .sort()
-        .forEach(space => {
-          const li = document.createElement('li');
-          li.textContent = space;
-          ul.appendChild(li)
-        });
-      textNode.appendChild(ul);
-    }
-  }
-
-  historyElement.appendChild(textNode);
 }
 
 function addMysticRuinsEncounterButton(_) {
@@ -276,17 +251,17 @@ function devastateCity(event, cityName) {
   const encounterButtonId = cityName.toLowerCase().replaceAll(/\s+/g, "-");
   document.getElementById(encounterButtonId).remove();
 
-  const historyElement = addHistoryElement(`${cityName} is Devastated!`);
   const textNode = document.createElement("p");
-  historyElement.appendChild(textNode);
-  textNode.textContent = `Remove any Clues in ${cityName}`;
+  textNode.innerHTML = `Remove any Clues in <strong>${cityName}</strong>`;
 
   if (++numCitiesDevastated === 9) {
     alert(`All 9 named Cities are devastated - investigators lose the game.`);
   }
 
-  removeExpeditionCardsFor(cityName, historyElement);
-  removeMysticRuinsCardsFor(cityName, historyElement);
+  removeExpeditionCardsFor(cityName, textNode);
+  removeMysticRuinsCardsFor(cityName, textNode);
+
+  showDialog(`${cityName} is Devastated!`, textNode.innerHTML);
 }
 
 function disableEncounterButtons() {
@@ -326,8 +301,11 @@ function enableEncounterButtons() {
   updateEncounterButtons(enableEncounterButton);
 }
 
-function endEncounter(buttonContainer, encounter, action, key) {
-  enableEncounterButtons();
+function endEncounter(event) {
+  event.target.remove();
+  dialog.close();
+  const historyElement = addHistoryElement(dialog.innerHTML);
+  historyElement.classList.add("encounter");
 }
 
 function findCardForSpace(space) { return (card) => card.space === space; }
@@ -368,15 +346,15 @@ function numUniqueSpacesInDeck(deckName) {
 }
 
 function putCrawlingChaosRumorIntoPlay(event) {
-  event.target.remove();
+  event.currentTarget.remove();
   showId("resolve-crawling-chaos-reckoning");
   showId("solve-crawling-chaos");
 
-  addHistoryElement(`Put '${TheCrawlingChaos}' Mythos card into play`);
+  addHistoryElement(`<strong>Put <em>${TheCrawlingChaos}</em> Rumor into play</strong>`);
 }
 
 function putSecretsOfThePastRumorIntoPlay(event) {
-  event.target.remove();
+  event.currentTarget.remove();
   showId("resolve-secrets-of-the-past");
   showId("solve-secrets-of-the-past");
   updateSecretsOfThePastButton();
@@ -387,7 +365,7 @@ function putSecretsOfThePastRumorIntoPlay(event) {
   disableEncounterButtons();
   enableEncounterButtons();
 
-  addHistoryElement(`Put '${SecretsOfThePast}' Mythos card into play`);
+  addHistoryElement(`<strong>Put <em>${SecretsOfThePast}</em> Rumor into play</strong>`);
 }
 
 function readAlound(text) {
@@ -418,7 +396,7 @@ function removeExpeditionCardsFor(cityName, historyElement) {
     const textNode = document.createElement("p");
 
     historyElement.appendChild(textNode);
-    textNode.textContent = `Removed ${cityName} from Expedition deck${plural} - check token location${plural}`;
+    textNode.innerHTML = `Removed <strong>${cityName}</strong> from Expedition deck${plural} - check token location${plural}`;
   }
 }
 
@@ -435,7 +413,7 @@ function removeMysticRuinsCardsFor(cityName, historyElement) {
     const textNode = document.createElement("p");
 
     historyElement.appendChild(textNode);
-    textNode.textContent = `Removed ${cityName} from Mystic Ruins deck - check token location`;
+    textNode.innerHTML = `Removed <strong>${cityName}</strong> from Mystic Ruins deck - check token location`;
   }
 }
 
@@ -464,7 +442,7 @@ function resolveCosmicAlignmentAdventureII(event, space, nextId) {
 
 function resolveCosmicAlignmentAdventureIII(event) {
   event.currentTarget.parentElement.remove();
-  resolveExpeditionEncounterForSpace(event, event.target.dataset.space);
+  resolveExpeditionEncounterForSpace(event, event.currentTarget.dataset.space);
 }
 
 function resolveCrawlingChaosRumorReckoning() {
@@ -478,11 +456,11 @@ function resolveCrawlingChaosRumorReckoning() {
 
   const plural = useSecondExpeditionDeck() ? "s" : "";
 
-  const historyElement = addHistoryElement(`Discarded top Expedition card${plural}`);
-  const textNode = document.createElement("p");
-
-  textNode.textContent = `Check Expedition token location${plural}`
-  historyElement.appendChild(textNode);
+  showDialog(
+    `Resolved <em>${TheCrawlingChaos}</em> Reckoning effect`,
+    `<p>Discarded top Expedition card${plural}</p>` +
+    `<p>Check Expedition token location${plural}</p>`
+  );
 }
 
 function resolveDreamQuestEncounterForSpace(event, space) {
@@ -539,10 +517,10 @@ function resolveLeopardManSpawn(event) {
 
   const plural = useSecondExpeditionDeck() ? "s" : "";
 
-  addModifiedExpeditionDeckHistoryItem(
-    `Resolved Leopard Man Spawn effect: ` +
+  showDialog(
+    'Resolved <em>Leopard Man</em> Spawn effect',
     (foundCard ? `Moved` : "Unable to move") +
-    ` Expedition token${plural} to ${TheHeartOfAfrica}`
+    ` Expedition token${plural} to <strong>${TheHeartOfAfrica}</strong>`
   );
 }
 
@@ -597,7 +575,7 @@ function resolveSecretsOfThePastRumorReckoning() {
   
   enableEncounterButtons();
 
-  addModifiedExpeditionDeckHistoryItem(`Resolved '${SecretsOfThePast}' Mythos Reckoning`, cardSpaces)
+  showExpeditionDeckChange(`Resolved <em>${SecretsOfThePast}</em> Rumor Reckoning`, cardSpaces)
 
   cardSpaces.forEach((space) => disableEncounterButtonsFor(space));
 
@@ -609,7 +587,7 @@ function resolveSecretsOfThePastRumorReckoning() {
 }
 
 function resolveTheWorldShakesMythos(event) {
-  event.target.parentElement.remove();
+  event.currentTarget.parentElement.remove();
 
   const buttons = Array.from(document.getElementsByClassName("expedition top-card"));
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
@@ -620,7 +598,7 @@ function resolveTheWorldShakesMythos(event) {
   expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
   updateSecretsOfThePastButton();
 
-  addModifiedExpeditionDeckHistoryItem("Resolved 'The World Shakes' Mythos", spacesRemoved)
+  showExpeditionDeckChange("Resolved <em>The World Shakes</em> Event", spacesRemoved)
 }
 
 function resolveUpheavalDisaster(event) {
@@ -640,7 +618,34 @@ function resolveUpheavalDisaster(event) {
   expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
   updateSecretsOfThePastButton();
 
-  addModifiedExpeditionDeckHistoryItem("Resolved 'Upheaval' Disaster", spacesRemoved)
+  showExpeditionDeckChange("Resolved 'Upheaval' Disaster", spacesRemoved)
+}
+
+function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
+  const plural = useSecondExpeditionDeck() ? "s" : "";
+  const textNode = document.createElement("div");
+
+  textNode.innerHTML = `Shuffled the Expedition deck${plural}—check Expedition token location${plural}`
+  
+  if (spacesRemoved.size > 0) {
+    textNode.innerHTML += '<br>Removed Expedition cards for';
+    if (spacesRemoved.size == 1) {
+      textNode.innerHTML += ' <strong>' + spacesRemoved.values().next().value + '</strong>';
+    } else {
+      const ul = document.createElement('ul');
+      Array
+        .from(spacesRemoved)
+        .sort()
+        .forEach(space => {
+          const li = document.createElement('li');
+          li.innerHTML = '<strong>' + space + '</strong>';
+          ul.appendChild(li)
+        });
+      textNode.appendChild(ul);
+    }
+  }
+
+  showDialog(title, textNode.innerHTML);
 }
 
 function showId(id) {
@@ -699,21 +704,20 @@ function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = 
   });
 
   const plural = buttons.length === 1 ? "" : "s";
-  const historyElement = addHistoryElement(`Shuffled the ${deckLabel} deck${plural}`);
-
-  const textNode = document.createElement("p");
-  textNode.textContent = `Check ${deckLabel} token location${plural}`;
-  historyElement.appendChild(textNode);
+  showDialog(
+    `Shuffled the ${deckLabel} deck${plural}`,
+    `Check ${deckLabel} token location${plural}`
+  );
 }
 
 function solveCrawlingChaosRumor() {
   removeElementWithId("crawling-chaos");
-  addHistoryElement(`Solved '${TheCrawlingChaos}' Rumor`);
+  addHistoryElement(`<strong>Solved <em>${TheCrawlingChaos}</em> Rumor</strong>`);
 }
 
 function solveSecretsOfThePast(event) {
-  event.target.parentElement.remove();
-  addHistoryElement(`Solved '${SecretsOfThePast}' Rumor`);
+  removeElementWithId("secrets-of-the-past");
+  addHistoryElement(`<strong>Solved <em>${SecretsOfThePast}</em> Rumor</strong>`);
 
   secretsOfThePastRumorInPlay = false;
   
@@ -723,7 +727,7 @@ function solveSecretsOfThePast(event) {
 function startDevastationEncounter(spaceType) {
   const card = drawCard(Devastation);
 
-  startEncounter(
+  showDialog(
     `Devastation: ${card.cardId}`,
     card
   );
@@ -739,23 +743,26 @@ function startDreamQuestEncounter(event) {
 }
 
 function startDreamQuestEncounterWith(card) {
-  startEncounter(
+  showDialog(
     `Dream-Quest - ${card.space}: ${card.cardId}`,
     card
   );
 }
 
-function startEncounter(headerText, encounter) {
-  disableEncounterButtons();
+function showDialog(headerText, encounter) {
+  dialog.innerHTML = "";
 
-  const historyElement = addHistoryElement(headerText);
-  historyElement.classList.add("encounter");
+  const headerElement = document.createElement("strong");
+  headerElement.innerHTML = headerText;
+  dialog.appendChild(headerElement);
 
-  addEncounterStep(historyElement, encounter);
+  dialog.showModal();
+
+  addEncounterStep(encounter);
 }
 
 function startExpeditionEncounter(event) {
-  const deck = removeTopCardButton(event.target);
+  const deck = removeTopCardButton(event.currentTarget);
   const card = deck.drawCard();
   
   addExpeditionEncounterButton(deck.name);
@@ -765,7 +772,7 @@ function startExpeditionEncounter(event) {
 }
 
 function startExpeditionEncounterWith(card) {
-  startEncounter(
+  showDialog(
     `Expedition - ${card.space}: ${card.cardId}`,
     card
   );
@@ -774,7 +781,7 @@ function startExpeditionEncounterWith(card) {
 function startGeneralEncounter(spaceType) {
   const card = drawCard(General);
 
-  startEncounter(
+  showDialog(
     `General ${card.cardId}: ${spaceType}`,
     card[spaceType]
   );
@@ -783,7 +790,7 @@ function startGeneralEncounter(spaceType) {
 function startLocationEncounter(deckName, cityName) {
   const card = drawCard(deckName);
 
-  startEncounter(
+  showDialog(
     `${deckName} ${card.cardId}: ${cityName}`,
     card[cityName]
   );
@@ -799,7 +806,7 @@ function startMysticRuinsEncounter(event) {
 }
 
 function startMysticRuinsEncounterWith(card) {
-  startEncounter(
+  showDialog(
     `Mystic Ruins - ${card.space}: ${card.cardId}`,
     card
   );
@@ -808,7 +815,7 @@ function startMysticRuinsEncounterWith(card) {
 function startOtherWorldEncounter() {
   const card = drawCard(OtherWorld);
 
-  startEncounter(
+  showDialog(
     `Other World ${card.cardId}: ${card.location}`,
     card
   );
@@ -817,7 +824,7 @@ function startOtherWorldEncounter() {
 function startResearchEncounter(spaceType) {
   const card = drawCard(Research);
 
-  startEncounter(
+  showDialog(
     `Research - ${ancientOne} ${card.cardId}: ${spaceType}`,
     card[spaceType]
   );
@@ -826,7 +833,7 @@ function startResearchEncounter(spaceType) {
 function startSpecialEncounter(deckName) {
   const card = drawCard(deckName);
 
-  startEncounter(
+  showDialog(
     `${deckName} ${card.cardId}`,
     card
   );
@@ -842,7 +849,7 @@ function updateSecretsOfThePastButton() {
   const button = document.getElementById("resolve-secrets-of-the-past");
   if (!button) return;
 
-  let text = `Resolve the '${SecretsOfThePast}' Mythos card's Reckoning effect<br>`;
+  let text = `Resolve the <strong>${SecretsOfThePast}</strong> Rumor Reckoning effect<br>`;
 
   if (useSecondExpeditionDeck()) {
     const spaces1 = numUniqueSpacesInDeck(`Expedition-1`);
@@ -978,3 +985,5 @@ setupSectionVisibility({
   Research: { selector: "#research-section", isVisible: true },
   Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section").childElementCount > 0 }
 });
+
+const dialog = document.getElementById("encounter-dialog");
