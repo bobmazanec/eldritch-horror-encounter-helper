@@ -91,7 +91,7 @@ function addHistoryElement(html) {
 
 function addMysticRuinsEncounterButton(_) {
   addTopCardButton(MysticRuins, "mystic-ruins-deck", "mystic-ruins", startMysticRuinsEncounter, card => {
-    return `Start ${card.space} Mystic Ruins Encounter`;
+    return `Start <strong>${card.space}</strong> Mystic Ruins Encounter`;
   })
 }
 
