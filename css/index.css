@@ -46,7 +46,10 @@
     }
   }
 
-  #crawling-chaos button img: {
+  #crawling-chaos button {
+    display: none;
+    
+    img: {
       justify-self: center;
     }
   }
