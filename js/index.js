@@ -164,6 +164,27 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
   document.getElementById(buttonContainerId).appendChild(button);
 }
 
+function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckActionFunction, deckName = null) {
+  let selector = `button.top-card.${deckClass}`;
+  if (deckName) {
+    selector += `[data-deck-name="${deckName}"]`;
+  }
+  const buttons = Array.from(document.querySelectorAll(selector));
+
+  buttons.forEach(button => {
+    button.remove();
+    const deck = removeTopCardButton(button);
+    deckActionFunction(deck);
+    addButtonFunction(deck.name);
+  });
+  
+  const plural = buttons.length === 1 ? "" : "s";
+  showDialog(
+    `${verb} the ${deckLabel} deck${plural}`,
+    `Check ${deckLabel} token location${plural}`
+  );
+}
+
 function buildDreamQuestDeck() {
   createDeckBySpaces(DreamQuest);
 }
@@ -690,23 +711,9 @@ function shuffleMysticRuinsDeck() {
 }
 
 function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = null) {
-  let selector = `button.top-card.${deckClass}`;
-  if (deckName) {
-    selector += `[data-deck-name="${deckName}"]`;
-  }
-  const buttons = Array.from(document.querySelectorAll(selector));
-
-  buttons.forEach(button => {
-    button.remove();
-    const deck = removeTopCardButton(button);
-    deck.shuffle();
-    addButtonFunction(deck.name);
-  });
-
-  const plural = buttons.length === 1 ? "" : "s";
-  showDialog(
-    `Shuffled the ${deckLabel} deck${plural}`,
-    `Check ${deckLabel} token location${plural}`
+  affectTopCardDeck(
+    deckLabel, deckClass, addButtonFunction,
+    'Shuffled', deck => deck.shuffle(), deckName
   );
 }
 
