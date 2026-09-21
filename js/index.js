@@ -888,7 +888,7 @@ function useCitiesInRuin() {
 
 function useDreamlandsBoard() {
   return (
-    ancientOne == "Hypnos" ||
+    ancientOne == Hypnos ||
     preludesUsed.includes(OtherworldlyDreams)
   );
 }

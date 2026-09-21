@@ -15,6 +15,7 @@
 
 // Ancient Ones
 const ElderThings = "Elder Things";
+const Hypnos = "Hypnos";
 const NephrenKa = "Nephren-Ka";
 
 // Cards
