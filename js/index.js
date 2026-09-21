@@ -300,6 +300,21 @@ function disableEncounterButtonsFor(space) {
   });
 }
 
+function discardTopDreamQuestCard() {
+  discardTopCard(DreamQuest, 'dream-quest', addDreamQuestEncounterButton);
+}
+
+function discardTopExpeditionCard() {
+  discardTopCard(Expedition, 'expedition', addExpeditionEncounterButton);
+}
+
+function discardTopCard(deckLabel, deckClass, addButtonFunction) {
+  affectTopCardDeck(
+    deckLabel, deckClass, addButtonFunction,
+    'Discarded top card from', deck => deck.drawCard()
+  );
+}
+
 function drawCard(deckName) {
   return decks[deckName].drawCard();
 }
@@ -934,6 +949,13 @@ buildResearchDeck();
 addDreamQuestEncounterButton();
 addMysticRuinsEncounterButton();
 
+if (ancientOne !== Hypnos) {
+  // "Discard the top card of the Dream-Quest deck" available only in Hyphos Research encounters
+  removeElementWithId("discard-top-dream-quest");
+}
+
+showId("add-secrets-of-the-past");
+
 if (useCosmicAlignmentAdventure()) {
   showId("cosmic-alignment");
   showId("add-ruins-in-the-heart-of-the-jungle");
@@ -961,11 +983,16 @@ if (useMountainsOfMadness()) {
 if (useSecondExpeditionDeck()) {
   addExpeditionEncounterButton(`${Expedition}-1`);
   addExpeditionEncounterButton(`${Expedition}-2`);
+  document.getElementById("discard-top-expedition").textContent += "s";
   document.getElementById("shuffle-expedition").textContent += "s";
 } else {
   addExpeditionEncounterButton(Expedition);
 }
-showId("add-secrets-of-the-past");
+
+if (expansionsUsed.includes(UnderThePyramids)) {
+  // Monterrey Jack and his Active ability might be in play
+  showId("discard-top-expedition");
+}
 
 addSpecialEncounterButtons(buildSpecialEncounterDecks());
 
