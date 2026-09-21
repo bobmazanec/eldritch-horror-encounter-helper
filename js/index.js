@@ -33,7 +33,7 @@ function addChoiceButtons(encounterStep) {
 
 function addDreamQuestEncounterButton() {
   addTopCardButton(DreamQuest, "dream-quest-deck", "dream-quest", startDreamQuestEncounter, card => {
-    return `Start ${card.space} Dream-Quest Encounter`;
+    return `Start <strong>${card.space}</strong> Dream-Quest Encounter`;
   })
 }
 
