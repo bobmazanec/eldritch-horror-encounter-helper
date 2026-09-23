@@ -1,10 +1,5 @@
 'use strict';
 
-function addOtherworldlyDreamsIIIButton(buttonId) {
-  removeElementWithId("otherworldly-dreams-III");
-  showId(buttonId);
-}
-
 function addChoiceButton(buttonContainer, text, onClick) {
   const button = document.createElement("button");
   button.textContent = text;
@@ -159,6 +154,11 @@ function addMysticRuinsEncounterButton(_) {
 
 function addOtherworldlyDreamsButtons() {
   showId("otherworldly-dreams-III");
+}
+
+function addOtherworldlyDreamsIIIButton(buttonId) {
+  removeElementWithId("otherworldly-dreams-III");
+  showId(buttonId);
 }
 
 function addRuinsInTheHeartOfTheJungle() {
