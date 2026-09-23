@@ -14,6 +14,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 // Ancient Ones
+const Abhoth = "Abhoth";
 const ElderThings = "Elder Things";
 const Hypnos = "Hypnos";
 const NephrenKa = "Nephren-Ka";

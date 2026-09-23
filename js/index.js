@@ -13,17 +13,27 @@ function addChoiceButton(buttonContainer, text, onClick) {
   buttonContainer.appendChild(button);
 }
 
-function addChoiceButtons(encounterStep) {
+function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounterStep = null) {
   const buttonContainer = document.createElement("div");
 
   if (!encounterStep.choices) {
+    // Done with the 'inner' encounter; switch back to the 'outer'
+    encounterStep = outerEncounterStep;
+  }
+
+  if (!encounterStep || !encounterStep.choices) {
       addChoiceButton(buttonContainer, "Continue", (event) => {
         endEncounter(event);
       });
   } else {
+    if (encounterStep === outerEncounterStep) {
+      // Switching back to 'outer' - display the outer encounter header
+      dialog.innerHTML += `<p><strong>${outerEncounterHeaderText}</strong></p>`;
+      outerEncounterStep = null;
+    }
     for (const label in encounterStep.choices) {
       addChoiceButton(buttonContainer, label, () => {
-        addEncounterStep(encounterStep.choices[label], buttonContainer, label);
+        addEncounterStep(outerEncounterHeaderText, encounterStep.choices[label], buttonContainer, label, outerEncounterStep);
       });
     }
   }
@@ -46,17 +56,69 @@ function addEncounterAction(buttonContainer, action) {
   buttonContainer.remove();
 }
 
-function addEncounterStep(encounterStep, priorButtonContainer = null, action = null) {
+function addEncounterStep(outerEncounterHeaderText, encounterStep, priorButtonContainer = null, action = null, outerEncounterStep = null) {
   if (action && priorButtonContainer) {
     addEncounterAction(priorButtonContainer, action);
   }
 
-  addEncounterStepText(encounterStep);
+  addEncounterStepText(outerEncounterHeaderText, encounterStep);
 
-  addChoiceButtons(encounterStep);
+  let nestSpawnOfAbhoth = false;
+
+  if (
+    ancientOne === Abhoth &&
+    encounterStep &&
+    encounterStep.intro
+  ) {
+    if (includesCultistAmbush(encounterStep.intro)) {
+      nestSpawnOfAbhoth = true;
+    } else {
+      if (includesMonsterAmbush(encounterStep.intro)) {
+        encounterStep = {
+          choices: {
+            "Drew a Cultist Monster": {
+              // Insert text to trigger Spawn of Abhoth
+              intro: "A Cultist Monster ambushes you!",
+              choices: encounterStep.choices
+            },
+
+            "Did not draw a Cultist Monster": {
+              intro: "",
+              choices: encounterStep.choices
+            }
+          }
+        }
+      }
+    }
+  }
+
+  if (nestSpawnOfAbhoth) {
+    const spawnOfAbhoth = 'Spawn of Abhoth';
+
+    // Copy the card to avoid modifying the original
+    const card = {};
+    Object.assign(card, drawCard(spawnOfAbhoth));
+
+    // Make sure card intro is an array, with inner encounter's header prepended
+    card.intro = [
+      `<strong>${spawnOfAbhoth} ${card.cardId}</strong>`
+    ].concat(
+      Array(card.intro).flat()
+    );
+
+    // Add the encounter step for the Spawn of Abhoth card,
+    // passing the combat resolution info for use when the inner encounter is resolved
+    addEncounterStep(
+      outerEncounterHeaderText, card,
+      null, null,
+      encounterStep.choices["Resolved the combat"]
+    );
+  } else {
+    addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounterStep);
+  }
 }
 
-function addEncounterStepText(encounterStep) {
+function addEncounterStepText(outerEncounterHeaderText, encounterStep) {
   let textItems;
   if (Array.isArray(encounterStep) || typeof(encounterStep) == "string") {
     textItems = encounterStep;
@@ -370,6 +432,20 @@ function getTopExpeditionCardSpaces(expeditionDecks) {
     },
     new Set()
   );
+}
+
+function includesMatch(encounterStep, regex) {
+  return Array(encounterStep).flat().find(
+    (text) => text.match(regex)
+  ) !== undefined;
+}
+
+function includesCultistAmbush(encounterStep) {
+  return includesMatch(encounterStep, /cultist monster ambushes/i);
+}
+
+function includesMonsterAmbush(encounterStep) {
+  return includesMatch(encounterStep, /a monster ambushes/i);
 }
 
 function makeImageName(name) {
@@ -780,7 +856,7 @@ function showDialog(headerText, encounter) {
 
   dialog.showModal();
 
-  addEncounterStep(encounter);
+  addEncounterStep(headerText, encounter);
 }
 
 function startExpeditionEncounter(event) {
