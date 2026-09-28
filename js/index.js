@@ -895,7 +895,7 @@ function startLocationEncounter(deckName, cityName) {
 }
 
 function startMysticRuinsEncounter(event) {
-  const deck = removeTopCardButton(event.target);
+  const deck = removeTopCardButton(event.currentTarget);
   const card = deck.drawCard();
 
   addMysticRuinsEncounterButton();
