@@ -38,7 +38,7 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
 
 function addDreamQuestEncounterButton() {
   addTopCardButton(DreamQuest, "dream-quest-deck", "dream-quest", startDreamQuestEncounter, card => {
-    return `Start <strong>${card.space}</strong> Dream-Quest Encounter`;
+    return `Start <strong>${card.location}</strong> Dream-Quest Encounter`;
   })
 }
 
@@ -130,7 +130,7 @@ function addEncounterStepText(outerEncounterHeaderText, encounterStep) {
 
 function addExpeditionEncounterButton(deckName) {
   addTopCardButton(deckName, "expedition-deck", "expedition", startExpeditionEncounter, card => {
-    return `Start <strong>${card.space}</strong> Expedition Encounter`;
+    return `Start <strong>${card.location}</strong> Expedition Encounter`;
   });
 }
 
@@ -148,7 +148,7 @@ function addHistoryElement(html) {
 
 function addMysticRuinsEncounterButton(_) {
   addTopCardButton(MysticRuins, "mystic-ruins-deck", "mystic-ruins", startMysticRuinsEncounter, card => {
-    return `Start <strong>${card.space}</strong> Mystic Ruins Encounter`;
+    return `Start <strong>${card.location}</strong> Mystic Ruins Encounter`;
   })
 }
 
@@ -213,7 +213,7 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
     button.onclick = onClick;
 
     const img = document.createElement("img");
-    img.src = `images/${buttonClass}/${makeImageName(card.space)}.webp`;
+    img.src = `images/${buttonClass}/${makeImageName(card.location)}.webp`;
     button.appendChild(img);
     button.innerHTML += "<br>" + buttonTextFunction(card);
   } else {
@@ -248,11 +248,11 @@ function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckAc
 }
 
 function buildDreamQuestDeck() {
-  createDeckBySpaces(DreamQuest);
+  createDeckByLocation(DreamQuest);
 }
 
 function buildExpeditionDecks() {
-  const allExpeditionCards = getCardsBySpaces(deckData.Expedition);
+  const allExpeditionCards = getCardsByLocation(deckData.Expedition);
   const wholeDeck = new deck(Expedition, allExpeditionCards);
   wholeDeck.shuffle();
   
@@ -266,11 +266,11 @@ function buildExpeditionDecks() {
 }
 
 function buildMysticRuinsDeck() {
-  createDeckBySpaces(MysticRuins);
+  createDeckByLocation(MysticRuins);
 }
 
 function buildOtherWorldDeck() {
-  createDeckBySpaces(OtherWorld);
+  createDeckByLocation(OtherWorld);
 }
 
 function buildResearchDeck() {
@@ -320,10 +320,10 @@ function buildSpecialEncounterDecks() {
   return deckNames;
 }
 
-function createDeckBySpaces(deckName) {
+function createDeckByLocation(deckName) {
   createDeck(
     deckName,
-    getCardsBySpaces(deckData[deckName])
+    getCardsByLocation(deckData[deckName])
   );
 }
 
@@ -406,15 +406,15 @@ function endEncounter(event) {
   historyElement.classList.add("encounter");
 }
 
-function findCardForSpace(space) { return (card) => card.space === space; }
+function findCardForLocation(location) { return (card) => card.location === location; }
 
-function getCardsBySpaces(rawCardsBySpaces) {
+function getCardsByLocation(rawCardsByLocation) {
   const allCards = [];
 
-  for (const space in rawCardsBySpaces) {
-    const cards = filterByExpansion(rawCardsBySpaces[space]);
+  for (const location in rawCardsByLocation) {
+    const cards = filterByExpansion(rawCardsByLocation[location]);
     cards.forEach(card => {
-      card.space = space;
+      card.location = location;
       allCards.push(card)
     });
   };
@@ -422,7 +422,7 @@ function getCardsBySpaces(rawCardsBySpaces) {
   return allCards;
 }
 
-function getTopExpeditionCardSpaces(expeditionDecks) {
+function getTopExpeditionCardLocations(expeditionDecks) {
   return expeditionDecks.reduce(
     (spaces, deck) => {
       if (!deck.isEmpty()) {
@@ -452,9 +452,9 @@ function makeImageName(name) {
   return name.replace(/\s+/g, "_");
 }
 
-function numUniqueSpacesInDeck(deckName) {
-  const spaces = new Set(decks[deckName].map(card => card.space));
-  return spaces.size;
+function numUniqueLocationsInDeck(deckName) {
+  const locations = new Set(decks[deckName].map(card => card.location));
+  return locations.size;
 }
 
 function putCrawlingChaosRumorIntoPlay(event) {
@@ -497,7 +497,7 @@ function removeExpeditionCardsFor(cityName, historyElement) {
 
   expeditionDecks.forEach(deck => {
     removedCards |= deck.removeCardsFromDrawStack(
-      card => card.space === cityName
+      card => card.location === cityName
     );
 
     addExpeditionEncounterButton(deck.name);
@@ -517,7 +517,7 @@ function removeMysticRuinsCardsFor(cityName, historyElement) {
   const deck = removeTopCardButton(button);
   const removedCards = deck.removeCardsFromDrawStack(
     // e.g., "Stonehenge (London)"
-    card => card.space.includes(cityName)
+    card => card.location.includes(cityName)
   );
   addMysticRuinsEncounterButton(deck.name);
 
@@ -534,27 +534,27 @@ function removeTopCardButton(button) {
   return decks[button.dataset.deckName];
 }
 
-function removeTopExpeditionCardSpaceCards(expeditionDecks) {
-  const cardSpaces = getTopExpeditionCardSpaces(expeditionDecks);
+function removeTopExpeditionCardLocationCards(expeditionDecks) {
+  const cardSpaces = getTopExpeditionCardLocations(expeditionDecks);
 
-  // Remove cards whose space matches the top card('s/s')
+  // Remove cards whose location matches the top card('s/s')
   expeditionDecks.forEach(deck => {
     deck.removeCardsFromDrawStack(
-      card => cardSpaces.has(card.space)
+      card => cardLocations.has(card.location)
     );
   });
   
-  return cardSpaces;
+  return cardLocations;
 }
 
-function resolveCosmicAlignmentAdventureII(event, space, nextId) {
+function resolveCosmicAlignmentAdventureII(event, location, nextId) {
   showId(nextId);
-  resolveMysticRuinsEncounterForSpace(event, space);
+  resolveMysticRuinsEncounterForSpace(event, location);
 }
 
 function resolveCosmicAlignmentAdventureIII(event) {
   event.currentTarget.parentElement.remove();
-  resolveExpeditionEncounterForSpace(event, event.currentTarget.dataset.space);
+  resolveExpeditionEncounterForLocation(event, event.currentTarget.dataset.location);
 }
 
 function resolveCrawlingChaosRumorReckoning() {
@@ -664,7 +664,7 @@ function resolveSecretsOfThePastRumorReckoning() {
     const card = deck.topCard();
     
     if (card) {
-      cardSpaces.add(card.space);
+      cardSpaces.add(card.location);
       deckNames.push(deck.name);
     }
     expeditionDeckIsEmpty |= deck.isEmpty();
@@ -675,7 +675,7 @@ function resolveSecretsOfThePastRumorReckoning() {
 
     // Remove cards whose space matches the drawn card('s/s')
     deck.removeCardsFromDrawStack(
-      card => cardSpaces.has(card.space)
+      card => cardSpaces.has(card.location)
     );
 
     if (deck.isEmpty()) {
@@ -842,7 +842,7 @@ function startDreamQuestEncounter(event) {
 
 function startDreamQuestEncounterWith(card) {
   showDialog(
-    `Dream-Quest - ${card.space}: ${card.cardId}`,
+    `Dream-Quest - ${card.location}: ${card.cardId}`,
     card
   );
 }
@@ -871,7 +871,7 @@ function startExpeditionEncounter(event) {
 
 function startExpeditionEncounterWith(card) {
   showDialog(
-    `Expedition - ${card.space}: ${card.cardId}`,
+    `Expedition - ${card.location}: ${card.cardId}`,
     card
   );
 }
@@ -905,7 +905,7 @@ function startMysticRuinsEncounter(event) {
 
 function startMysticRuinsEncounterWith(card) {
   showDialog(
-    `Mystic Ruins - ${card.space}: ${card.cardId}`,
+    `Mystic Ruins - ${card.location}: ${card.cardId}`,
     card
   );
 }
@@ -950,11 +950,11 @@ function updateSecretsOfThePastButton() {
   let text = `Resolve the <strong>${SecretsOfThePast}</strong> Rumor Reckoning effect<br>`;
 
   if (useSecondExpeditionDeck()) {
-    const spaces1 = numUniqueSpacesInDeck(`Expedition-1`);
-    const spaces2 = numUniqueSpacesInDeck(`Expedition-2`);
+    const spaces1 = numUniqueLocationsInDeck(`Expedition-1`);
+    const spaces2 = numUniqueLocationsInDeck(`Expedition-2`);
     text += `The Expedition decks have ${spaces1} and ${spaces2} unique spaces remaining, respectively`;
   } else {
-    const spaces = numUniqueSpacesInDeck(Expedition);
+    const spaces = numUniqueLocationsInDeck(Expedition);
     const plural = spaces === 1 ? "" : "s";
     text += `The Expedition deck has ${spaces} unique space${plural} remaining`;
   }
