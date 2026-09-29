@@ -1,5 +1,8 @@
 'use strict';
 
+let dialog;
+
+
 function addChoiceButton(buttonContainer, text, onClick) {
   const button = document.createElement("button");
   button.textContent = text;
@@ -1015,85 +1018,89 @@ function useSecondExpeditionDeck() {
   return preludesUsed.includes(LitanyOfSecrets);
 }
 
-buildSimpleDecks();
-buildDreamQuestDeck();
-buildExpeditionDecks();
-buildMysticRuinsDeck();
-buildOtherWorldDeck();
-buildResearchDeck();
+function initializeGame() {
+  buildSimpleDecks();
+  buildDreamQuestDeck();
+  buildExpeditionDecks();
+  buildMysticRuinsDeck();
+  buildOtherWorldDeck();
+  buildResearchDeck();
 
-addDreamQuestEncounterButton();
-addMysticRuinsEncounterButton();
+  addDreamQuestEncounterButton();
+  addMysticRuinsEncounterButton();
 
-if (ancientOne !== Hypnos) {
-  // "Discard the top card of the Dream-Quest deck" available only in Hyphos Research encounters
-  removeElementWithId("discard-top-dream-quest");
+  if (ancientOne !== Hypnos) {
+    // "Discard the top card of the Dream-Quest deck" available only in Hyphos Research encounters
+    removeElementWithId("discard-top-dream-quest");
+  }
+
+  showId("add-secrets-of-the-past");
+
+  if (useCosmicAlignmentAdventure()) {
+    showId("cosmic-alignment");
+    showId("add-ruins-in-the-heart-of-the-jungle");
+    showId("add-ruins-under-the-stars");
+  }
+
+  if (useOtherworldlyDreamsAdventure()) {
+    showId("otherworldly-dreams");
+    showId("add-aboard-the-black-galley");
+    showId("add-beyond-the-river-skai");
+    showId("add-the-blessings-of-nodens");
+  }
+
+
+  if (preludesUsed.includes(OtherworldlyDreams)) {
+    addOtherworldlyDreamsButtons();
+  }
+
+  if (useMountainsOfMadness()) {
+    showId("add-crawling-chaos");
+  } else {
+    removeElementWithId("crawling-chaos");
+  }
+
+  if (useSecondExpeditionDeck()) {
+    addExpeditionEncounterButton(`${Expedition}-1`);
+    addExpeditionEncounterButton(`${Expedition}-2`);
+    document.getElementById("discard-top-expedition").textContent += "s";
+    document.getElementById("shuffle-expedition").textContent += "s";
+  } else {
+    addExpeditionEncounterButton(Expedition);
+  }
+
+  if (expansionsUsed.includes(UnderThePyramids)) {
+    // Monterrey Jack and his Active ability might be in play
+    showId("discard-top-expedition");
+  }
+
+  addSpecialEncounterButtons(buildSpecialEncounterDecks());
+
+  setupSectionVisibility({
+    Adventure: { selector: "#adventures-section", isVisible: useCosmicAlignmentAdventure() || useOtherworldlyDreamsAdventure() },
+    Africa: { selector: "#africa-section", isVisible: useEgyptBoard() },
+    America: { selector: "#america-section", isVisible: true },
+    "Antarctica Research": { selector: "#antarctica-research-section", isVisible: useAntarcticaBoard() },
+    "Asia/Australia": { selector: "#asia-australia-section", isVisible: true },
+    Devastation: { selector: "#devastation-section", isVisible: useCitiesInRuin() },
+    Disaster: { selector: "#disaster-section", isVisible: useCitiesInRuin() },
+    "Dream-Quest": { selector: "#dream-quest-section", isVisible: useDreamlandsBoard() },
+    "The Dreamlands": { selector: "#dreamlands-section", isVisible: useDreamlandsBoard() },
+    Egypt: { selector: "#egypt-section", isVisible: useEgyptBoard() },
+    Europe: { selector: "#europe-section", isVisible: true },
+    Expedition: { selector: "#expedition-section", isVisible: true },
+    General: { selector: "#general-section", isVisible: true },
+    Monster: { selector: "#monsters-section", isVisible: useCitiesInRuin() },
+    Mountain: { selector: "#mountain-section", isVisible: useAntarcticaBoard() },
+    "Mystic Ruins": { selector: "#mystic-ruins-section", isVisible: useMysticRuinsDeck() },
+    Mythos: { selector: "#mythos-section", isVisible: true },
+    "Other World": { selector: "#other-world-section", isVisible: true },
+    Outpost: { selector: "#outpost-section", isVisible: useAntarcticaBoard() },
+    Research: { selector: "#research-section", isVisible: true },
+    Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section").childElementCount > 0 }
+  });
+
+  dialog = document.getElementById("encounter-dialog");
 }
 
-showId("add-secrets-of-the-past");
-
-if (useCosmicAlignmentAdventure()) {
-  showId("cosmic-alignment");
-  showId("add-ruins-in-the-heart-of-the-jungle");
-  showId("add-ruins-under-the-stars");
-}
-
-if (useOtherworldlyDreamsAdventure()) {
-  showId("otherworldly-dreams");
-  showId("add-aboard-the-black-galley");
-  showId("add-beyond-the-river-skai");
-  showId("add-the-blessings-of-nodens");
-}
-
-
-if (preludesUsed.includes(OtherworldlyDreams)) {
-  addOtherworldlyDreamsButtons();
-}
-
-if (useMountainsOfMadness()) {
-  showId("add-crawling-chaos");
-} else {
-  removeElementWithId("crawling-chaos");
-}
-
-if (useSecondExpeditionDeck()) {
-  addExpeditionEncounterButton(`${Expedition}-1`);
-  addExpeditionEncounterButton(`${Expedition}-2`);
-  document.getElementById("discard-top-expedition").textContent += "s";
-  document.getElementById("shuffle-expedition").textContent += "s";
-} else {
-  addExpeditionEncounterButton(Expedition);
-}
-
-if (expansionsUsed.includes(UnderThePyramids)) {
-  // Monterrey Jack and his Active ability might be in play
-  showId("discard-top-expedition");
-}
-
-addSpecialEncounterButtons(buildSpecialEncounterDecks());
-
-setupSectionVisibility({
-  Adventure: { selector: "#adventures-section", isVisible: useCosmicAlignmentAdventure() || useOtherworldlyDreamsAdventure() },
-  Africa: { selector: "#africa-section", isVisible: useEgyptBoard() },
-  America: { selector: "#america-section", isVisible: true },
-  "Antarctica Research": { selector: "#antarctica-research-section", isVisible: useAntarcticaBoard() },
-  "Asia/Australia": { selector: "#asia-australia-section", isVisible: true },
-  Devastation: { selector: "#devastation-section", isVisible: useCitiesInRuin() },
-  Disaster: { selector: "#disaster-section", isVisible: useCitiesInRuin() },
-  "Dream-Quest": { selector: "#dream-quest-section", isVisible: useDreamlandsBoard() },
-  "The Dreamlands": { selector: "#dreamlands-section", isVisible: useDreamlandsBoard() },
-  Egypt: { selector: "#egypt-section", isVisible: useEgyptBoard() },
-  Europe: { selector: "#europe-section", isVisible: true },
-  Expedition: { selector: "#expedition-section", isVisible: true },
-  General: { selector: "#general-section", isVisible: true },
-  Monster: { selector: "#monsters-section", isVisible: useCitiesInRuin() },
-  Mountain: { selector: "#mountain-section", isVisible: useAntarcticaBoard() },
-  "Mystic Ruins": { selector: "#mystic-ruins-section", isVisible: useMysticRuinsDeck() },
-  Mythos: { selector: "#mythos-section", isVisible: true },
-  "Other World": { selector: "#other-world-section", isVisible: true },
-  Outpost: { selector: "#outpost-section", isVisible: useAntarcticaBoard() },
-  Research: { selector: "#research-section", isVisible: true },
-  Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section").childElementCount > 0 }
-});
-
-const dialog = document.getElementById("encounter-dialog");
+renderGameSetupForm();

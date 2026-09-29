@@ -15,9 +15,21 @@
 
 // Ancient Ones
 const Abhoth = "Abhoth";
+const Antediluvium = "Antediluvium";
+const AtlachNacha = "Atlach-Nacha";
+const Azathoth = "Azathoth";
+const Cthulhu = "Cthulhu";
 const ElderThings = "Elder Things";
+const Hastur = "Hastur";
 const Hypnos = "Hypnos";
+const Ithaqua = "Ithaqua";
 const NephrenKa = "Nephren-Ka";
+const Nyarlathotep = "Nyarlathotep";
+const ShubNiggurath = "Shub-Niggurath";
+const ShuddeMell = "Shudde M'ell";
+const Syzygy = "Syzygy";
+const Yig = "Yig";
+const YogSothoth = "Yog-Sothoth";
 
 // Cards
 const SecretsOfThePast = "Secrets of the Past";
@@ -55,9 +67,30 @@ const TheStarsAlign = "The Stars Align";
 // Spaces
 const TheHeartOfAfrica = "The Heart of Africa";
 
-const ancientOne = ElderThings;
+
 const expansionsUsed = [Core, CitiesInRuin, ForsakenLore, MasksOfNyarlathotep, SignsOfCarcosa, StrangeRemnants, TheDreamlands, MountainsOfMadness, UnderThePyramids];
-const preludesUsed = [OtherworldlyDreams, InCosmicAlignment, InTheLightlessChamber, LitanyOfSecrets, TheStarsAlign];
+
+// Ancient Ones available for selection, keyed by the expansion that adds them
+const ancientOneChoicesByExpansion = {
+  [Core]: [Azathoth, Cthulhu, ShubNiggurath, YogSothoth],
+  [ForsakenLore]: [Yig],
+  [MountainsOfMadness]: [ElderThings, Ithaqua],
+  [StrangeRemnants]: [Syzygy],
+  [UnderThePyramids]: [Abhoth, NephrenKa],
+  [SignsOfCarcosa]: [Hastur],
+  [TheDreamlands]: [AtlachNacha, Hypnos],
+  [CitiesInRuin]: [ShuddeMell],
+  [MasksOfNyarlathotep]: [Antediluvium, Nyarlathotep]
+};
+
+// Preludes available for selection, keyed by the expansion that adds them
+const preludeChoicesByExpansion = {
+  [MountainsOfMadness]: [DoomsayerFromAntarctica],
+  [StrangeRemnants]: [InCosmicAlignment],
+  [TheDreamlands]: [OtherworldlyDreams],
+  [UnderThePyramids]: [UnderThePyramids, LitanyOfSecrets],
+  [MasksOfNyarlathotep]: [InTheLightlessChamber, TheStarsAlign]
+};
 
 let numCitiesDevastated = 0;
 const deckData = {
@@ -67,3 +100,7 @@ const deckData = {
 };
 const decks = {};
 let   secretsOfThePastRumorInPlay = false;
+
+// Set by the Game Setup form
+let ancientOne;
+let preludesUsed = [];

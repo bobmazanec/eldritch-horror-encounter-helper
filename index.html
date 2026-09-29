@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="css/index.css">
     <!-- Data -->
     <script src="js/global_variables.js"></script>
-    <script src="js/deck.js"></script>
     <script src="js/deckdata_abhoth_research_encounters.js"></script>
     <script src="js/deckdata_antarctica_research_encounters.js"></script>
     <script src="js/deckdata_antediluvium_research_encounters.js"></script>
@@ -63,11 +62,30 @@
     <script src="js/deckdata_yog-sothoth_research_encounters.js"></script>
     <script src="js/deckdata_yuggoth.js"></script>
     <!-- Logic -->
+    <script src="js/game_setup.js"></script>
+    <script src="js/deck.js"></script>
     <script defer src="js/index.js"></script>
   </head>
   <body>
     <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
-    <div id="app"></div>
+    <div id="app">
+      <fieldset id="game-setup-section">
+        <strong>Game Setup</strong>
+        <form id="game-setup-form" onsubmit="submitGameSetup(event)">
+          <fieldset>
+            <legend>Ancient One</legend>
+            <select id="ancient-one-choices" name="ancientOne"></select>
+          </fieldset>
+
+          <fieldset id="prelude-section">
+            <legend>Prelude(s)</legend>
+            <div id="prelude-choices"></div>
+          </fieldset>
+
+          <button type="submit">Start Game</button>
+        </form>
+      </fieldset>
+    </div>
     <div id="mainView">
       <fieldset class="visibility">
         <strong>Toggle Section Visibility</strong>

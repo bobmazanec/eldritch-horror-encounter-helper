@@ -17,7 +17,15 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#game-setup-section {
+  width: fit-content;
+  margin-inline: auto;
+  margin-top: 1em;
+}
+
 #mainView {
+  display: none;
+
   .section-hidden {
     display: none !important;
   }
