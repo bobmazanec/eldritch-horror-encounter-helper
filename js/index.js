@@ -176,6 +176,7 @@ function addRuinsUnderTheStars() {
 
 function addSpecialEncounterButtons(deckNames) {
   if (deckNames.length === 0) {
+    removeElementWithId("special-encounters-section");
     return;
   }
 
@@ -1097,7 +1098,7 @@ function initializeGame() {
     "Other World": { selector: "#other-world-section", isVisible: true },
     Outpost: { selector: "#outpost-section", isVisible: useAntarcticaBoard() },
     Research: { selector: "#research-section", isVisible: true },
-    Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section").childElementCount > 0 }
+    Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section") != null }
   });
 
   dialog = document.getElementById("encounter-dialog");
