@@ -558,7 +558,7 @@ function resolveCosmicAlignmentAdventureII(event, location, nextId) {
 
 function resolveCosmicAlignmentAdventureIII(event) {
   event.currentTarget.parentElement.remove();
-  resolveExpeditionEncounterForLocation(event, event.currentTarget.dataset.location);
+  resolveExpeditionEncounterForSpace(event, event.currentTarget.dataset.space);
 }
 
 function resolveCrawlingChaosRumorReckoning() {
@@ -583,7 +583,7 @@ function resolveDreamQuestEncounterForSpace(event, space) {
   event.target.remove();
 
   const deck = decks[DreamQuest];
-  const card = deck.searchForCard(findCardForSpace(space));
+  const card = deck.searchForCard(findCardForLocation(space));
 
   shuffleDreamQuestDeck();
 
@@ -599,13 +599,13 @@ function resolveExpeditionEncounterForSpace(event, space) {
   }
 
   let deck = decks[deckName];
-  let card = deck.searchForCard(findCardForSpace(space));
+  let card = deck.searchForCard(findCardForLocation(space));
 
   shuffleTopCardDeck(deckName, 'expedition', addExpeditionEncounterButton, deckName);
   if (!card) {
     deckName = `${Expedition}-2`;
     let deck = decks[deckName];
-    card = deck.searchForCard(findCardForSpace(space));
+    card = deck.searchForCard(findCardForLocation(space));
     shuffleTopCardDeck(deckName, 'expedition', addExpeditionEncounterButton, deckName);
   }
 
@@ -621,7 +621,7 @@ function resolveLeopardManSpawn(event) {
     const deck = decks[button.dataset.deckName];
 
     // Do not discard the found card, since it is being moved in the deck
-    const card = deck.searchForCard(findCardForSpace(TheHeartOfAfrica), false);
+    const card = deck.searchForCard(findCardForLocation(TheHeartOfAfrica), false);
 
     foundCard |= !!card;
 
@@ -644,7 +644,7 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
   event.currentTarget.remove();
 
   const deck = decks[MysticRuins];
-  const card = deck.searchForCard(findCardForSpace(space));
+  const card = deck.searchForCard(findCardForLocation(space));
 
   shuffleMysticRuinsDeck();
 
@@ -1049,7 +1049,6 @@ function initializeGame() {
     showId("add-beyond-the-river-skai");
     showId("add-the-blessings-of-nodens");
   }
-
 
   if (preludesUsed.includes(OtherworldlyDreams)) {
     addOtherworldlyDreamsButtons();
