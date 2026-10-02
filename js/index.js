@@ -1005,7 +1005,7 @@ function useMountainsOfMadness() {
 function useMysticRuinsDeck() {
   // True if either of the Ancient Ones or Preludes,
   return (
-    ["Antediluvium", "Syzygy"].includes(ancientOne) ||
+    [Antediluvium, Syzygy].includes(ancientOne) ||
     preludesUsed.includes(TheStarsAlign) ||
     useCosmicAlignmentAdventure()
   );
