@@ -1104,4 +1104,4 @@ function initializeGame() {
   dialog = document.getElementById("encounter-dialog");
 }
 
-renderGameSetupForm();
+renderExpansionSelection();

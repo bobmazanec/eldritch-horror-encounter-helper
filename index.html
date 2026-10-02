@@ -68,24 +68,40 @@
   </head>
   <body>
     <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
-    <div id="app">
-      <fieldset id="game-setup-section">
-        <strong>Game Setup</strong>
-        <form id="game-setup-form" onsubmit="submitGameSetup(event)">
-          <fieldset>
-            <legend>Ancient One</legend>
-            <select id="ancient-one-choices" name="ancientOne"></select>
-          </fieldset>
 
-          <fieldset id="prelude-section">
-            <legend>Prelude(s)</legend>
-            <div id="prelude-choices"></div>
-          </fieldset>
-
-          <button type="submit">Start Game</button>
+    <div id="expansion-selection-section">
+      <button onclick="startNewGame(event)">New Game</button>
+      <fieldset>
+        <legend>Select set(s) used</legend>
+        <form id="expansion-selection-form">
+          <div id="expansion-choices"></div>
         </form>
       </fieldset>
     </div>
+    <fieldset id="game-setup-section" hidden>
+      <strong>Game Setup</strong>
+      <form id="game-setup-form" onsubmit="submitGameSetup(event)">
+        <fieldset>
+          <legend>Ancient One</legend>
+          <select id="ancient-one-choices" name="ancientOne">
+            <option value="" selected>Select an Ancient One</option>
+            <hr>
+          </select>
+        </fieldset>
+
+        <fieldset id="prelude-section">
+          <legend>Prelude(s)</legend>
+          <em>
+            Play with whatever Prelude(s) you like.
+            <br>
+            If you use any of these, select it/them here.
+          </em>
+          <div id="prelude-choices"></div>
+        </fieldset>
+
+        <button type="submit" id="start-game-button" disabled>Start Game</button>
+      </form>
+    </fieldset>
     <div id="mainView">
       <fieldset class="visibility">
         <strong>Toggle Section Visibility</strong>

@@ -17,10 +17,61 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+#expansion-selection-section,
 #game-setup-section {
   width: fit-content;
   margin-inline: auto;
   margin-top: 1em;
+}
+
+#expansion-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.expansion-choice {
+  display: grid;
+  grid-template-rows: 56px auto;
+  justify-items: center;
+  align-content: start;
+  gap: 0.25em;
+  min-height: 84px;
+  padding: 0.25em;
+  text-align: center;
+}
+
+.expansion-choice__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 56px;
+}
+
+.expansion-choice img {
+  max-width: 45px;
+  max-height: 56px;
+  justify-self: center;
+}
+
+.expansion-choice--core img {
+  width: auto;
+  height: 33px;
+  max-width: none;
+  max-height: none;
+}
+
+#expansion-selection-section button {
+  display: block;
+  margin-inline: auto;
+}
+
+@media (max-width: 600px) {
+  #expansion-choices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 #mainView {

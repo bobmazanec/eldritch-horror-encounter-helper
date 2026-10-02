@@ -67,9 +67,6 @@ const TheStarsAlign = "The Stars Align";
 // Spaces
 const TheHeartOfAfrica = "The Heart of Africa";
 
-
-const expansionsUsed = [Core, CitiesInRuin, ForsakenLore, MasksOfNyarlathotep, SignsOfCarcosa, StrangeRemnants, TheDreamlands, MountainsOfMadness, UnderThePyramids];
-
 // Ancient Ones available for selection, keyed by the expansion that adds them
 const ancientOneChoicesByExpansion = {
   [Core]: [Azathoth, Cthulhu, ShubNiggurath, YogSothoth],
@@ -104,3 +101,4 @@ let   secretsOfThePastRumorInPlay = false;
 // Set by the Game Setup form
 let ancientOne;
 let preludesUsed = [];
+let expansionsUsed = [];
