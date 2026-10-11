@@ -108,7 +108,7 @@
   #crawling-chaos button {
     display: none;
     
-    img: {
+    img {
       justify-self: center;
     }
   }
