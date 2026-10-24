@@ -292,16 +292,6 @@ function buildResearchDeck() {
   }
 }
 
-function createDeck(deckName, cards) {
-  decks[deckName] = new deck(deckName, cards);
-}
-
-function filterByExpansion(cards) {
-  return cards.filter(
-    card => expansionsUsed.includes(card.expansionId)
-  );
-}
-
 function buildSimpleDecks() {
   [
     "Africa", "America", "Asia/Australia",
@@ -329,6 +319,10 @@ function buildSpecialEncounterDecks() {
   }
 
   return deckNames;
+}
+
+function createDeck(deckName, cards) {
+  decks[deckName] = new deck(deckName, cards);
 }
 
 function createDeckByLocation(deckName) {
@@ -373,19 +367,19 @@ function disableEncounterButtonsFor(space) {
   });
 }
 
+function discardTopCard(deckLabel, deckClass, addButtonFunction) {
+  affectTopCardDeck(
+    deckLabel, deckClass, addButtonFunction,
+    'Discarded top card from', deck => deck.drawCard()
+  );
+}
+
 function discardTopDreamQuestCard() {
   discardTopCard(DreamQuest, 'dream-quest', addDreamQuestEncounterButton);
 }
 
 function discardTopExpeditionCard() {
   discardTopCard(Expedition, 'expedition', addExpeditionEncounterButton);
-}
-
-function discardTopCard(deckLabel, deckClass, addButtonFunction) {
-  affectTopCardDeck(
-    deckLabel, deckClass, addButtonFunction,
-    'Discarded top card from', deck => deck.drawCard()
-  );
 }
 
 function drawCard(deckName) {
@@ -418,6 +412,12 @@ function endEncounter(event, continuationFunction = null) {
   if (continuationFunction) continuationFunction();
 }
 
+function filterByExpansion(cards) {
+  return cards.filter(
+    card => expansionsUsed.includes(card.expansionId)
+  );
+}
+
 function findCardForLocation(location) { return (card) => card.location === location; }
 
 function getCardsByLocation(rawCardsByLocation) {
@@ -446,20 +446,103 @@ function getTopExpeditionCardLocations(expeditionDecks) {
   );
 }
 
+function includesCultistAmbush(encounterStep) {
+  return includesMatch(encounterStep, /cultist monster ambushes/i);
+}
+
 function includesMatch(encounterStep, regex) {
   return Array(encounterStep).flat().find(
     (text) => text.match(regex)
   ) !== undefined;
 }
 
-function includesCultistAmbush(encounterStep) {
-  return includesMatch(encounterStep, /cultist monster ambushes/i);
-}
-
 function includesMonsterAmbush(encounterStep) {
   return includesMatch(encounterStep, /a monster ambushes/i);
 }
 
+function initializeGame() {
+  buildSimpleDecks();
+  buildDreamQuestDeck();
+  buildExpeditionDecks();
+  buildMysticRuinsDeck();
+  buildOtherWorldDeck();
+  buildResearchDeck();
+
+  addDreamQuestEncounterButton();
+  addMysticRuinsEncounterButton();
+
+  if (ancientOne !== Hypnos) {
+    // "Discard the top card of the Dream-Quest deck" available only in Hyphos Research encounters
+    removeElementWithId("discard-top-dream-quest");
+  }
+
+  showId("add-secrets-of-the-past");
+
+  if (useCosmicAlignmentAdventure()) {
+    showId("cosmic-alignment");
+    showId("add-ruins-in-the-heart-of-the-jungle");
+    showId("add-ruins-under-the-stars");
+  }
+
+  if (useOtherworldlyDreamsAdventure()) {
+    showId("otherworldly-dreams");
+    showId("add-aboard-the-black-galley");
+    showId("add-beyond-the-river-skai");
+    showId("add-the-blessings-of-nodens");
+  }
+
+  if (preludesUsed.includes(OtherworldlyDreams)) {
+    addOtherworldlyDreamsButtons();
+  }
+
+  if (useMountainsOfMadness()) {
+    showId("add-crawling-chaos");
+  } else {
+    removeElementWithId("crawling-chaos");
+  }
+
+  if (useSecondExpeditionDeck()) {
+    addExpeditionEncounterButton(`${Expedition}-1`);
+    addExpeditionEncounterButton(`${Expedition}-2`);
+    document.getElementById("discard-top-expedition").textContent += "s";
+    document.getElementById("shuffle-expedition").textContent += "s";
+  } else {
+    addExpeditionEncounterButton(Expedition);
+  }
+
+  if (expansionsUsed.includes(UnderThePyramids)) {
+    // Monterrey Jack and his Active ability might be in play
+    showId("discard-top-expedition");
+  }
+
+  addSpecialEncounterButtons(buildSpecialEncounterDecks());
+
+  setupSectionVisibility({
+    Adventure: { selector: "#adventures-section", isVisible: useCosmicAlignmentAdventure() || useOtherworldlyDreamsAdventure() },
+    Africa: { selector: "#africa-section", isVisible: useEgyptBoard() },
+    America: { selector: "#america-section", isVisible: true },
+    "Antarctica Research": { selector: "#antarctica-research-section", isVisible: useAntarcticaBoard() },
+    "Asia/Australia": { selector: "#asia-australia-section", isVisible: true },
+    Devastation: { selector: "#devastation-section", isVisible: useCitiesInRuin() },
+    Disaster: { selector: "#disaster-section", isVisible: useCitiesInRuin() },
+    "Dream-Quest": { selector: "#dream-quest-section", isVisible: useDreamlandsBoard() },
+    "The Dreamlands": { selector: "#dreamlands-section", isVisible: useDreamlandsBoard() },
+    Egypt: { selector: "#egypt-section", isVisible: useEgyptBoard() },
+    Europe: { selector: "#europe-section", isVisible: true },
+    Expedition: { selector: "#expedition-section", isVisible: true },
+    General: { selector: "#general-section", isVisible: true },
+    Monster: { selector: "#monsters-section", isVisible: useCitiesInRuin() },
+    Mountain: { selector: "#mountain-section", isVisible: useAntarcticaBoard() },
+    "Mystic Ruins": { selector: "#mystic-ruins-section", isVisible: useMysticRuinsDeck() },
+    Mythos: { selector: "#mythos-section", isVisible: true },
+    "Other World": { selector: "#other-world-section", isVisible: true },
+    Outpost: { selector: "#outpost-section", isVisible: useAntarcticaBoard() },
+    Research: { selector: "#research-section", isVisible: true },
+    Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section") != null }
+  });
+
+  dialog = document.getElementById("encounter-dialog");
+}
 function makeImageName(name) {
   return name.replace(/\s+/g, "_");
 }
@@ -744,6 +827,47 @@ function resolveUpheavalDisaster(event) {
   showExpeditionDeckChange("Resolved 'Upheaval' Disaster", spacesRemoved)
 }
 
+function setupSectionVisibility(sectionVisibility) {
+  const fieldset = document.querySelector("fieldset.visibility");
+  const template = document.getElementById("sectionVisibilityItemTemplate");
+
+  Object.entries(sectionVisibility).forEach(([sectionName, config]) => {
+    const sectionElement = document.querySelector(config.selector);
+
+    if (!sectionElement) {
+      return;
+    }
+
+    if (config.isVisible) {
+      const label = template.content.firstElementChild.cloneNode(true);
+      const checkbox = label.querySelector("input");
+      label.append(` ${sectionName}`);
+      checkbox.addEventListener("change", () => {
+        sectionElement.classList.toggle("section-hidden", !checkbox.checked);
+      });
+      fieldset.appendChild(label);
+    } else {
+      sectionElement.classList.add("section-hidden");
+    }
+  });
+}
+
+function showDialog(headerText, encounter, afterContinueFunction = null) {
+  dialog.innerHTML = "";
+
+  const headerElement = document.createElement("strong");
+  headerElement.innerHTML = headerText;
+  dialog.appendChild(headerElement);
+
+  dialog.showModal();
+
+  addEncounterStep(
+    headerText, encounter,
+    null, null, null,
+    afterContinueFunction
+  );
+}
+
 function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
   const plural = useSecondExpeditionDeck() ? "s" : "";
   const textNode = document.createElement("div");
@@ -773,31 +897,6 @@ function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
 
 function showId(id) {
   document.getElementById(id).style.display = "block";
-}
-
-function setupSectionVisibility(sectionVisibility) {
-  const fieldset = document.querySelector("fieldset.visibility");
-  const template = document.getElementById("sectionVisibilityItemTemplate");
-
-  Object.entries(sectionVisibility).forEach(([sectionName, config]) => {
-    const sectionElement = document.querySelector(config.selector);
-
-    if (!sectionElement) {
-      return;
-    }
-
-    if (config.isVisible) {
-      const label = template.content.firstElementChild.cloneNode(true);
-      const checkbox = label.querySelector("input");
-      label.append(` ${sectionName}`);
-      checkbox.addEventListener("change", () => {
-        sectionElement.classList.toggle("section-hidden", !checkbox.checked);
-      });
-      fieldset.appendChild(label);
-    } else {
-      sectionElement.classList.add("section-hidden");
-    }
-  });
 }
 
 function shuffleDreamQuestDeck() {
@@ -856,22 +955,6 @@ function startDreamQuestEncounterWith(card) {
   showDialog(
     `Dream-Quest - ${card.location}: ${card.cardId}`,
     card
-  );
-}
-
-function showDialog(headerText, encounter, afterContinueFunction = null) {
-  dialog.innerHTML = "";
-
-  const headerElement = document.createElement("strong");
-  headerElement.innerHTML = headerText;
-  dialog.appendChild(headerElement);
-
-  dialog.showModal();
-
-  addEncounterStep(
-    headerText, encounter,
-    null, null, null,
-    afterContinueFunction
   );
 }
 
@@ -985,12 +1068,12 @@ function useAntarcticaBoard() {
   );
 }
 
-function useCosmicAlignmentAdventure() {
-  return preludesUsed.includes(InCosmicAlignment);
-}
-
 function useCitiesInRuin() {
   return expansionsUsed.includes(CitiesInRuin);
+}
+
+function useCosmicAlignmentAdventure() {
+  return preludesUsed.includes(InCosmicAlignment);
 }
 
 function useDreamlandsBoard() {
@@ -1031,88 +1114,5 @@ function useSecondExpeditionDeck() {
   return preludesUsed.includes(LitanyOfSecrets);
 }
 
-function initializeGame() {
-  buildSimpleDecks();
-  buildDreamQuestDeck();
-  buildExpeditionDecks();
-  buildMysticRuinsDeck();
-  buildOtherWorldDeck();
-  buildResearchDeck();
-
-  addDreamQuestEncounterButton();
-  addMysticRuinsEncounterButton();
-
-  if (ancientOne !== Hypnos) {
-    // "Discard the top card of the Dream-Quest deck" available only in Hyphos Research encounters
-    removeElementWithId("discard-top-dream-quest");
-  }
-
-  showId("add-secrets-of-the-past");
-
-  if (useCosmicAlignmentAdventure()) {
-    showId("cosmic-alignment");
-    showId("add-ruins-in-the-heart-of-the-jungle");
-    showId("add-ruins-under-the-stars");
-  }
-
-  if (useOtherworldlyDreamsAdventure()) {
-    showId("otherworldly-dreams");
-    showId("add-aboard-the-black-galley");
-    showId("add-beyond-the-river-skai");
-    showId("add-the-blessings-of-nodens");
-  }
-
-  if (preludesUsed.includes(OtherworldlyDreams)) {
-    addOtherworldlyDreamsButtons();
-  }
-
-  if (useMountainsOfMadness()) {
-    showId("add-crawling-chaos");
-  } else {
-    removeElementWithId("crawling-chaos");
-  }
-
-  if (useSecondExpeditionDeck()) {
-    addExpeditionEncounterButton(`${Expedition}-1`);
-    addExpeditionEncounterButton(`${Expedition}-2`);
-    document.getElementById("discard-top-expedition").textContent += "s";
-    document.getElementById("shuffle-expedition").textContent += "s";
-  } else {
-    addExpeditionEncounterButton(Expedition);
-  }
-
-  if (expansionsUsed.includes(UnderThePyramids)) {
-    // Monterrey Jack and his Active ability might be in play
-    showId("discard-top-expedition");
-  }
-
-  addSpecialEncounterButtons(buildSpecialEncounterDecks());
-
-  setupSectionVisibility({
-    Adventure: { selector: "#adventures-section", isVisible: useCosmicAlignmentAdventure() || useOtherworldlyDreamsAdventure() },
-    Africa: { selector: "#africa-section", isVisible: useEgyptBoard() },
-    America: { selector: "#america-section", isVisible: true },
-    "Antarctica Research": { selector: "#antarctica-research-section", isVisible: useAntarcticaBoard() },
-    "Asia/Australia": { selector: "#asia-australia-section", isVisible: true },
-    Devastation: { selector: "#devastation-section", isVisible: useCitiesInRuin() },
-    Disaster: { selector: "#disaster-section", isVisible: useCitiesInRuin() },
-    "Dream-Quest": { selector: "#dream-quest-section", isVisible: useDreamlandsBoard() },
-    "The Dreamlands": { selector: "#dreamlands-section", isVisible: useDreamlandsBoard() },
-    Egypt: { selector: "#egypt-section", isVisible: useEgyptBoard() },
-    Europe: { selector: "#europe-section", isVisible: true },
-    Expedition: { selector: "#expedition-section", isVisible: true },
-    General: { selector: "#general-section", isVisible: true },
-    Monster: { selector: "#monsters-section", isVisible: useCitiesInRuin() },
-    Mountain: { selector: "#mountain-section", isVisible: useAntarcticaBoard() },
-    "Mystic Ruins": { selector: "#mystic-ruins-section", isVisible: useMysticRuinsDeck() },
-    Mythos: { selector: "#mythos-section", isVisible: true },
-    "Other World": { selector: "#other-world-section", isVisible: true },
-    Outpost: { selector: "#outpost-section", isVisible: useAntarcticaBoard() },
-    Research: { selector: "#research-section", isVisible: true },
-    Special: { selector: "#special-encounters-section", isVisible: document.getElementById("special-encounters-section") != null }
-  });
-
-  dialog = document.getElementById("encounter-dialog");
-}
 
 renderExpansionSelection();
