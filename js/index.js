@@ -239,11 +239,8 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
   document.getElementById(buttonContainerId).appendChild(button);
 }
 
-function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckActionFunction, deckName = null, afterAffectFunction = null) {
+function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckActionFunction, afterAffectFunction = null) {
   let selector = `button.top-card.${deckClass}`;
-  if (deckName) {
-    selector += `[data-deck-name="${deckName}"]`;
-  }
   const buttons = Array.from(document.querySelectorAll(selector));
 
   buttons.forEach(button => {
@@ -808,17 +805,17 @@ function shuffleDreamQuestDeck() {
 }
 
 function shuffleExpeditionDeck(afterShuffleFunction = null) {
-  shuffleTopCardDeck(Expedition, 'expedition', addExpeditionEncounterButton, null, afterShuffleFunction);
+  shuffleTopCardDeck(Expedition, 'expedition', addExpeditionEncounterButton, afterShuffleFunction);
 }
 
 function shuffleMysticRuinsDeck(afterShuffleFunction = null) {
-  shuffleTopCardDeck(MysticRuins, 'mystic-ruins', addMysticRuinsEncounterButton, null, afterShuffleFunction);
+  shuffleTopCardDeck(MysticRuins, 'mystic-ruins', addMysticRuinsEncounterButton, afterShuffleFunction);
 }
 
-function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = null, afterShuffleFunction = null) {
+function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, afterShuffleFunction = null) {
   affectTopCardDeck(
     deckLabel, deckClass, addButtonFunction,
-    'Shuffled', deck => deck.shuffle(), deckName,
+    'Shuffled', deck => deck.shuffle(),
     afterShuffleFunction
   );
 }
