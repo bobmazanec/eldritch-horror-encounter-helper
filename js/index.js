@@ -775,6 +775,7 @@ function resolveSecretsOfThePastRumorReckoning() {
     if (deck.isEmpty()) {
       expeditionDeckIsEmpty = true;
     } else {
+      deck.shuffle();
       addExpeditionEncounterButton(deckName);
     }
   });
@@ -801,7 +802,10 @@ function resolveTheWorldShakesMythos(event) {
 
   spacesRemoved.forEach(space => disableEncounterButtonsFor(space));
 
-  expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
+  expeditionDecks.forEach(deck => {
+    deck.shuffle();
+    addExpeditionEncounterButton(deck.name);
+  });
   updateSecretsOfThePastButton();
 
   showExpeditionDeckChange("Resolved <em>The World Shakes</em> Event", spacesRemoved)
@@ -821,7 +825,10 @@ function resolveUpheavalDisaster(event) {
     spacesRemoved = spacesRemoved.union(cardSpacesRemoved);
   }
 
-  expeditionDecks.forEach(deck => addExpeditionEncounterButton(deck.name));
+  expeditionDecks.forEach(deck => {
+    deck.shuffle();
+    addExpeditionEncounterButton(deck.name);
+  });
   updateSecretsOfThePastButton();
 
   showExpeditionDeckChange("Resolved 'Upheaval' Disaster", spacesRemoved)
@@ -871,13 +878,11 @@ function showDialog(headerText, encounter, afterContinueFunction = null) {
 function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
   const plural = useSecondExpeditionDeck() ? "s" : "";
   const textNode = document.createElement("div");
-
-  textNode.innerHTML = `Shuffled the Expedition deck${plural}—check Expedition token location${plural}`
   
   if (spacesRemoved.size > 0) {
-    textNode.innerHTML += '<br>Removed Expedition cards for';
+    textNode.innerHTML += 'Removed Expedition cards for';
     if (spacesRemoved.size == 1) {
-      textNode.innerHTML += ' <strong>' + spacesRemoved.values().next().value + '</strong>';
+      textNode.innerHTML += ' <strong>' + spacesRemoved.values().next().value + '</strong><br>';
     } else {
       const ul = document.createElement('ul');
       Array
@@ -891,6 +896,8 @@ function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
       textNode.appendChild(ul);
     }
   }
+
+  textNode.innerHTML += `Shuffled the Expedition deck${plural}—check Expedition token location${plural}`
 
   showDialog(title, textNode.innerHTML);
 }
