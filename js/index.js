@@ -42,7 +42,7 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
 function addDreamQuestEncounterButton() {
   addTopCardButton(DreamQuest, "dream-quest-deck", "dream-quest", startDreamQuestEncounter, card => {
     return `Start <strong>${card.location}</strong> Dream-Quest Encounter`;
-  })
+  });
 }
 
 function addEncounterAction(buttonContainer, action) {
