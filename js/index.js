@@ -11,7 +11,7 @@ function addChoiceButton(buttonContainer, text, onClick) {
   buttonContainer.appendChild(button);
 }
 
-function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounterStep = null) {
+function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounterStep = null, continuationFunction = null) {
   const buttonContainer = document.createElement("div");
 
   if (!encounterStep.choices) {
@@ -21,7 +21,7 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
 
   if (!encounterStep || !encounterStep.choices) {
       addChoiceButton(buttonContainer, "Continue", (event) => {
-        endEncounter(event);
+        endEncounter(event, continuationFunction);
       });
   } else {
     if (encounterStep === outerEncounterStep) {
@@ -54,7 +54,13 @@ function addEncounterAction(buttonContainer, action) {
   buttonContainer.remove();
 }
 
-function addEncounterStep(outerEncounterHeaderText, encounterStep, priorButtonContainer = null, action = null, outerEncounterStep = null) {
+function addEncounterStep(
+  outerEncounterHeaderText, encounterStep,
+  priorButtonContainer = null,
+  action = null,
+  outerEncounterStep = null,
+  afterContinueFunction = null
+) {
   if (action && priorButtonContainer) {
     addEncounterAction(priorButtonContainer, action);
   }
@@ -112,7 +118,10 @@ function addEncounterStep(outerEncounterHeaderText, encounterStep, priorButtonCo
       encounterStep.choices["Resolved the combat"]
     );
   } else {
-    addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounterStep);
+    addChoiceButtons(
+      outerEncounterHeaderText, encounterStep, outerEncounterStep,
+      afterContinueFunction
+    );
   }
 }
 
@@ -230,7 +239,7 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
   document.getElementById(buttonContainerId).appendChild(button);
 }
 
-function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckActionFunction, deckName = null) {
+function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckActionFunction, deckName = null, afterAffectFunction = null) {
   let selector = `button.top-card.${deckClass}`;
   if (deckName) {
     selector += `[data-deck-name="${deckName}"]`;
@@ -247,7 +256,8 @@ function affectTopCardDeck(deckLabel, deckClass, addButtonFunction, verb, deckAc
   const plural = buttons.length === 1 ? "" : "s";
   showDialog(
     `${verb} the ${deckLabel} deck${plural}`,
-    `Check ${deckLabel} token location${plural}`
+    `Check ${deckLabel} token location${plural}`,
+    afterAffectFunction
   );
 }
 
@@ -403,11 +413,12 @@ function enableEncounterButtons() {
   updateEncounterButtons(enableEncounterButton);
 }
 
-function endEncounter(event) {
+function endEncounter(event, continuationFunction = null) {
   event.target.remove();
   dialog.close();
   const historyElement = addHistoryElement(dialog.innerHTML);
   historyElement.classList.add("encounter");
+  if (continuationFunction) continuationFunction();
 }
 
 function findCardForLocation(location) { return (card) => card.location === location; }
@@ -601,15 +612,14 @@ function resolveExpeditionEncounterForSpace(event, space) {
   let deck = decks[deckName];
   let card = deck.searchForCard(findCardForLocation(space));
 
-  shuffleTopCardDeck(deckName, 'expedition', addExpeditionEncounterButton, deckName);
-  if (!card) {
-    deckName = `${Expedition}-2`;
-    let deck = decks[deckName];
+  if (!card && useSecondExpeditionDeck()) {
+    deck = decks[`${Expedition}-2`];
     card = deck.searchForCard(findCardForLocation(space));
-    shuffleTopCardDeck(deckName, 'expedition', addExpeditionEncounterButton, deckName);
   }
 
-  startExpeditionEncounterWith(card);
+  shuffleExpeditionDeck(
+    () => startExpeditionEncounterWith(card)
+  );
 }
 
 function resolveLeopardManSpawn(event) {
@@ -646,9 +656,9 @@ function resolveMysticRuinsEncounterForSpace(event, space) {
   const deck = decks[MysticRuins];
   const card = deck.searchForCard(findCardForLocation(space));
 
-  shuffleMysticRuinsDeck();
-
-  startMysticRuinsEncounterWith(card);
+  shuffleMysticRuinsDeck(
+    () => startMysticRuinsEncounterWith(card, true)
+  );
 }
 
 function resolveOtherworldlyDreamsAdventureIII(event, space) {
@@ -797,18 +807,19 @@ function shuffleDreamQuestDeck() {
   shuffleTopCardDeck(DreamQuest, 'dream-quest', addDreamQuestEncounterButton);
 }
 
-function shuffleExpeditionDeck() {
-  shuffleTopCardDeck(Expedition, 'expedition', addExpeditionEncounterButton);
+function shuffleExpeditionDeck(afterShuffleFunction = null) {
+  shuffleTopCardDeck(Expedition, 'expedition', addExpeditionEncounterButton, null, afterShuffleFunction);
 }
 
-function shuffleMysticRuinsDeck() {
-  shuffleTopCardDeck(MysticRuins, 'mystic-ruins', addMysticRuinsEncounterButton);
+function shuffleMysticRuinsDeck(afterShuffleFunction = null) {
+  shuffleTopCardDeck(MysticRuins, 'mystic-ruins', addMysticRuinsEncounterButton, null, afterShuffleFunction);
 }
 
-function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = null) {
+function shuffleTopCardDeck(deckLabel, deckClass, addButtonFunction, deckName = null, afterShuffleFunction = null) {
   affectTopCardDeck(
     deckLabel, deckClass, addButtonFunction,
-    'Shuffled', deck => deck.shuffle(), deckName
+    'Shuffled', deck => deck.shuffle(), deckName,
+    afterShuffleFunction
   );
 }
 
@@ -851,7 +862,7 @@ function startDreamQuestEncounterWith(card) {
   );
 }
 
-function showDialog(headerText, encounter) {
+function showDialog(headerText, encounter, afterContinueFunction = null) {
   dialog.innerHTML = "";
 
   const headerElement = document.createElement("strong");
@@ -860,7 +871,11 @@ function showDialog(headerText, encounter) {
 
   dialog.showModal();
 
-  addEncounterStep(headerText, encounter);
+  addEncounterStep(
+    headerText, encounter,
+    null, null, null,
+    afterContinueFunction
+  );
 }
 
 function startExpeditionEncounter(event) {
