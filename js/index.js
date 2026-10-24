@@ -438,7 +438,7 @@ function getTopExpeditionCardLocations(expeditionDecks) {
   return expeditionDecks.reduce(
     (spaces, deck) => {
       if (!deck.isEmpty()) {
-        spaces.add(deck.topCard().space);
+        spaces.add(deck.topCard().location);
       }
       return spaces;
     },
@@ -629,8 +629,8 @@ function removeTopCardButton(button) {
   return decks[button.dataset.deckName];
 }
 
-function removeTopExpeditionCardLocationCards(expeditionDecks) {
-  const cardSpaces = getTopExpeditionCardLocations(expeditionDecks);
+function removeTopExpeditionCardSpaceCards(expeditionDecks) {
+  const cardLocations = getTopExpeditionCardLocations(expeditionDecks);
 
   // Remove cards whose location matches the top card('s/s')
   expeditionDecks.forEach(deck => {
