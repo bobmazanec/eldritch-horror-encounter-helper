@@ -1287,7 +1287,25 @@ class EncounterParser
       end
     end
 
+    fail_marker = markers.find { |marker| marker[:kind] == 'fail' }
+    if fail_marker && fail_marker[:match][0].match?(/\bor do(?: not|n't)\b/i)
+      pass_effect = apply_fail_effect_to_declined_choice(pass_effect, fail_effect)
+    end
+
     encounter_step(intro, { 'Pass' => pass_effect, 'Fail' => fail_effect })
+  end
+
+  # "If you fail or do not <action>, <effect>" applies the fail effect to the pass branch's declined option too.
+  def apply_fail_effect_to_declined_choice(pass_effect, fail_effect)
+    return pass_effect unless pass_effect.is_a?(Hash) && pass_effect['choices'].is_a?(Hash)
+    return pass_effect if fail_effect.to_s.empty?
+
+    declined_key = pass_effect['choices'].keys.find { |key| key.match?(/\ADo not\b/i) }
+    return pass_effect unless declined_key && pass_effect['choices'][declined_key].to_s.empty?
+
+    updated = pass_effect.dup
+    updated['choices'] = pass_effect['choices'].merge(declined_key => fail_effect)
+    updated
   end
 
   def test_result_conditional_object(text)
