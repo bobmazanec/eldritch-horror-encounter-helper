@@ -17,6 +17,49 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 */
+@font-face {
+  font-family: "TeX Gyre Termes";
+  src: url("../fonts/TeX Gyre Termes Regular.otf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TeX Gyre Termes";
+  src: url("../fonts/TeX Gyre Termes Italic.otf");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Birmingham";
+  src: url("../fonts/Birmingham.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ugly Qua";
+  src: url("../fonts/Ugly Qua.woff") format("woff"), url("../fonts/Ugly Qua.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+body,
+button,
+select {
+  font-family: "TeX Gyre Termes", "Times New Roman", serif;
+  font-size: 18px;
+}
+
+h1 {
+  font-family: "Birmingham";
+  font-weight: 400;
+  font-size: 35px;
+  text-align: center;
+  line-height: 50px;
+}
+
 #expansion-selection-section,
 #game-setup-section {
   width: fit-content;
@@ -48,6 +91,12 @@
   justify-content: center;
   gap: 0.5em;
   min-height: 56px;
+}
+
+.expansion-choice__name {
+  font-family: "Ugly Qua";
+  font-variant-caps: small-caps;
+  font-size: 16px;
 }
 
 .expansion-choice img {
