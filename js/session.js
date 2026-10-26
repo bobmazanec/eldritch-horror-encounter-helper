@@ -24,7 +24,8 @@ function createEmptyGameUIState() {
     shownIds: [],
     removedIds: [],
     disabledSpaces: [],
-    devastatedCities: []
+    devastatedCities: [],
+    hiddenSections: []
   };
 }
 
@@ -49,7 +50,8 @@ function loadGame() {
     }
 
     const uiState = savedGame.uiState || createEmptyGameUIState();
-    ["shownIds", "removedIds", "disabledSpaces", "devastatedCities"].forEach(key => {
+    uiState.hiddenSections = uiState.hiddenSections || [];
+    ["shownIds", "removedIds", "disabledSpaces", "devastatedCities", "hiddenSections"].forEach(key => {
       if (!Array.isArray(uiState[key])) {
         throw new Error(`The saved game has invalid UI state: ${key}.`);
       }
@@ -87,7 +89,8 @@ function loadGame() {
       shownIds: [...uiState.shownIds],
       removedIds: [...uiState.removedIds],
       disabledSpaces: [...uiState.disabledSpaces],
-      devastatedCities: [...uiState.devastatedCities]
+      devastatedCities: [...uiState.devastatedCities],
+      hiddenSections: [...uiState.hiddenSections]
     };
 
     Object.keys(decks).forEach(deckName => delete decks[deckName]);
@@ -176,7 +179,26 @@ function resetGameUIState() {
   isTrackingGameUIState = false;
 }
 
+function recordSectionVisibility(sectionName, isVisible) {
+  if (!isTrackingGameUIState) {
+    return;
+  }
+
+  gameUIState.hiddenSections = gameUIState.hiddenSections.filter(name => name !== sectionName);
+  if (!isVisible) {
+    gameUIState.hiddenSections.push(sectionName);
+  }
+  saveGame();
+}
+
 function restoreGameUIState() {
+  document.querySelectorAll("fieldset.visibility input[data-section]").forEach(checkbox => {
+    if (gameUIState.hiddenSections.includes(checkbox.dataset.section)) {
+      checkbox.checked = false;
+      document.querySelector(checkbox.dataset.selector).classList.add("section-hidden");
+    }
+  });
+
   gameUIState.shownIds.forEach(id => {
     const element = document.getElementById(id);
     if (element) {

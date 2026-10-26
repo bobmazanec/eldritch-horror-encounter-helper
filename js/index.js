@@ -872,8 +872,11 @@ function setupSectionVisibility(sectionVisibility) {
       const label = template.content.firstElementChild.cloneNode(true);
       const checkbox = label.querySelector("input");
       label.append(` ${sectionName}`);
+      checkbox.dataset.section = sectionName;
+      checkbox.dataset.selector = config.selector;
       checkbox.addEventListener("change", () => {
         sectionElement.classList.toggle("section-hidden", !checkbox.checked);
+        recordSectionVisibility(sectionName, checkbox.checked);
       });
       fieldset.appendChild(label);
     } else {
