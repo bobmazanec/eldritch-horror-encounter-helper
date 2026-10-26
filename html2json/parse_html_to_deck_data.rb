@@ -348,6 +348,14 @@ class EncounterParser
       pass_key, fail_key = pass_fail_action_keys(row[:intro_text])
       pass_value = choice_value_from_text(row[:pass_text])
       fail_value = choice_value_from_text(row[:fail_text])
+      intro_text = row[:intro_text]
+
+      pass_or_gain_condition = inline_pass_or_gain_condition(intro_text)
+      if pass_or_gain_condition
+        intro_text = pass_or_gain_condition[:intro]
+        pass_key = 'Pass or gain the Condition'
+        pass_value = choice_value_from_text(pass_or_gain_condition[:effect])
+      end
 
       if pass_value.is_a?(String)
         trimmed = clean_text(pass_value.sub(/\s+If you fail[;,].+\z/im, ''))
@@ -355,7 +363,7 @@ class EncounterParser
       end
 
       payload = {
-        'intro' => row[:intro_text],
+        'intro' => intro_text,
         'choices' => {
           pass_key => pass_value,
           fail_key => fail_value
@@ -368,6 +376,19 @@ class EncounterParser
     else
       parse_single_text_encounter(row[:encounter_text])
     end
+  end
+
+  def inline_pass_or_gain_condition(text)
+    clean = clean_text(text)
+    match = clean.match(/\A(.*?)\s*If you pass or gain the Condition,\s*(.+?)(?:\s*If you fail,\s*(.+))?\z/i)
+    return nil unless match
+
+    fail_effect = clean_text(match[3].to_s)
+    {
+      intro: clean_text(match[1]),
+      effect: clean_text(match[2]),
+      fail_effect: fail_effect.empty? ? nil : fail_effect
+    }
   end
 
   def apply_shared_choice_follow_up!(payload)
@@ -564,6 +585,16 @@ class EncounterParser
   end
 
   def parse_single_text_encounter(text)
+    pass_or_gain_condition = inline_pass_or_gain_condition(text)
+    if pass_or_gain_condition
+      choices = {
+        'Pass or gain the Condition' => simplify_effect_text(pass_or_gain_condition[:effect])
+      }
+      fail_effect = pass_or_gain_condition[:fail_effect]
+      choices['Fail'] = simplify_effect_text(fail_effect) if fail_effect
+      return normalize_encounter_value(encounter_step(pass_or_gain_condition[:intro], choices))
+    end
+
     ambush_with_trailing_optional = parse_ambush_with_trailing_optional_choice(text)
     return normalize_encounter_value(ambush_with_trailing_optional) if ambush_with_trailing_optional
 
