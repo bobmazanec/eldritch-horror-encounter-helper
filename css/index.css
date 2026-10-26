@@ -52,6 +52,10 @@ select {
   font-size: 16px;
 }
 
+dialog#encounter-dialog {
+  width: 80%;
+}
+
 h1 {
   font-family: "Birmingham";
   font-weight: 400;
