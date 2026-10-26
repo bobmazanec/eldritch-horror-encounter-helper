@@ -135,6 +135,13 @@ h1 {
     margin-inline: auto;
     margin-top: 1em;
 
+    button:has(> img) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
     .mythos {
       display: grid;
       grid: auto-flow / 120px max-content max-content max-content;
