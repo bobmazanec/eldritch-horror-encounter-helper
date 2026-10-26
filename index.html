@@ -64,12 +64,14 @@
     <!-- Logic -->
     <script src="js/game_setup.js"></script>
     <script src="js/deck.js"></script>
+    <script src="js/session.js"></script>
     <script defer src="js/index.js"></script>
   </head>
   <body>
     <h1>ELDRITCH HORROR ENCOUNTER HELPER</h1>
 
     <div id="expansion-selection-section">
+      <button type="button" id="load-game-button" onclick="loadGame()" hidden>Load Last Session</button>
       <button onclick="startNewGame(event)">New Game</button>
       <fieldset>
         <legend>Select set(s) used</legend>
@@ -426,10 +428,10 @@
             </button>
           </div>
 
-          <div class="card">
+          <div id="world-shakes-card" class="card">
             <img src="images/the-world-shakes.jpg">
             <br>
-            <button type="button" class="card" onclick="resolveTheWorldShakesMythos(event)">
+            <button type="button" id="resolve-the-world-shakes" class="card" onclick="resolveTheWorldShakesMythos(event)">
               Resolve <strong>The World Shakes</strong> Event
             </button>
           </div>
@@ -454,61 +456,61 @@
             <img src="images/Disaster.webp" width="80%" height="100%">
           </div>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Arkham')">
+          <button type="button" id="devastate-arkham" class="disaster" onclick="devastateCity(event, 'Arkham')">
             <img src="images/Arkham_Devastated.webp" width="81" height="66" alt="Devastate Arkham">
             <br>
             Devastate <strong>Arkham</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Buenos Aires')">
+          <button type="button" id="devastate-buenos-aires" class="disaster" onclick="devastateCity(event, 'Buenos Aires')">
             <img src="images/Buenos_Aires_Devastated.webp" width="81" height="66" alt="Devastate Buenos Aires">
             <br>
             Devastate <strong>Buenos Aires</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Istanbul')">
+          <button type="button" id="devastate-istanbul" class="disaster" onclick="devastateCity(event, 'Istanbul')">
             <img src="images/Istanbul_Devastated.webp" width="81" height="66" alt="Devastate Istanbul">
             <br>
             Devastate <strong>Istanbul</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'London')">
+          <button type="button" id="devastate-london" class="disaster" onclick="devastateCity(event, 'London')">
             <img src="images/London_Devastated.webp" width="81" height="66" alt="Devastate London">
             <br>
             Devastate <strong>London</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Rome')">
+          <button type="button" id="devastate-rome" class="disaster" onclick="devastateCity(event, 'Rome')">
             <img src="images/Rome_Devastated.webp" width="81" height="66" alt="Devastate Rome">
             <br>
             Devastate <strong>Rome</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'San Francisco')">
+          <button type="button" id="devastate-san-francisco" class="disaster" onclick="devastateCity(event, 'San Francisco')">
             <img src="images/San_Francisco_Devastated.webp" width="81" height="66" alt="Devastate San Francisco">
             <br>
             Devastate <strong>San Francisco</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Shanghai')">
+          <button type="button" id="devastate-shanghai" class="disaster" onclick="devastateCity(event, 'Shanghai')">
             <img src="images/Shanghai_Devastated.webp" width="81" height="66" alt="Devastate Shanghai">
             <br>
             Devastate <strong>Shanghai</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Sydney')">
+          <button type="button" id="devastate-sydney" class="disaster" onclick="devastateCity(event, 'Sydney')">
             <img src="images/Sydney_Devastated.webp" width="81" height="66" alt="Devastate Sydney">
             <br>
             Devastate <strong>Sydney</strong>
           </button>
 
-          <button type="button" class="disaster" onclick="devastateCity(event, 'Tokyo')">
+          <button type="button" id="devastate-tokyo" class="disaster" onclick="devastateCity(event, 'Tokyo')">
             <img src="images/Tokyo_Devastated.webp" width="81" height="66" alt="Devastate Tokyo">
             <br>
             Devastate <strong>Tokyo</strong>
           </button>
 
-          <button type="button" onclick="resolveUpheavalDisaster(event)">
+          <button type="button" id="resolve-upheaval-disaster" onclick="resolveUpheavalDisaster(event)">
             <img src="images/Upheaval.webp" width="81" height="81" alt="Upheaval Disaster">
             <br>
             Resolve <strong>Upheaval</strong> Disaster

@@ -45,19 +45,8 @@ function renderExpansionSelection() {
     tile.append(controls, nameLabel);
     container.append(tile);
   });
-}
 
-function startNewGame(event) {
-  event.preventDefault();
-
-  const selectedExpansions = Array.from(
-    document.querySelectorAll("input[name='expansion']:checked")
-  ).map(checkbox => checkbox.value);
-  expansionsUsed = [Core, ...selectedExpansions];
-
-  renderGameSetupForm();
-  document.getElementById("expansion-selection-section").remove();
-  document.getElementById("game-setup-section").hidden = false;
+  updateLoadGameButton();
 }
 
 function renderGameSetupForm() {
@@ -94,6 +83,19 @@ function renderGameSetupForm() {
     label.append(input, ` ${name}`);
     preludeContainer.append(label, document.createElement("br"));
   });
+}
+
+function startNewGame(event) {
+  event.preventDefault();
+
+  const selectedExpansions = Array.from(
+    document.querySelectorAll("input[name='expansion']:checked")
+  ).map(checkbox => checkbox.value);
+  expansionsUsed = [Core, ...selectedExpansions];
+
+  renderGameSetupForm();
+  document.getElementById("expansion-selection-section").remove();
+  document.getElementById("game-setup-section").hidden = false;
 }
 
 function submitGameSetup(event) {

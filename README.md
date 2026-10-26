@@ -7,6 +7,8 @@ It is inspired by [Eldritch Horror Card Clerk+](https://metapone.github.io/eldri
 ## Running the Application
 With all required files in place (see below), open `index.html` in a web browser.
 
+Game progress is saved automatically in the browser as you play. Use **Load Last Session** on the opening screen to resume the saved game, including deck state, changed buttons, and history.
+
 ### This Application Requires More Data
 
 This application's source code is **not** ready to deploy and run.
