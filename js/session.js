@@ -262,3 +262,7 @@ function updateLoadGameButton() {
     button.hidden = true;
   }
 }
+
+function goHome() {
+  window.location.reload();
+}
