@@ -83,6 +83,7 @@ function addEncounterStep(
             "Drew a Cultist Monster": {
               // Insert text to trigger Spawn of Abhoth
               intro: "A Cultist Monster ambushes you!",
+              introVisible: false,
               choices: encounterStep.choices
             },
 
@@ -126,6 +127,8 @@ function addEncounterStep(
 }
 
 function addEncounterStepText(outerEncounterHeaderText, encounterStep) {
+  if (encounterStep.introVisible === false) return;
+  
   let textItems;
   if (Array.isArray(encounterStep) || typeof(encounterStep) == "string") {
     textItems = encounterStep;
