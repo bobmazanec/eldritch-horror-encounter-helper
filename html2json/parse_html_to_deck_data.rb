@@ -362,6 +362,8 @@ class EncounterParser
         pass_value = trimmed unless trimmed.empty?
       end
 
+      pass_value = resolve_fail_effect_placeholders(pass_value, fail_value)
+
       payload = {
         'intro' => intro_text,
         'choices' => {
@@ -504,12 +506,32 @@ class EncounterParser
     end
   end
 
+  def resolve_fail_effect_placeholders(value, fail_value)
+    case value
+    when Hash
+      value.each_with_object({}) do |(key, subvalue), acc|
+        acc[key] = key == 'intro' ? subvalue : resolve_fail_effect_placeholders(subvalue, fail_value)
+      end
+    when Array
+      value.map { |item| resolve_fail_effect_placeholders(item, fail_value) }
+    when String
+      return value unless value.match?(/\bresolve the fail effect\b/i)
+
+      interpolated_intro = replace_fail_effect_placeholder(value, fail_text_for_value(fail_value))
+      fail_value.is_a?(Hash) ? fail_branch_copy(fail_value, interpolated_intro) : interpolated_intro
+    else
+      value
+    end
+  end
+
   def replace_fail_effect_placeholder(text, card_fail_text)
     base = clean_text(text)
     fail_sentence = clean_text(card_fail_text)
     fail_clause = clause_fit_text(fail_sentence)
 
     replaced = base.gsub(/Otherwise,\s*resolve the fail effect\.?/i, "Otherwise, #{fail_clause}")
+    replaced = replaced.gsub(/,\s*resolve the fail effect\.?/i, ", #{fail_clause}")
+    replaced = replaced.gsub(/,\s*resolve the fail effect\.?/i, ". #{fail_sentence}")
     replaced = replaced.gsub(/;\s*resolve the fail effect\.?/i, "; #{fail_clause}")
     replaced = fail_sentence if replaced.match?(/\Aresolve the fail effect\.?\z/i)
 
