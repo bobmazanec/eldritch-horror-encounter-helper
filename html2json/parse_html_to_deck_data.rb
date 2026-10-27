@@ -357,6 +357,14 @@ class EncounterParser
         pass_value = choice_value_from_text(pass_or_gain_condition[:effect])
       end
 
+      optional_test = optional_choice_with_test(intro_text)
+      if optional_test
+        choices = optional_test[:choices].transform_values do |value|
+          value.empty? ? value : encounter_step(value, { 'Pass' => pass_value, 'Fail' => fail_value })
+        end
+        return finalize_pass_fail_payload({ 'intro' => optional_test[:intro], 'choices' => choices })
+      end
+
       if pass_value.is_a?(String)
         trimmed = clean_text(pass_value.sub(/\s+If you fail[;,].+\z/im, ''))
         pass_value = trimmed unless trimmed.empty?
@@ -378,6 +386,34 @@ class EncounterParser
     else
       parse_single_text_encounter(row[:encounter_text])
     end
+  end
+
+  def inline_optional_choice_with_test(text)
+    clean = clean_text(text)
+    match = clean.match(/\A(.+?)\s+If you fail,\s*(.+)\z/i)
+    return nil unless match
+
+    optional = optional_choice_with_test(match[1])
+    return nil unless optional
+
+    choices = optional[:choices].transform_values do |value|
+      value.empty? ? value : encounter_step(value, { 'Pass' => '', 'Fail' => choice_value_from_text(match[2]) })
+    end
+    encounter_step(optional[:intro], choices)
+  end
+
+  def optional_choice_with_test(text)
+    optional = parse_generic_may_to_choice(clean_text(text))
+    return nil unless optional && optional[:choices].length == 2
+
+    values = optional[:choices].values
+    return nil unless values.all?(String) && !values[0].empty? && values[1].empty?
+    return nil unless values[0].match?(/\((?:Will|Lore|Influence|Observation|Strength|Agility|Luck)[^)]*\)/i)
+
+    {
+      intro: clean_text(optional[:intro]),
+      choices: optional[:choices]
+    }
   end
 
   def inline_pass_or_gain_condition(text)
@@ -619,6 +655,9 @@ class EncounterParser
 
     ambush_with_trailing_optional = parse_ambush_with_trailing_optional_choice(text)
     return normalize_encounter_value(ambush_with_trailing_optional) if ambush_with_trailing_optional
+
+    inline_test = inline_optional_choice_with_test(text)
+    return normalize_encounter_value(inline_test) if inline_test
 
     optional_choice = parse_optional_choice(text)
     if optional_choice
@@ -1076,7 +1115,7 @@ class EncounterParser
     cost = clean_text(cost_text)
     score = 0
 
-    score += 3 if cost.match?(/\b(spend|gain|become|discard|spawn|advance|lose|move|flip|pay)\b/i)
+    score += 3 if cost.match?(/\b(spend|gain|become|discard|spawn|advance|lose|move|flip|pay|drink)\b/i)
     score += 2 if cost.match?(/\b(Health|Sanity|Clue|Focus|Resource|Condition|Gate|Monster|Asset)\b/i)
     score += 1 if cost.match?(/\b\d+\b/)
     score -= 2 if cost.match?(/\b(know|able|want|need|hope|try)\b/i)
