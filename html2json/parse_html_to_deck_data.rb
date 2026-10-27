@@ -136,7 +136,7 @@ class EncounterParser
 
   def process_three_location_file(file_name, page_title, table_infos)
     deck_name = deck_name_for(file_name, page_title)
-    cards = fix_exploring_gharne_card4(deck_name, merge_location_tables_to_cards(table_infos))
+    cards = merge_location_tables_to_cards(table_infos)
     { deck_data: { deck_name => cards }, deck_data_research: {} }
   end
 
@@ -154,7 +154,7 @@ class EncounterParser
       ancient_one = 'Unknown' if ancient_one.empty?
 
       deck_data_special[ancient_one] ||= {}
-      deck_data_special[ancient_one][deck_name] = fix_exploring_gharne_card4(deck_name, parse_table_as_cards(table_info[:table], nil))
+      deck_data_special[ancient_one][deck_name] = parse_table_as_cards(table_info[:table], nil)
     end
 
     { deck_data: {}, deck_data_research: {}, deck_data_special: deck_data_special }
@@ -176,7 +176,7 @@ class EncounterParser
       deck_name = build_deck_name(page_title, file_name, table_info[:heading], table_infos.length, index)
       location_key = nil
       cards = parse_table_as_cards(table_info[:table], location_key)
-      deck_data[deck_name] = fix_exploring_gharne_card4(deck_name, cards)
+      deck_data[deck_name] = cards
     end
 
     { deck_data: deck_data, deck_data_research: {} }
@@ -350,21 +350,6 @@ class EncounterParser
       fail_value = choice_value_from_text(row[:fail_text])
       intro_text = row[:intro_text]
 
-      pass_or_gain_condition = inline_pass_or_gain_condition(intro_text)
-      if pass_or_gain_condition
-        intro_text = pass_or_gain_condition[:intro]
-        pass_key = 'Pass or gain the Condition'
-        pass_value = choice_value_from_text(pass_or_gain_condition[:effect])
-      end
-
-      optional_test = optional_choice_with_test(intro_text)
-      if optional_test
-        choices = optional_test[:choices].transform_values do |value|
-          value.empty? ? value : encounter_step(value, { 'Pass' => pass_value, 'Fail' => fail_value })
-        end
-        return finalize_pass_fail_payload({ 'intro' => optional_test[:intro], 'choices' => choices })
-      end
-
       if pass_value.is_a?(String)
         trimmed = clean_text(pass_value.sub(/\s+If you fail[;,].+\z/im, ''))
         pass_value = trimmed unless trimmed.empty?
@@ -503,28 +488,6 @@ class EncounterParser
     nested_fail = nested_choices['Fail']
     return payload unless nested_pass.is_a?(String) && nested_fail.is_a?(String)
 
-    pass_text = clean_text(nested_pass)
-    nested_fail_text = clean_text(nested_fail)
-    card_fail_text = fail_text_for_value(top_fail)
-    return payload if pass_text.empty? || card_fail_text.empty?
-
-    nested_fail_has_placeholder = nested_fail_text.match?(/\bresolve the fail effect\b/i)
-
-    pass_has_placeholder = pass_text.match?(/\bresolve the fail effect\b/i)
-
-    if nested_fail_has_placeholder
-      nested_choices['Fail'] = replace_fail_effect_placeholder(nested_fail_text, card_fail_text)
-    end
-
-    return payload unless pass_text.match?(/\AIf your test result\b/i)
-
-    return payload unless pass_has_placeholder
-
-    # Replace placeholder fail references with the card-level fail text.
-    replaced = replace_fail_effect_placeholder(pass_text, card_fail_text)
-
-    nested_choices['Pass'] = replaced
-
     payload
   end
 
@@ -548,15 +511,11 @@ class EncounterParser
       value.each_with_object({}) do |(key, subvalue), acc|
         acc[key] = key == 'intro' ? subvalue : resolve_fail_effect_placeholders(subvalue, fail_value)
       end
-    when Array
-      value.map { |item| resolve_fail_effect_placeholders(item, fail_value) }
     when String
       return value unless value.match?(/\bresolve the fail effect\b/i)
 
       interpolated_intro = replace_fail_effect_placeholder(value, fail_text_for_value(fail_value))
       fail_value.is_a?(Hash) ? fail_branch_copy(fail_value, interpolated_intro) : interpolated_intro
-    else
-      value
     end
   end
 
@@ -1716,29 +1675,6 @@ class EncounterParser
     end
   end
 
-  def fix_exploring_gharne_card4(deck_name, cards)
-    return cards unless deck_name == "Exploring G'harne"
-    return cards unless cards.is_a?(Array)
-
-    cards.map do |card|
-      next card unless card.is_a?(Hash) && card['cardId'] == 4
-
-      pass_branch = card.dig('choices', 'Pass')
-      fail_branch = card.dig('choices', 'Fail')
-      nested_fail = card.dig('choices', 'Pass', 'choices', 'Fail')
-
-      if pass_branch.is_a?(Hash) && fail_branch.is_a?(Hash) && nested_fail.is_a?(String) && ambush_choice_object(nested_fail)
-        card = card.dup
-        card['choices'] = card['choices'].dup
-        pass_copy = pass_branch.dup
-        pass_copy['choices'] = pass_branch['choices'].dup
-        pass_copy['choices']['Fail'] = fail_branch_copy(fail_branch)
-        card['choices']['Pass'] = pass_copy
-      end
-
-      card
-    end
-  end
 
   def pass_fail_markers(text)
     markers = []
