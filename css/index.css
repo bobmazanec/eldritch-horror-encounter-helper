@@ -32,6 +32,13 @@
 }
 
 @font-face {
+  font-family: "TeX Gyre Termes";
+  src: url("../fonts/TeX Gyre Termes Bold.otf");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "Birmingham";
   src: url("../fonts/Birmingham.ttf") format("truetype");
   font-weight: 400;
