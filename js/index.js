@@ -37,6 +37,7 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
   }
   
   dialog.appendChild(buttonContainer);
+  dialog.querySelector("button")?.focus();
 }
 
 function addDreamQuestEncounterButton() {
@@ -341,6 +342,22 @@ function createDeckByLocation(deckName) {
   );
 }
 
+function cycleEncounterDialogButtonFocus(event) {
+  if (event.key !== "Tab") return;
+
+  const buttons = Array.from(dialog.querySelectorAll("button:not(:disabled)"));
+  if (buttons.length === 0) return;
+
+  const currentIndex = buttons.indexOf(document.activeElement);
+  const direction = event.shiftKey ? -1 : 1;
+  const nextIndex = currentIndex === -1
+    ? (event.shiftKey ? buttons.length - 1 : 0)
+    : (currentIndex + direction + buttons.length) % buttons.length;
+
+  event.preventDefault();
+  buttons[nextIndex].focus();
+}
+
 function devastateCity(event, cityName) {
   recordDevastatedCity(cityName);
 
@@ -561,6 +578,7 @@ function initializeGame(restoreDecks = false) {
   });
 
   dialog = document.getElementById("encounter-dialog");
+  dialog.addEventListener("keydown", cycleEncounterDialogButtonFocus);
   startTrackingGameUIState();
   saveGame();
 }
@@ -895,13 +913,13 @@ function showDialog(headerText, encounter, afterContinueFunction = null) {
   headerElement.innerHTML = headerText;
   dialog.appendChild(headerElement);
 
-  dialog.showModal();
-
   addEncounterStep(
     headerText, encounter,
     null, null, null,
     afterContinueFunction
   );
+
+  dialog.showModal();
 }
 
 function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
