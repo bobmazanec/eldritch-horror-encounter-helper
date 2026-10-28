@@ -85,6 +85,17 @@ function renderGameSetupForm() {
   });
 }
 
+function selectRandomAncientOne() {
+  const ancientOneSelect = document.getElementById("ancient-one-choices");
+  const choices = Array.from(ancientOneSelect.options).filter(option => option.value);
+
+  if (choices.length === 0) return;
+
+  const randomChoice = choices[Math.floor(Math.random() * choices.length)];
+  ancientOneSelect.value = randomChoice.value;
+  ancientOneSelect.dispatchEvent(new Event("change"));
+}
+
 function startNewGame(event) {
   event.preventDefault();
 
