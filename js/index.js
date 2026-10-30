@@ -882,6 +882,15 @@ function setupSectionVisibility(sectionVisibility) {
   const fieldset = document.querySelector("fieldset.visibility");
   const template = document.getElementById("sectionVisibilityItemTemplate");
 
+  fieldset.querySelector("#hide-all-sections").addEventListener("click", () => {
+    fieldset.querySelectorAll("input[type='checkbox'][data-section]").forEach(checkbox => {
+      if (checkbox.checked) {
+        checkbox.checked = false;
+        checkbox.dispatchEvent(new Event("change"));
+      }
+    });
+  });
+
   Object.entries(sectionVisibility).forEach(([sectionName, config]) => {
     const sectionElement = document.querySelector(config.selector);
 
@@ -904,6 +913,11 @@ function setupSectionVisibility(sectionVisibility) {
       sectionElement.classList.add("section-hidden");
     }
   });
+
+  fieldset.append(
+    document.createElement("br"),
+    fieldset.querySelector("#hide-all-sections")
+  );
 }
 
 function showDialog(headerText, encounter, afterContinueFunction = null) {
