@@ -412,7 +412,7 @@ class EncounterParser
 
     values = optional[:choices].values
     return nil unless values.all?(String) && !values[0].empty? && values[1].empty?
-    return nil unless values[0].match?(/\((?:#{SKILL}|Agility|Luck)[^)]*\)/i)
+    return nil unless values[0].match?(/\((?:#{SKILL})[^)]*\)/i)
 
     {
       intro: clean_text(optional[:intro]),
