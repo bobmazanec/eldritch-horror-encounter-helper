@@ -70,7 +70,7 @@ Generated files are JavaScript fragments intended to be loaded by `../index.html
 
 Location-based cards can additionally contain location keys whose values are encounter payloads. The parser sorts cards and generated deck keys for stable output.
 
-The parser also normalizes common encounter structures, including skill tests, pass/fail effects, optional actions, ambush combat results, movement choices, and nested choices.
+The parser also normalizes common encounter structures, including skill tests, pass/fail effects, optional actions, ambush combat results, movement choices, and nested choices. Skill icons in encounter text are emitted as local images.
 
 The parser generally maintains most of the original card and encounter text from the HTML; however, it does make some changes and additions to facilitate presenting only the portions of the encounter relevant to the player's choices and/or test results.
 

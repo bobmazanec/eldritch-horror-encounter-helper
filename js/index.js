@@ -5,7 +5,7 @@ let dialog;
 
 function addChoiceButton(buttonContainer, text, onClick) {
   const button = document.createElement("button");
-  button.textContent = text;
+  button.innerHTML = text;
   button.onclick = onClick;
 
   buttonContainer.appendChild(button);
@@ -615,7 +615,14 @@ function putSecretsOfThePastRumorIntoPlay(event) {
 }
 
 function readAlound(text) {
-  const utterance = new SpeechSynthesisUtterance(text);
+  const spokenText = text.replace(
+    /<img\b[^>]*?\bsrc="images\/([^.]*)\.[^"]*"[^>]*>\s*(?:([+-])\s*(\d+))?/gi,
+    (_match, skill, sign, modifier) => {
+      if (!sign) return skill;
+      return `${skill} ${sign === "+" ? "plus" : "minus"} ${modifier}`;
+    }
+  );
+  const utterance = new SpeechSynthesisUtterance(spokenText);
   speechSynthesis.speak(utterance);
 }
 

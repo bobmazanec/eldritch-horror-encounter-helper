@@ -13,6 +13,10 @@ class EncounterParser
   CONDITIONAL_MARKER = /If you (pass|fail|do not|don't|do),/i
   COMBAT_RESULT_MARKER = /\b(?:If you (?:do not )?defeat\b|If you are (?:not )?defeated\b|Whether you defeat\b|For each success you roll on the [^,]+ test,|If you (?:pass|fail)\b[^.?!;]*(?:\btests?\b|\blose\b[^.?!;]*\b(?:Health|Sanity)\b)|If you lose\b[^.?!;]*\b(?:Health|Sanity)\b[^.?!;]*\btests?\b|Afterward,?\b)/i
   SKILL_NAMES = %w[Strength Will Lore Observation Influence].freeze
+  # Punctuation-free placeholders keep skill icons intact through sentence splitting until output.
+  SKILL_ICON_START = "\u{E000}"
+  SKILL_ICON_END = "\u{E001}"
+  SKILL = "#{SKILL_ICON_START}?(?:#{SKILL_NAMES.join('|')})#{SKILL_ICON_END}?".freeze
   RESEARCH_FILES = %w[
     Abhoth_Research_Encounters
     Antarctica_Research_Encounters
@@ -89,6 +93,7 @@ class EncounterParser
         file_result = process_file(path, file_type)
         next unless file_result
 
+        file_result = file_result.transform_values { |value| restore_skill_icons(value) }
         output_path = write_output_for_file(path, file_result, file_type)
         generated_count += 1
         puts "#{File.basename(path)} -> #{File.basename(output_path)}"
@@ -99,6 +104,20 @@ class EncounterParser
   end
 
   private
+
+  def restore_skill_icons(value)
+    pattern = /#{SKILL_ICON_START}(#{SKILL_NAMES.join('|')})#{SKILL_ICON_END}/
+    case value
+    when String
+      value.gsub(pattern) { %(<img src="images/#{Regexp.last_match(1)}.webp">) }
+    when Array
+      value.map { |item| restore_skill_icons(item) }
+    when Hash
+      value.each_with_object({}) { |(k, v), acc| acc[restore_skill_icons(k)] = restore_skill_icons(v) }
+    else
+      value
+    end
+  end
 
   def process_file(path, file_type)
     html = File.read(path)
@@ -330,15 +349,15 @@ class EncounterParser
       {
         card_id: card_id,
         expansion_id: expansion_id,
-        intro_text: clean_text(extract_text(tds[2])),
-        pass_text: clean_text(extract_text(tds[3])),
-        fail_text: clean_text(extract_text(tds[4]))
+        intro_text: clean_text(extract_text(tds[2], skill_icons: true)),
+        pass_text: clean_text(extract_text(tds[3], skill_icons: true)),
+        fail_text: clean_text(extract_text(tds[4], skill_icons: true))
       }
     else
       {
         card_id: card_id,
         expansion_id: expansion_id,
-        encounter_text: clean_text(extract_text(tds[2]))
+        encounter_text: clean_text(extract_text(tds[2], skill_icons: true))
       }
     end
   end
@@ -393,7 +412,7 @@ class EncounterParser
 
     values = optional[:choices].values
     return nil unless values.all?(String) && !values[0].empty? && values[1].empty?
-    return nil unless values[0].match?(/\((?:Will|Lore|Influence|Observation|Strength|Agility|Luck)[^)]*\)/i)
+    return nil unless values[0].match?(/\((?:#{SKILL}|Agility|Luck)[^)]*\)/i)
 
     {
       intro: clean_text(optional[:intro]),
@@ -1251,7 +1270,7 @@ class EncounterParser
 
   def skill_test_conditional_object(text)
     clean = clean_text(text)
-    return nil unless clean.match?(/\((Strength|Will|Lore|Observation|Influence)([+-]\d+)?\)/)
+    return nil unless clean.match?(/\(#{SKILL}([+-]\d+)?\)/)
     return nil unless clean.match?(/If you\s+pass(?:\s+[^,]*)?,|If you\s+fail(?:\s+[^,]*)?,/i)
 
     markers = pass_fail_markers(clean)
@@ -1409,7 +1428,7 @@ class EncounterParser
 
   def dual_skill_combat_choices(text)
     clean = clean_text(text)
-    match = clean.match(/\AIf you pass the (Strength|Will|Lore|Observation|Influence) or (Strength|Will|Lore|Observation|Influence) test,\s*(.+?)\s*If you pass both tests,\s*(.+)\z/i)
+    match = clean.match(/\AIf you pass the (#{SKILL}) or (#{SKILL}) test,\s*(.+?)\s*If you pass both tests,\s*(.+)\z/i)
     return nil unless match
 
     first_skill = match[1]
@@ -1751,7 +1770,7 @@ class EncounterParser
     text.strip
   end
 
-  def extract_text(node)
+  def extract_text(node, skill_icons: false)
     return '' unless node
 
     node = node.dup
@@ -1760,13 +1779,15 @@ class EncounterParser
       n.remove if n['style'].to_s.downcase.include?('display: none')
     end
 
-    # Replace skill icon markup with explicit skill text without adding punctuation.
+    # Replace wiki skill icons with local skill images.
     node.css('span[title], a[title]').each do |n|
+      next unless skill_icons
+
       title = normalize_space(n['title'])
       next unless SKILL_NAMES.include?(title)
       next unless n.at_css('img')
 
-      n.replace(title)
+      n.replace("#{SKILL_ICON_START}#{title}#{SKILL_ICON_END}")
     end
 
     text = extract_text_preserving_italics(node)
@@ -1792,7 +1813,7 @@ class EncounterParser
   def clean_text(text)
     clean = normalize_space(text)
     clean = clean.tr("\u2014\u2013", '-')
-    clean = clean.gsub(/\((Strength|Will|Lore|Observation|Influence)\)\s*([+-])\s*(\d+)\)/, '(\1\2\3)')
+    clean = clean.gsub(/\((#{SKILL})\)\s*([+-])\s*(\d+)\)/, '(\1\2\3)')
 
     clean
       .gsub(/\s+([,.;:!?])/, '\\1')
