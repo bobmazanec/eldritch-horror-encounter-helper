@@ -4,6 +4,10 @@
 
 Present Eldritch Horror encounters step-by-step so players cannot see possible outcomes before choosing how to proceed.
 
+View it at https://bobmazanec.github.io/eldritch-horror-encounter-helper/
+
+Discuss it on [BoardGameGeek](https://boardgamegeek.com/thread/3793351/eh-encounter-helper-website).
+
 It is inspired by [Eldritch Horror Card Clerk+](https://metapone.github.io/eldritch-horror-card-clerk-plus/).
 
 ## Running the Application
