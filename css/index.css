@@ -85,6 +85,12 @@ h1 {
   font-size: 35px;
   text-align: center;
   line-height: 50px;
+
+  img {
+    height: 80px;
+    vertical-align: middle;
+    width: 80px;
+  }
 }
 
 #expansion-selection-section,
