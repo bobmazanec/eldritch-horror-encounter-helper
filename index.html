@@ -107,7 +107,13 @@
       </form>
     </fieldset>
     <div id="mainView">
-      <button type="button" class="home-button" onclick="goHome()">Home</button>
+      <div class="gameplay-controls">
+        <label for="read-encounter-text">
+          <input type="checkbox" id="read-encounter-text" checked onchange="toggleEncounterReading(this.checked)">
+          Read encounter text aloud
+        </label>
+        <button type="button" class="home-button" onclick="goHome()">Home</button>
+      </div>
       <fieldset class="visibility">
         Toggle Section Visibility
         <br>

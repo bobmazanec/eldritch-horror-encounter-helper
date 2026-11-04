@@ -26,7 +26,9 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
   } else {
     if (encounterStep === outerEncounterStep) {
       // Switching back to 'outer' - display the outer encounter header
-      dialog.innerHTML += `<p><strong>${outerEncounterHeaderText}</strong></p>`;
+      const headerElement = document.createElement("p");
+      headerElement.innerHTML = `<strong>${outerEncounterHeaderText}</strong>`;
+      dialog.appendChild(headerElement);
       outerEncounterStep = null;
     }
     for (const label in encounterStep.choices) {
@@ -438,7 +440,9 @@ function enableEncounterButtons() {
 function endEncounter(event, continuationFunction = null) {
   event.target.remove();
   dialog.close();
-  addHistoryElement(dialog.innerHTML, "encounter");
+  const encounterHistory = dialog.cloneNode(true);
+  encounterHistory.querySelector(".dialog-reading-control")?.remove();
+  addHistoryElement(encounterHistory.innerHTML, "encounter");
   if (continuationFunction) continuationFunction();
 }
 
@@ -615,6 +619,8 @@ function putSecretsOfThePastRumorIntoPlay(event) {
 }
 
 function readAlound(text) {
+  if (!document.getElementById("read-encounter-text").checked) return;
+
   const spokenText = text.replace(
     /<img\b[^>]*?\bsrc="images\/([^.]*)\.[^"]*"[^>]*>\s*(?:([+-])\s*(\d+))?/gi,
     (_match, skill, sign, modifier) => {
@@ -624,6 +630,13 @@ function readAlound(text) {
   );
   const utterance = new SpeechSynthesisUtterance(spokenText);
   speechSynthesis.speak(utterance);
+}
+
+function toggleEncounterReading(isEnabled) {
+  document.querySelectorAll("#read-encounter-text, .dialog-reading-toggle").forEach(checkbox => {
+    checkbox.checked = isEnabled;
+  });
+  if (!isEnabled) speechSynthesis.cancel();
 }
 
 function removeElementWithId(id) {
@@ -929,6 +942,19 @@ function setupSectionVisibility(sectionVisibility) {
 
 function showDialog(headerText, encounter, afterContinueFunction = null) {
   dialog.innerHTML = "";
+
+  const readingControl = document.createElement("label");
+  readingControl.className = "dialog-reading-control";
+
+  const readingCheckbox = document.createElement("input");
+  readingCheckbox.type = "checkbox";
+  readingCheckbox.className = "dialog-reading-toggle";
+  readingCheckbox.checked = document.getElementById("read-encounter-text").checked;
+  readingCheckbox.addEventListener("change", () => {
+    toggleEncounterReading(readingCheckbox.checked);
+  });
+  readingControl.append(readingCheckbox, " Read encounter text aloud");
+  dialog.appendChild(readingControl);
 
   const headerElement = document.createElement("strong");
   headerElement.innerHTML = headerText;

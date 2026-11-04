@@ -63,6 +63,19 @@ dialog#encounter-dialog {
   button {
     margin: 5px;
   }
+
+  .dialog-reading-control {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
+    padding: 0.5em 0;
+    background: Canvas;
+    border-bottom: 1px solid currentColor;
+  }
+
   width: 80%;
 }
 
