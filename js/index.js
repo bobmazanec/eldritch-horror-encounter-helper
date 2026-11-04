@@ -5,6 +5,7 @@ let dialog;
 
 function addChoiceButton(buttonContainer, text, onClick) {
   const button = document.createElement("button");
+  button.classList.add("encounter-choice-button");
   button.innerHTML = text;
   button.onclick = onClick;
 
@@ -39,7 +40,6 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
   }
   
   dialog.appendChild(buttonContainer);
-  dialog.querySelector("button")?.focus();
 }
 
 function addDreamQuestEncounterButton() {
@@ -967,6 +967,7 @@ function showDialog(headerText, encounter, afterContinueFunction = null) {
   );
 
   dialog.showModal();
+  dialog.querySelector("button.encounter-choice-button")?.focus();
 }
 
 function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
