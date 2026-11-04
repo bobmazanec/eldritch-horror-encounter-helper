@@ -632,13 +632,6 @@ function readAlound(text) {
   speechSynthesis.speak(utterance);
 }
 
-function toggleEncounterReading(isEnabled) {
-  document.querySelectorAll("#read-encounter-text, .dialog-reading-toggle").forEach(checkbox => {
-    checkbox.checked = isEnabled;
-  });
-  if (!isEnabled) speechSynthesis.cancel();
-}
-
 function removeElementWithId(id) {
   removeUIElement(document.getElementById(id));
 }
@@ -1139,6 +1132,13 @@ function startSpecialEncounter(deckName) {
     `${deckName} ${card.cardId}`,
     card
   );
+}
+
+function toggleEncounterReading(isEnabled) {
+  document.querySelectorAll("#read-encounter-text, .dialog-reading-toggle").forEach(checkbox => {
+    checkbox.checked = isEnabled;
+  });
+  if (!isEnabled) speechSynthesis.cancel();
 }
 
 function updateEncounterButtons(updateButton) {
