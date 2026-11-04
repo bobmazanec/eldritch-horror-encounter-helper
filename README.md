@@ -1,5 +1,7 @@
 # eldritch-horror-encounter-helper
 
+![Tentacles with glasses, one holding a card](favicon.ico)
+
 Present Eldritch Horror encounters step-by-step so players cannot see possible outcomes before choosing how to proceed.
 
 It is inspired by [Eldritch Horror Card Clerk+](https://metapone.github.io/eldritch-horror-card-clerk-plus/).
