@@ -66,7 +66,7 @@ Input pages are expected to resemble MediaWiki HTML and may contain:
 
 ## Generated Data
 
-Generated files are JavaScript fragments intended to be loaded by `../index.html` that has already created a `deckData` object. They are not standalone JSON documents or standalone JavaScript programs.
+Generated files are JavaScript fragments intended to be loaded by `../index.html` that has already created a `deckData` object. They are neither standalone JSON documents nor standalone JavaScript programs.
 
 Location-based cards can additionally contain location keys whose values are encounter payloads. The parser sorts cards and generated deck keys for stable output.
 
@@ -82,13 +82,6 @@ After changing an HTML source file or parser logic, regenerate the JavaScript da
 ruby parse_html_to_deck_data.rb
 ```
 
-I don't recommend committing the HTML and generated JS files to the repository. However, you can use `git` to identify changes:
-- Remove `js/deckdata_*.js` from `.gitignore` temporarily
-- `git add js/deckdata_*.js`
-- `ruby parse_html_to_deck_data.rb`
-- Use `git diff` to see changes in the generated output.
-
-For a parser-only change that should preserve existing data, this is a useful check:
 
 ```sh
 ruby parse_html_to_deck_data.rb && git diff --quiet -- js
@@ -118,7 +111,7 @@ After starting to develop this by hand, I quickly began to see how many regular 
 
  Use `ruby -c parse_html_to_deck_data.rb` to check its syntax.
 
-The project currently uses regeneration and diffing (see above) as its primary end-to-end validation. There is no separate automated test suite.
+The project currently uses regeneration and diffing as its primary end-to-end validation. There is no separate automated test suite.
 
 ## Code Coverage
 I also prompted Copilot to generate `coverage_report.rb`. It uses the `coverage` gem to record the parser's execution as it processes the input files.
