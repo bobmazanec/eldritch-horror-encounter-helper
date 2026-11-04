@@ -40,6 +40,7 @@ function addChoiceButtons(outerEncounterHeaderText, encounterStep, outerEncounte
   }
   
   dialog.appendChild(buttonContainer);
+  focusFirstEncounterChoiceButton();
 }
 
 function addDreamQuestEncounterButton() {
@@ -453,6 +454,10 @@ function filterByExpansion(cards) {
 }
 
 function findCardForLocation(location) { return (card) => card.location === location; }
+
+function focusFirstEncounterChoiceButton() {
+  dialog.querySelector("button.encounter-choice-button")?.focus();
+}
 
 function getCardsByLocation(rawCardsByLocation) {
   const allCards = [];
@@ -960,8 +965,9 @@ function showDialog(headerText, encounter, afterContinueFunction = null) {
   );
 
   dialog.showModal();
-  dialog.querySelector("button.encounter-choice-button")?.focus();
+  focusFirstEncounterChoiceButton();
 }
+
 
 function showExpeditionDeckChange(title, spacesRemoved = new Set()) {
   const plural = useSecondExpeditionDeck() ? "s" : "";
