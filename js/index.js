@@ -216,7 +216,6 @@ function addSpecialEncounterButtons(deckNames) {
 
     const button = document.createElement("button");
     button.type = "button";
-    button.classList.add("encounter");
     button.onclick = () => startSpecialEncounter(deckName);
 
     button.appendChild(img);
@@ -235,7 +234,6 @@ function addTopCardButton(deckName, buttonContainerId, buttonClass, onClick, but
   button.dataset.deckName = deckName;
 
   if (card) {
-    button.classList.add("encounter");
     button.onclick = onClick;
 
     const img = document.createElement("img");
@@ -384,11 +382,11 @@ function devastateCity(event, cityName) {
   showDialog(`${cityName} is Devastated!`, textNode.innerHTML);
 }
 
-function disableEncounterButtons() {
-  updateEncounterButtons(button => button.disabled = true);
+function disableExpeditionEncounterButtons() {
+  updateExpeditionEncounterButtons(button => button.disabled = true);
 }
 
-function disableEncounterButtonsFor(space) {
+function disableExpeditionEncounterButtonsFor(space) {
   recordDisabledSpace(space);
 
   const buttons = document.querySelectorAll(`button[data-space="${space}"]`);
@@ -434,8 +432,8 @@ function enableEncounterButton(button) {
   button.disabled = false;
 }
 
-function enableEncounterButtons() {
-  updateEncounterButtons(enableEncounterButton);
+function enableExpeditionEncounterButtons() {
+  updateExpeditionEncounterButtons(enableEncounterButton);
 }
 
 function endEncounter(event, continuationFunction = null) {
@@ -617,8 +615,8 @@ function putSecretsOfThePastRumorIntoPlay(event) {
   secretsOfThePastRumorInPlay = true;
 
   // Disable, then re-enable if approriate
-  disableEncounterButtons();
-  enableEncounterButtons();
+  disableExpeditionEncounterButtons();
+  enableExpeditionEncounterButtons();
 
   addHistoryElement(`<strong>Put <em>${SecretsOfThePast}</em> Rumor into play</strong>`);
 }
@@ -842,11 +840,11 @@ function resolveSecretsOfThePastRumorReckoning() {
     }
   });
   
-  enableEncounterButtons();
+  enableExpeditionEncounterButtons();
 
   showExpeditionDeckChange(`Resolved <em>${SecretsOfThePast}</em> Rumor Reckoning`, cardSpaces)
 
-  cardSpaces.forEach((space) => disableEncounterButtonsFor(space));
+  cardSpaces.forEach((space) => disableExpeditionEncounterButtonsFor(space));
 
   if (expeditionDeckIsEmpty) {
     const article = useSecondExpeditionDeck() ? "An" : "The";
@@ -862,7 +860,7 @@ function resolveTheWorldShakesMythos(event) {
   const expeditionDecks = buttons.map(button => removeTopCardButton(button));
   const spacesRemoved = removeTopExpeditionCardSpaceCards(expeditionDecks);
 
-  spacesRemoved.forEach(space => disableEncounterButtonsFor(space));
+  spacesRemoved.forEach(space => disableExpeditionEncounterButtonsFor(space));
 
   expeditionDecks.forEach(deck => {
     deck.shuffle();
@@ -883,7 +881,7 @@ function resolveUpheavalDisaster(event) {
   for (let i = 0; i < 3; i++) {
     const cardSpacesRemoved = removeTopExpeditionCardSpaceCards(expeditionDecks);
 
-    cardSpacesRemoved.forEach(space => disableEncounterButtonsFor(space));
+    cardSpacesRemoved.forEach(space => disableExpeditionEncounterButtonsFor(space));
     spacesRemoved = spacesRemoved.union(cardSpacesRemoved);
   }
 
@@ -1034,7 +1032,7 @@ function solveSecretsOfThePast(event) {
 
   addHistoryElement(`<strong>Solved <em>${SecretsOfThePast}</em> Rumor</strong>`);
   
-  enableEncounterButtons();
+  enableExpeditionEncounterButtons();
 }
 
 function startDevastationEncounter(spaceType) {
@@ -1147,9 +1145,9 @@ function toggleEncounterReading(isEnabled) {
   if (!isEnabled) speechSynthesis.cancel();
 }
 
-function updateEncounterButtons(updateButton) {
+function updateExpeditionEncounterButtons(updateButton) {
   document
-    .querySelectorAll("button.encounter")
+    .querySelectorAll("button.expedition")
     .forEach(updateButton);
 }
 
