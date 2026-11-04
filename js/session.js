@@ -216,7 +216,7 @@ function restoreGameUIState() {
     document.getElementById(cityId)?.remove();
   });
 
-  gameUIState.disabledSpaces.forEach(disableEncounterButtonsFor);
+  gameUIState.disabledSpaces.forEach(disableExpeditionEncounterButtonsFor);
 }
 
 function restoreHistory(history) {
