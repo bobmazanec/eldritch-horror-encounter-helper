@@ -2059,7 +2059,7 @@ deckData["Asia/Australia"] = [
     "Tokyo": {
       "intro": "Yuzuru Hiraga has engineered a fleet of ships to fight unnatural horrors. If you can navigate the naval bureaucracy to reach him, he will help. You may spend 1 Focus to choose 1 Monster on any space; the chosen Monster loses 2 Health.",
       "choices": {
-        "Spend 1 Focus to choose 1 Monster on any space": "The chosen Monster loses 2 Health",
+        "Spend 1 Focus to choose 1 Monster on any space": "",
         "Do not choose 1 Monster on any space": ""
       }
     },

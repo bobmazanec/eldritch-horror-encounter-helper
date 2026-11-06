@@ -985,6 +985,11 @@ class EncounterParser
     remaining = clean_text(clean[chosen[:match].end(0)..] || '')
     return nil if !remaining.empty? && !remaining.match?(/\AIf you\s+/i)
 
+    # With no trailing follow-up, discard inline text unless it contains a skill test needed for branching.
+    if remaining.empty? && !inline_follow_up.match?(/\((?:#{SKILL})[^)]*\)/i)
+      inline_follow_up = ''
+    end
+
     effects = split_optional_effects(cost)
     effects = [cost] if effects.empty?
 
